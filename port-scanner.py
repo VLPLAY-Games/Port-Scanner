@@ -28,9 +28,8 @@ def main():
     width = 1000
     height = 600
     draw_text = ""
-    margin = 0
     pr.init_window(width, height, "Port Scanner")
-    pr.set_target_fps(60)
+    pr.set_target_fps(30)
 
 
     pr.set_window_icon(pr.load_image('portscanner.png'))
@@ -57,13 +56,17 @@ def main():
         if pr.gui_button(
                     pr.Rectangle(200, 100, 100, 50), 
                     'Check ports (1000)'): 
+                pr.begin_drawing()
+                pr.draw_text("Checking...", 550, 125, 10, colors.BLACK)
+                pr.clear_background(colors.WHITE)
+                pr.end_drawing()
+                pr.begin_drawing()
                 open_ports = scan_ports(IP, 1, 1000)
                 if len(open_ports) != 0:
                     draw_text = "Open ports: " + str(open_ports)
                 else:
                     draw_text = 'All ports are closed'
-                
-                    
+                      
         pr.draw_text(draw_text, 550, 125, 10, colors.BLACK)
         pr.clear_background(colors.WHITE)
         pr.end_drawing()
@@ -73,16 +76,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-    # target_host = input("Введите IP-адрес или доменное имя: ")
-    # start_port = int(input("Введите начальный порт: "))
-    # end_port = int(input("Введите конечный порт: "))
-    
-    # print(f"Сканирование портов от {start_port} до {end_port} на {target_host}...")
-    # open_ports = scan_ports(target_host, start_port, end_port)
-    
-    # print("\nОткрытые порты:")
-    # for port in open_ports:
-    #     print(port)
