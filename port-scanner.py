@@ -1,4 +1,4 @@
-import socket, pyray
+import socket, pyray as pr
 from raylib import colors
 from concurrent.futures import ThreadPoolExecutor
 
@@ -18,24 +18,56 @@ def scan_ports(host, start_port, end_port):
             port, is_open = future.result()
             if is_open:
                 open_ports.append(port)
-                print(f"Порт {port} открыт.")
+                # print(f"Порт {port} открыт.")
             else:
-                print(f"Порт {port} закрыт.")
+                pass
+                # print(f"Порт {port} закрыт.")
     return open_ports
 
 def main():
     width = 1000
     height = 600
-    pyray.init_window(width, height, "Port Scanner")
-    while not pyray.window_should_close():
-        pyray.begin_drawing()
-        pyray.clear_background(colors.WHITE)
-        if pyray.gui_button(
-                    pyray.Rectangle(100, 100, 100, 50), 
-                    'Press me!'):
-                print('Кнопка нажата')
-        pyray.end_drawing()
-    pyray.close_window()
+    draw_text = ""
+    margin = 0
+    pr.init_window(width, height, "Port Scanner")
+    pr.set_target_fps(60)
+
+
+    pr.set_window_icon(pr.load_image('portscanner.png'))
+    IP = socket.gethostbyname(socket.gethostname())
+    while not pr.window_should_close():
+        pr.begin_drawing()
+
+        pr.draw_line(500,25,500,575,colors.BLACK)
+        pr.draw_line(25,575,975,575,colors.BLACK)
+        pr.draw_line(25,25,975,25,colors.BLACK)
+        
+        pr.draw_text("Select option", 50,50,25,colors.BLACK)
+        pr.draw_text("Result", 550,50,25,colors.BLACK)
+
+        pr.draw_rectangle_lines(525, 100, 450, 450, colors.BLACK)
+
+        # Получение IP адреса
+        if pr.gui_button(
+                    pr.Rectangle(50, 100, 100, 50), 
+                    'Check your IP'):   
+                draw_text = "Your IP is: "+ IP
+
+        # Получение открытых портов собственного IP 
+        if pr.gui_button(
+                    pr.Rectangle(200, 100, 100, 50), 
+                    'Check ports (1000)'): 
+                open_ports = scan_ports(IP, 1, 1000)
+                if len(open_ports) != 0:
+                    draw_text = "Open ports: " + str(open_ports)
+                else:
+                    draw_text = 'All ports are closed'
+                
+                    
+        pr.draw_text(draw_text, 550, 125, 10, colors.BLACK)
+        pr.clear_background(colors.WHITE)
+        pr.end_drawing()
+    pr.close_window()
 
 
 
