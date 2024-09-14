@@ -1,6 +1,7 @@
 import socket, pyray as pr, netifaces, subprocess, os
 from raylib import colors
 from concurrent.futures import ThreadPoolExecutor
+from config import *
 
 def scan_port(host, port):
     """Проверяет, открыт ли порт на заданном хосте."""
@@ -39,17 +40,22 @@ def get_ip6_addresses():
             ip_list.append(link['addr'])
     return ip_list
 
-
 def main():
-    width = 1000
-    height = 600
     draw_text = ""
-    pr.init_window(width, height, "Port Scanner")
-    pr.set_target_fps(30)
+    terminal_active = False
+    keys = []
+    keyboard = ""
+    enter_pressed = False
+    task = ""
+    first_port = 0
+    end_port = 0
+    pr.init_window(width, height, app_name)
+    pr.set_target_fps(fps)
 
 
     pr.set_window_icon(pr.load_image('portscanner.png'))
     IP = socket.gethostbyname(socket.gethostname())
+    task_ip = ""
     while not pr.window_should_close():
         pr.begin_drawing()
 
@@ -73,6 +79,7 @@ def main():
         if pr.gui_button(
                     pr.Rectangle(200, 100, 100, 50), 
                     'Check main ports'): 
+                task = "main_ports"
                 pr.begin_drawing()
                 pr.draw_text("Checking open ports...", 550, 125, 10, colors.BLACK)
                 pr.clear_background(colors.WHITE)
@@ -91,6 +98,54 @@ def main():
         if pr.gui_button(
                     pr.Rectangle(350, 100, 100, 50), 
                     'All info'):   
+                task = 'all_info'
+        
+        # Получение IP адреса
+        if pr.gui_button(
+                    pr.Rectangle(50, 200, 100, 50), 
+                    'Start'):   
+            draw_text = "Enter IP address to check: \n"
+            terminal_active = True
+            task = "ip_ports"
+
+        # Получение нажатия всех кнопок с клавиатуры
+        while value := pr.get_key_pressed():
+            if (terminal_active):
+                if (pr.is_key_pressed(257)):
+                    enter_pressed = True
+                else:
+                    keys.append(chr(value))
+        try:
+            if (enter_pressed):
+                if task == "ip_ports":
+                    task_ip = ''.join(keys)
+                    keys = []
+                    draw_text += "Enter first port: \n"
+                    task = "ip_first"
+                elif task == "ip_first":
+                    first_port = int(''.join(keys))
+                    keys = []
+                    draw_text += "Enter end port: \n"
+                    task = "ip_end"
+                elif task == "ip_end":
+                    end_port = int(''.join(keys))
+                    keys = []
+                    task = "ip_ports_start"
+
+                enter_pressed = False
+        except:
+            terminal_active = False
+            task = ""
+            enter_pressed = False
+            draw_text += "An error has occurred"
+        # Проверка задания 
+        try:
+            if task == "ip_ports_start":
+                draw_text += 'Starting task... \n'
+                open_ports = scan_ports(task_ip, first_port, end_port)
+                draw_text += "Open ports in " + task_ip + ":" + "\n" + str(open_ports) + "\n"         
+                task = ""
+            elif task == "all_info":
                 pr.begin_drawing()
                 pr.draw_text("Checking info this may take a while", 550, 125, 10, colors.BLACK)
                 pr.clear_background(colors.WHITE)
@@ -109,14 +164,30 @@ def main():
                         draw_text += "Open ports in " + ip + ":" + "\n" + str(open_ports) + "\n \n"
                     else:
                         draw_text += 'All ports are closed in ' + ip
+                task = ""
+        except:
+            terminal_active = False
+            draw_text += "An error has occurred"
+            task = ""
 
-                
-        pr.draw_text(draw_text, 550, 125, 10, colors.BLACK)
+        pr.draw_text(app_name + " by VL_PLAY Games " + version, 725, 585, 12, colors.BLACK)
+        pr.draw_text(draw_text + str(''.join(keys)) if terminal_active else draw_text, 550, 125, 10, colors.BLACK)
         pr.clear_background(colors.WHITE)
         pr.end_drawing()
+
     pr.close_window()
 
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except:
+        pr.init_window(300, 200, "Port Scanner Critical Error")
+        pr.set_target_fps(30)
+        pr.set_window_icon(pr.load_image('portscanner.png'))
+        while not pr.window_should_close():
+            pr.clear_background(colors.WHITE)
+            pr.draw_text("Critical Error", 75, 75, 25, colors.BLACK)
+            pr.end_drawing()
+            pr.begin_drawing()
