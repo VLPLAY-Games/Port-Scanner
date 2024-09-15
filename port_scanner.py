@@ -51,8 +51,8 @@ def get_ip6_addresses():
         try:
             for link in netifaces.ifaddresses(interface)[netifaces.AF_INET6]:
                 ip_list.append(link['addr'])
-        except:
-            pass
+        except Exception as e:
+            logging.error(str(e) + version)
     return ip_list
 
 def main():
