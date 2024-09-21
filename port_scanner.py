@@ -11,10 +11,6 @@ import netifaces
 from raylib import colors
 from config import width, height, fps, app_name, version
 
-# Логирование приложения
-logging.basicConfig(filename='report.log', format='%(asctime)s - %(levelname)s - %(message)s', \
-                    level=logging.INFO)
-
 class Ip:
     """ Класс для работы с IP """
     # Инициализация
@@ -22,28 +18,36 @@ class Ip:
         self.ipv4_list = []
         self.ipv6_list = []
         self.task_ip = ""
+        logging.info("IP class initialized")
 
     # Получение IP v4
     def get_ip4_addresses(self):
-        self.ipv4_list = []
-        for interface in netifaces.interfaces():
-            try:
-                for link in netifaces.ifaddresses(interface)[netifaces.AF_INET]:
-                    self.ipv4_list.append(link['addr'])
-            except:
-                pass
-        return self.ipv4_list
+        try:
+            self.ipv4_list = []
+            for interface in netifaces.interfaces():
+                try:
+                    for link in netifaces.ifaddresses(interface)[netifaces.AF_INET]:
+                        self.ipv4_list.append(link['addr'])
+                except:
+                    pass
+            return self.ipv4_list
+        except Exception as e:
+            logging.error("Error while getting IP v4: " + str(e))
 
     # Получение IP v6
     def get_ip6_addresses(self):
-        self.ipv6_list = []
-        for interface in netifaces.interfaces():
-            try:
-                for link in netifaces.ifaddresses(interface)[netifaces.AF_INET6]:
-                    self.ipv6_list.append(link['addr'])
-            except Exception as e:
-                logging.error(str(e) + version)
-        return self.ipv6_list
+        try:
+            logging.info("Started task get IP v6")
+            self.ipv6_list = []
+            for interface in netifaces.interfaces():
+                try:
+                    for link in netifaces.ifaddresses(interface)[netifaces.AF_INET6]:
+                        self.ipv6_list.append(link['addr'])
+                except Exception as e:
+                    logging.error(str(e) + version)
+            return self.ipv6_list
+        except Exception as e:
+            logging.error("Error while getting IP v6: " + str(e))
 
     # Получение IP v4 + v6
     def get_all_ip(self):
@@ -56,6 +60,7 @@ class Port:
         self.open_ports = []
         self.first_port = 0
         self.end_port = 0
+        logging.info("Port class initialized")
 
     def scan_port(self, host, port):
         """Проверяет, открыт ли порт на заданном хосте."""
@@ -66,20 +71,25 @@ class Port:
 
     def scan_ports(self, host, start_port, end_port):
         """Сканирует порты в заданном диапазоне."""
-        with ThreadPoolExecutor(max_workers=100) as executor:
-            futures = {executor.submit(self.scan_port, host, port):
-                    port for port in range(start_port, end_port + 1)}
-            for future in futures:
-                port, is_open = future.result()
-                if is_open:
-                    self.open_ports.append(port)
-        return self.open_ports
+        try:
+            logging.info("Started scan ports")
+            with ThreadPoolExecutor(max_workers=100) as executor:
+                futures = {executor.submit(self.scan_port, host, port):
+                        port for port in range(start_port, end_port + 1)}
+                for future in futures:
+                    port, is_open = future.result()
+                    if is_open:
+                        self.open_ports.append(port)
+            return self.open_ports
+        except Exception as e:
+            logging.error("Error while scan ports: " + str(e))
 
 class Task:
     """ Класс для работы с заданиями"""
     # Инициализация
     def __init__(self):
         self.name_task = ""
+        logging.info("Task class initialized")
 
     # Проверка задания + нажатия Enter
     def check_task(self, app, ip, port, keyboard):
@@ -138,6 +148,7 @@ class Keyboard:
     def __init__(self):
         self.keys = []
         self.enter_pressed = False
+        logging.info("Keyboard class initialized")
 
     # Получить текст с клавиатуры
     def get_keys(self):
@@ -176,12 +187,14 @@ class App(Keyboard):
         self.task = ""
         self.first_port = 0
         self.end_port = 0
+        logging.info("App class initialized")
 
     # Запуск приложения
     def init_app(self):
         pr.init_window(self.width, self.height, self.app_name)
         pr.set_target_fps(self.fps)
         pr.set_window_icon(pr.load_image('portscanner.png'))
+        logging.info("App initialized")
 
     # Отрисовка дизайна приложения
     def draw_main(self):
@@ -206,6 +219,7 @@ class App(Keyboard):
         pr.init_window(300, 200, "Port Scanner Critical Error")
         pr.set_target_fps(30)
         pr.set_window_icon(pr.load_image('portscanner.png'))
+        logging.info("Error window initialized")
         while not pr.window_should_close():
             pr.clear_background(colors.WHITE)
             pr.draw_text("Critical Error", 75, 75, 25, colors.BLACK)
@@ -222,7 +236,7 @@ class App(Keyboard):
 class Button:
     """ Класс для работы с кнопками"""
     def __init__(self):
-        pass
+        logging.info("Button class initialized")
     
     # Отрисовка и отработка кнопки вся информация
     def but_all_info(self, app):
@@ -275,11 +289,11 @@ class Button:
         self.but_ip(app, ip)
         self.but_main_ports(app, ip, port)
 
-        
-
-
-
 def main():
+    os.remove("report.log")
+    # Логирование приложения
+    logging.basicConfig(filename='report.log', format='%(asctime)s - %(levelname)s - %(message)s', \
+                level=logging.INFO)
     logging.info("App started")
     app = App()
     ip = Ip()
