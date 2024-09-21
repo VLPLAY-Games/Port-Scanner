@@ -95,52 +95,63 @@ class Task:
     def check_task(self, app, ip, port, keyboard):
         # Проверка Enter
         if keyboard.enter_pressed:
-            if app.task == "ip_ports":
-                ip.task_ip = ''.join(keyboard.get_keys())
-                keyboard.keys_erase()
-                app.draw_text += ip.task_ip + "\nEnter first port: \n"
-                app.task = "ip_first"
-            elif app.task == "ip_first":
-                port.first_port = int(''.join(keyboard.get_keys()))
-                keyboard.keys_erase()
-                app.draw_text += str(port.first_port) + "\nEnter end port: \n"
-                app.task = "ip_end"
-            elif app.task == "ip_end":
-                port.end_port = int(''.join(keyboard.get_keys()))
-                keyboard.keys_erase()
-                app.task = "ip_ports_start"
-            keyboard.enter_pressed = False
+            try:
+                if app.task == "ip_ports":
+                    ip.task_ip = ''.join(keyboard.get_keys())
+                    keyboard.keys_erase()
+                    app.draw_text += ip.task_ip + "\nEnter first port: \n"
+                    app.task = "ip_first"
+                elif app.task == "ip_first":
+                    port.first_port = int(''.join(keyboard.get_keys()))
+                    keyboard.keys_erase()
+                    app.draw_text += str(port.first_port) + "\nEnter end port: \n"
+                    app.task = "ip_end"
+                elif app.task == "ip_end":
+                    port.end_port = int(''.join(keyboard.get_keys()))
+                    keyboard.keys_erase()
+                    app.task = "ip_ports_start"
+                keyboard.enter_pressed = False
+            except Exception as e:
+                app.exception("Error while perfoming custom task: ", str(e))
 
         # Вся информация
         if app.task == "all_info":
-            pr.begin_drawing()
-            pr.draw_text("Checking info this may take a while", 550, 125, 10, colors.BLACK)
-            pr.clear_background(colors.WHITE)
-            pr.end_drawing()
-            pr.begin_drawing()
-            app.draw_text = "All information: \nNetwork devicess info \n"
-            if os.name == 'nt':
-                app.draw_text += subprocess.check_output("ipconfig" ).decode('utf-8')
-            else:
-                app.draw_text += subprocess.check_output("ifconfig" ).decode('utf-8')
-
-            app.draw_text += "Checking open ports... \n"
-            for ip_l in ip.get_ip4_addresses():
-                open_ports = port.scan_ports(ip_l, 1, 49151)
-                if len(open_ports) != 0:
-                    app.draw_text += "Open ports in " + ip_l + \
-                        ":" + "\n" + str(open_ports) + "\n \n"
+            try:
+                logging.info("Started task 'all info'")
+                pr.begin_drawing()
+                pr.draw_text("Checking info this may take a while", 550, 125, 10, colors.BLACK)
+                pr.clear_background(colors.WHITE)
+                pr.end_drawing()
+                pr.begin_drawing()
+                app.draw_text = "All information: \nNetwork devicess info \n"
+                if os.name == 'nt':
+                    app.draw_text += subprocess.check_output("ipconfig" ).decode('utf-8')
                 else:
-                    app.draw_text += 'All ports are closed in ' + ip_l
-            app.task = ""
+                    app.draw_text += subprocess.check_output("ifconfig" ).decode('utf-8')
+
+                app.draw_text += "Checking open ports... \n"
+                for ip_l in ip.get_ip4_addresses():
+                    open_ports = port.scan_ports(ip_l, 1, 49151)
+                    if len(open_ports) != 0:
+                        app.draw_text += "Open ports in " + ip_l + \
+                            ":" + "\n" + str(open_ports) + "\n \n"
+                    else:
+                        app.draw_text += 'All ports are closed in ' + ip_l
+                app.task = ""
+            except Exception as e:
+                app.exception("Error while perfoming task 'all info': ", str(e))
         
         # Проверка портов для кастом
         elif app.task == "ip_ports_start":
-            app.draw_text += str(port.end_port) + '\nStarting task... \n'
-            open_ports = port.scan_ports(ip.task_ip, port.first_port, port.end_port)
-            app.draw_text += "Open ports in " + ip.task_ip + \
-                ":" + "\n" + str(open_ports) + "\n"
-            app.task = ""
+            try:
+                logging.info("Started custom task")
+                app.draw_text += str(port.end_port) + '\nStarting task... \n'
+                open_ports = port.scan_ports(ip.task_ip, port.first_port, port.end_port)
+                app.draw_text += "Open ports in " + ip.task_ip + \
+                    ":" + "\n" + str(open_ports) + "\n"
+                app.task = ""
+            except Exception as e:
+                app.exception("Error while perfoming custom task: ", str(e))
 
 class Keyboard:
     """ Класс для работы с клавиатурой"""
@@ -191,10 +202,13 @@ class App(Keyboard):
 
     # Запуск приложения
     def init_app(self):
-        pr.init_window(self.width, self.height, self.app_name)
-        pr.set_target_fps(self.fps)
-        pr.set_window_icon(pr.load_image('portscanner.png'))
-        logging.info("App initialized")
+        try:
+            pr.init_window(self.width, self.height, self.app_name)
+            pr.set_target_fps(self.fps)
+            pr.set_window_icon(pr.load_image('portscanner.png'))
+            logging.info("App initialized")
+        except Exception as e:
+            logging.critical("Error while initializing App window: " + str(e))
 
     # Отрисовка дизайна приложения
     def draw_main(self):
@@ -226,8 +240,9 @@ class App(Keyboard):
             pr.end_drawing()
             pr.begin_drawing()
 
-    def exception(self, e):
-        logging.error(str(e) + version)
+    def exception(self, text, e):
+        logging.error(text)
+        logging.error(str(e))
         self.terminal_active = False
         self.task = ""
         self.enter_pressed = False
