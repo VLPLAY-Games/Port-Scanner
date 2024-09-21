@@ -173,6 +173,9 @@ class Keyboard:
     def keys_erase(self):
         self.keys = []
 
+    def keys_del(self):
+        self.keys = self.keys[:-1]
+
     # Добавление текста с клавиатуры
     def check_key(self, app):
         # Получение нажатия всех кнопок с клавиатуры
@@ -180,6 +183,8 @@ class Keyboard:
             if app.terminal_active:
                 if pr.is_key_pressed(257):
                     self.enter_pressed = True
+                elif pr.is_key_pressed(259):
+                    self.keys_del()
                 else:
                     self.keys.append(chr(value))
 
