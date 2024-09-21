@@ -140,7 +140,7 @@ class Task:
                 app.task = ""
             except Exception as e:
                 app.exception("Error while perfoming task 'all info': ", str(e))
-        
+
         # Проверка портов для кастом
         elif app.task == "ip_ports_start":
             try:
@@ -252,7 +252,7 @@ class Button:
     """ Класс для работы с кнопками"""
     def __init__(self):
         logging.info("Button class initialized")
-    
+
     # Отрисовка и отработка кнопки вся информация
     def but_all_info(self, app):
         if pr.gui_button(
@@ -272,23 +272,23 @@ class Button:
     # Отрисовка и обработка кнопки проверить основные порты
     def but_main_ports(self, app, ip, port):
         # Получение открытых портов собственного IP
-            if pr.gui_button(
-                        pr.Rectangle(200, 100, 100, 50),
-                        'Check main ports'):
-                app.task = "main_ports"
-                pr.begin_drawing()
-                pr.draw_text("Checking open ports...", 550, 125, 10, colors.BLACK)
-                pr.clear_background(colors.WHITE)
-                pr.end_drawing()
-                pr.begin_drawing()
-                app.draw_text = "Checking open ports... \n \n"
-                for ip_l in ip.get_ip4_addresses():
-                    open_ports = port.scan_ports(ip_l, 1, 10000)
-                    if len(open_ports) != 0:
-                        app.draw_text += "Open ports in " + ip_l + \
-                            ":" + "\n" + str(open_ports) + "\n \n"
-                    else:
-                        app.draw_text += 'All ports are closed in ' + ip_l
+        if pr.gui_button(
+                    pr.Rectangle(200, 100, 100, 50),
+                    'Check main ports'):
+            app.task = "main_ports"
+            pr.begin_drawing()
+            pr.draw_text("Checking open ports...", 550, 125, 10, colors.BLACK)
+            pr.clear_background(colors.WHITE)
+            pr.end_drawing()
+            pr.begin_drawing()
+            app.draw_text = "Checking open ports... \n \n"
+            for ip_l in ip.get_ip4_addresses():
+                open_ports = port.scan_ports(ip_l, 1, 10000)
+                if len(open_ports) != 0:
+                    app.draw_text += "Open ports in " + ip_l + \
+                        ":" + "\n" + str(open_ports) + "\n \n"
+                else:
+                    app.draw_text += 'All ports are closed in ' + ip_l
 
     # Отрисовка и обработка кнопки получения всех ip
     def but_ip(self, app, ip):
@@ -309,6 +309,7 @@ def main():
     # Логирование приложения
     logging.basicConfig(filename='report.log', format='%(asctime)s - %(levelname)s - %(message)s', \
                 level=logging.INFO)
+    logging.info("             Port scanner                 ")
     logging.info("App started")
     app = App()
     ip = Ip()
