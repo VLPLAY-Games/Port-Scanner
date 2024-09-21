@@ -20,6 +20,10 @@ class Ip:
         self.task_ip = ""
         logging.info("IP class initialized")
 
+    # Деинициализация
+    def __del__(self):
+        logging.info("IP class deinitialized")
+
     # Получение IP v4
     def get_ip4_addresses(self):
         try:
@@ -62,6 +66,10 @@ class Port:
         self.end_port = 0
         logging.info("Port class initialized")
 
+    # Деинициализация
+    def __del__(self):
+        logging.info("Port class deinitialized")
+
     def scan_port(self, host, port):
         """Проверяет, открыт ли порт на заданном хосте."""
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
@@ -90,6 +98,10 @@ class Task:
     def __init__(self):
         self.name_task = ""
         logging.info("Task class initialized")
+    
+    # Деинициализация
+    def __del__(self):
+        logging.info("Task class deinitialized")
 
     # Проверка задания + нажатия Enter
     def check_task(self, app, ip, port, keyboard):
@@ -161,6 +173,10 @@ class Keyboard:
         self.enter_pressed = False
         logging.info("Keyboard class initialized")
 
+    # Деинициализация
+    def __del__(self):
+        logging.info("Keyboard class deinitialized")
+
     # Получить текст с клавиатуры
     def get_keys(self):
         return self.keys
@@ -204,6 +220,10 @@ class App(Keyboard):
         self.first_port = 0
         self.end_port = 0
         logging.info("App class initialized")
+
+    # Деинициализация
+    def __del__(self):
+        logging.info("App class deinitialized")
 
     # Запуск приложения
     def init_app(self):
@@ -257,6 +277,10 @@ class Button:
     """ Класс для работы с кнопками"""
     def __init__(self):
         logging.info("Button class initialized")
+    
+    # Деинициализация
+    def __del__(self):
+        logging.info("Button class deinitialized")
 
     # Отрисовка и отработка кнопки вся информация
     def but_all_info(self, app):
@@ -337,6 +361,7 @@ def main():
         pr.close_window()
     except Exception as e:
         app.error_init(e)
+    del app, ip, task, port, keyboard, button
     logging.info("App is closed")
 
 if __name__ == '__main__':
