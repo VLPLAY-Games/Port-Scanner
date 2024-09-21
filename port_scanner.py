@@ -13,19 +13,19 @@ from config import width, height, fps, app_name, version
 
 class Ip:
     """ Класс для работы с IP """
-    # Инициализация
     def __init__(self):
+        """ Инициализация """
         self.ipv4_list = []
         self.ipv6_list = []
         self.task_ip = ""
         logging.info("IP class initialized")
 
-    # Деинициализация
     def __del__(self):
+        """ Деинициализация """
         logging.info("IP class deinitialized")
 
-    # Получение IP v4
     def get_ip4_addresses(self):
+        """ Получение IP v4 """
         try:
             self.ipv4_list = []
             for interface in netifaces.interfaces():
@@ -38,8 +38,8 @@ class Ip:
         except Exception as e:
             logging.error("Error while getting IP v4: " + str(e))
 
-    # Получение IP v6
     def get_ip6_addresses(self):
+        """ Получение IP v6 """
         try:
             logging.info("Started task get IP v6")
             self.ipv6_list = []
@@ -53,21 +53,22 @@ class Ip:
         except Exception as e:
             logging.error("Error while getting IP v6: " + str(e))
 
-    # Получение IP v4 + v6
     def get_all_ip(self):
+        """ Получение IP v4 + v6 """
         return "Your IP v4 is: \n" + str(self.get_ip4_addresses()) + \
                     "\n \nYour IP v6 is:\n" + str(self.get_ip6_addresses())
 
 class Port:
     """ Класс для работы с портами"""
     def __init__(self):
+        """ Инициализация """
         self.open_ports = []
         self.first_port = 0
         self.end_port = 0
         logging.info("Port class initialized")
 
-    # Деинициализация
     def __del__(self):
+        """ Деинициализация """
         logging.info("Port class deinitialized")
 
     def scan_port(self, host, port):
@@ -94,17 +95,17 @@ class Port:
 
 class Task:
     """ Класс для работы с заданиями"""
-    # Инициализация
     def __init__(self):
+        """ Инициализация """
         self.name_task = ""
         logging.info("Task class initialized")
-    
-    # Деинициализация
+
     def __del__(self):
+        """ Деинициализация """
         logging.info("Task class deinitialized")
 
-    # Проверка задания + нажатия Enter
     def check_task(self, app, ip, port, keyboard):
+        """ Проверка задания + нажатия Enter """
         # Проверка Enter
         if keyboard.enter_pressed:
             try:
@@ -167,33 +168,34 @@ class Task:
 
 class Keyboard:
     """ Класс для работы с клавиатурой"""
-    # Инициализация
     def __init__(self):
+        """ Инициализация """
         self.keys = []
         self.enter_pressed = False
         logging.info("Keyboard class initialized")
 
-    # Деинициализация
     def __del__(self):
+        """ Деинициализация """
         logging.info("Keyboard class deinitialized")
 
-    # Получить текст с клавиатуры
     def get_keys(self):
+        """ Получить текст с клавиатуры """
         return self.keys
 
-    # Добавить текст
     def append_keys(self, var):
+        """ Добавить текст """
         self.keys.append(var)
 
-    # Очистить клавиатуру
     def keys_erase(self):
+        """ Очистить клавиатуру """
         self.keys = []
 
     def keys_del(self):
+        """ Удалить 1 смивол с конца"""
         self.keys = self.keys[:-1]
 
-    # Добавление текста с клавиатуры
     def check_key(self, app):
+        """ Добавление текста с клавиатуры """
         # Получение нажатия всех кнопок с клавиатуры
         while value := pr.get_key_pressed():
             if app.terminal_active:
@@ -206,8 +208,8 @@ class Keyboard:
 
 class App(Keyboard):
     """ Основной класс приложения"""
-    # Инициализация класса
     def __init__(self):
+        """ Инициализация класса """
         super().__init__()
         self.version = version
         self.width = width
@@ -221,12 +223,12 @@ class App(Keyboard):
         self.end_port = 0
         logging.info("App class initialized")
 
-    # Деинициализация
     def __del__(self):
+        """ Деинициализация """
         logging.info("App class deinitialized")
 
-    # Запуск приложения
     def init_app(self):
+        """ Запуск приложения """
         try:
             pr.init_window(self.width, self.height, self.app_name)
             pr.set_target_fps(self.fps)
@@ -235,8 +237,8 @@ class App(Keyboard):
         except Exception as e:
             logging.critical("Error while initializing App window: " + str(e))
 
-    # Отрисовка дизайна приложения
     def draw_main(self):
+        """ Отрисовка дизайна приложения """
         pr.draw_line(500,25,500,575,colors.BLACK)
         pr.draw_line(25,575,975,575,colors.BLACK)
         pr.draw_line(25,25,975,25,colors.BLACK)
@@ -246,14 +248,14 @@ class App(Keyboard):
         pr.draw_rectangle_lines(525, 100, 450, 450, colors.BLACK)
         pr.draw_text(app_name + " by VL_PLAY Games " + version, 725, 585, 12, colors.BLACK)
 
-    # Отрисовка терминала
     def draw_terminal(self , keys):
+        """ Отрисовка терминала """
         pr.draw_text(self.draw_text + str(''.join(keys)) if self.terminal_active \
                      else self.draw_text, \
                      550, 125, 10, colors.BLACK)
 
-    # Отрисовка ошибки
     def error_init(self, e):
+        """ Отрисовка ошибки """
         logging.critical(str(e) + version)
         pr.init_window(300, 200, "Port Scanner Critical Error")
         pr.set_target_fps(30)
@@ -266,6 +268,7 @@ class App(Keyboard):
             pr.begin_drawing()
 
     def exception(self, text, e):
+        """ Обработка исключений """
         logging.error(text)
         logging.error(str(e))
         self.terminal_active = False
@@ -276,21 +279,22 @@ class App(Keyboard):
 class Button:
     """ Класс для работы с кнопками"""
     def __init__(self):
+        """ Инициализация """
         logging.info("Button class initialized")
-    
-    # Деинициализация
+
     def __del__(self):
+        """ Деинициализация """
         logging.info("Button class deinitialized")
 
-    # Отрисовка и отработка кнопки вся информация
     def but_all_info(self, app):
+        """ Отрисовка и отработка кнопки вся информация """
         if pr.gui_button(
                 pr.Rectangle(350, 100, 100, 50),
                 'All info'):   
             app.task = 'all_info'
 
-    # Отрисовка и отработка кнопки кастом
     def but_custom_task(self, app):
+        """ Отрисовка и отработка кнопки кастом """
         if pr.gui_button(
                 pr.Rectangle(50, 200, 100, 50),
                 'Start'):   
@@ -298,8 +302,8 @@ class Button:
             app.terminal_active = True
             app.task = "ip_ports"
 
-    # Отрисовка и обработка кнопки проверить основные порты
     def but_main_ports(self, app, ip, port):
+        """ Отрисовка и обработка кнопки проверить основные порты """
         # Получение открытых портов собственного IP
         if pr.gui_button(
                     pr.Rectangle(200, 100, 100, 50),
@@ -319,21 +323,22 @@ class Button:
                 else:
                     app.draw_text += 'All ports are closed in ' + ip_l
 
-    # Отрисовка и обработка кнопки получения всех ip
     def but_ip(self, app, ip):
+        """ Отрисовка и обработка кнопки получения всех ip """
         if pr.gui_button(
                     pr.Rectangle(50, 100, 100, 50),
                     'Check your IP'):
             app.draw_text = ip.get_all_ip()
 
-    # Проверка всех кнопок
     def check_all_but(self, app, ip, port):
+        """ Проверка всех кнопок """
         self.but_all_info(app)
         self.but_custom_task(app)
         self.but_ip(app, ip)
         self.but_main_ports(app, ip, port)
 
 def main():
+    """ Основная функция """
     os.remove("report.log")
     # Логирование приложения
     logging.basicConfig(filename='report.log', format='%(asctime)s - %(levelname)s - %(message)s', \
