@@ -1,4 +1,6 @@
 """ Сканер портов """
+
+# Библиотеки
 import subprocess
 import os
 import socket
@@ -9,14 +11,17 @@ import netifaces
 from raylib import colors
 from config import width, height, fps, app_name, version
 
+# Логирование приложения
 logging.basicConfig(filename='report.log', format='%(asctime)s - %(levelname)s - %(message)s', \
                     level=logging.INFO)
 
 class Ip:
     """ Класс для работы с IP """
+    # Инициализация
     def __init__(self):
         self.ipv4_list = []
         self.ipv6_list = []
+        self.task_ip = ""
 
     # Получение IP v4
     def get_ip4_addresses(self):
@@ -40,6 +45,7 @@ class Ip:
                 logging.error(str(e) + version)
         return self.ipv6_list
 
+    # Получение IP v4 + v6
     def get_all_ip(self):
         return "Your IP v4 is: \n" + str(self.get_ip4_addresses()) + \
                     "\n \nYour IP v6 is:\n" + str(self.get_ip6_addresses())
@@ -48,6 +54,8 @@ class Port:
     """ Класс для работы с портами"""
     def __init__(self):
         self.open_ports = []
+        self.first_port = 0
+        self.end_port = 0
 
     def scan_port(self, host, port):
         """Проверяет, открыт ли порт на заданном хосте."""
@@ -67,42 +75,95 @@ class Port:
                     self.open_ports.append(port)
         return self.open_ports
 
-
 class Task:
     """ Класс для работы с заданиями"""
+    # Инициализация
     def __init__(self):
         self.name_task = ""
 
-    def check_task(self, app):
-        pass
+    # Проверка задания + нажатия Enter
+    def check_task(self, app, ip, port, keyboard):
+        # Проверка Enter
+        if keyboard.enter_pressed:
+            if app.task == "ip_ports":
+                ip.task_ip = ''.join(keyboard.get_keys())
+                keyboard.keys_erase()
+                app.draw_text += ip.task_ip + "\nEnter first port: \n"
+                app.task = "ip_first"
+            elif app.task == "ip_first":
+                port.first_port = int(''.join(keyboard.get_keys()))
+                keyboard.keys_erase()
+                app.draw_text += str(port.first_port) + "\nEnter end port: \n"
+                app.task = "ip_end"
+            elif app.task == "ip_end":
+                port.end_port = int(''.join(keyboard.get_keys()))
+                keyboard.keys_erase()
+                app.task = "ip_ports_start"
+            keyboard.enter_pressed = False
+
+        # Вся информация
+        if app.task == "all_info":
+            pr.begin_drawing()
+            pr.draw_text("Checking info this may take a while", 550, 125, 10, colors.BLACK)
+            pr.clear_background(colors.WHITE)
+            pr.end_drawing()
+            pr.begin_drawing()
+            app.draw_text = "All information: \nNetwork devicess info \n"
+            if os.name == 'nt':
+                app.draw_text += subprocess.check_output("ipconfig" ).decode('utf-8')
+            else:
+                app.draw_text += subprocess.check_output("ifconfig" ).decode('utf-8')
+
+            app.draw_text += "Checking open ports... \n"
+            for ip_l in ip.get_ip4_addresses():
+                open_ports = port.scan_ports(ip_l, 1, 49151)
+                if len(open_ports) != 0:
+                    app.draw_text += "Open ports in " + ip_l + \
+                        ":" + "\n" + str(open_ports) + "\n \n"
+                else:
+                    app.draw_text += 'All ports are closed in ' + ip_l
+            app.task = ""
+        
+        # Проверка портов для кастом
+        elif app.task == "ip_ports_start":
+            app.draw_text += str(port.end_port) + '\nStarting task... \n'
+            open_ports = port.scan_ports(ip.task_ip, port.first_port, port.end_port)
+            app.draw_text += "Open ports in " + ip.task_ip + \
+                ":" + "\n" + str(open_ports) + "\n"
+            app.task = ""
 
 class Keyboard:
     """ Класс для работы с клавиатурой"""
+    # Инициализация
     def __init__(self):
         self.keys = []
+        self.enter_pressed = False
 
+    # Получить текст с клавиатуры
     def get_keys(self):
         return self.keys
 
+    # Добавить текст
     def append_keys(self, var):
         self.keys.append(var)
 
+    # Очистить клавиатуру
     def keys_erase(self):
         self.keys = []
 
+    # Добавление текста с клавиатуры
     def check_key(self, app):
         # Получение нажатия всех кнопок с клавиатуры
         while value := pr.get_key_pressed():
             if app.terminal_active:
                 if pr.is_key_pressed(257):
-                    app.enter_pressed = True
+                    self.enter_pressed = True
                 else:
                     self.keys.append(chr(value))
 
-
-
 class App(Keyboard):
     """ Основной класс приложения"""
+    # Инициализация класса
     def __init__(self):
         super().__init__()
         self.version = version
@@ -112,16 +173,17 @@ class App(Keyboard):
         self.app_name = app_name
         self.draw_text = ""
         self.terminal_active = False
-        self.enter_pressed = False
         self.task = ""
         self.first_port = 0
         self.end_port = 0
 
+    # Запуск приложения
     def init_app(self):
         pr.init_window(self.width, self.height, self.app_name)
         pr.set_target_fps(self.fps)
         pr.set_window_icon(pr.load_image('portscanner.png'))
 
+    # Отрисовка дизайна приложения
     def draw_main(self):
         pr.draw_line(500,25,500,575,colors.BLACK)
         pr.draw_line(25,575,975,575,colors.BLACK)
@@ -132,11 +194,13 @@ class App(Keyboard):
         pr.draw_rectangle_lines(525, 100, 450, 450, colors.BLACK)
         pr.draw_text(app_name + " by VL_PLAY Games " + version, 725, 585, 12, colors.BLACK)
 
+    # Отрисовка терминала
     def draw_terminal(self , keys):
         pr.draw_text(self.draw_text + str(''.join(keys)) if self.terminal_active \
                      else self.draw_text, \
                      550, 125, 10, colors.BLACK)
 
+    # Отрисовка ошибки
     def error_init(self, e):
         logging.critical(str(e) + version)
         pr.init_window(300, 200, "Port Scanner Critical Error")
@@ -155,18 +219,19 @@ class App(Keyboard):
         self.enter_pressed = False
         self.draw_text += "An error has occurred"
 
-
 class Button:
     """ Класс для работы с кнопками"""
     def __init__(self):
         pass
     
+    # Отрисовка и отработка кнопки вся информация
     def but_all_info(self, app):
         if pr.gui_button(
                 pr.Rectangle(350, 100, 100, 50),
                 'All info'):   
             app.task = 'all_info'
 
+    # Отрисовка и отработка кнопки кастом
     def but_custom_task(self, app):
         if pr.gui_button(
                 pr.Rectangle(50, 200, 100, 50),
@@ -175,6 +240,7 @@ class Button:
             app.terminal_active = True
             app.task = "ip_ports"
 
+    # Отрисовка и обработка кнопки проверить основные порты
     def but_main_ports(self, app, ip, port):
         # Получение открытых портов собственного IP
             if pr.gui_button(
@@ -195,19 +261,23 @@ class Button:
                     else:
                         app.draw_text += 'All ports are closed in ' + ip_l
 
-
+    # Отрисовка и обработка кнопки получения всех ip
     def but_ip(self, app, ip):
         if pr.gui_button(
                     pr.Rectangle(50, 100, 100, 50),
                     'Check your IP'):
             app.draw_text = ip.get_all_ip()
 
-
+    # Проверка всех кнопок
     def check_all_but(self, app, ip, port):
         self.but_all_info(app)
         self.but_custom_task(app)
         self.but_ip(app, ip)
         self.but_main_ports(app, ip, port)
+
+        
+
+
 
 def main():
     logging.info("App started")
@@ -219,66 +289,12 @@ def main():
     button = Button()
     try:
         app.init_app()
-        task_ip = ""
         while not pr.window_should_close():
             pr.begin_drawing()
             app.draw_main()
-            # Получение полной информации
             button.check_all_but(app, ip, port)
             keyboard.check_key(app)
-            try:
-                if app.enter_pressed:
-                    if app.task == "ip_ports":
-                        app.task_ip = ''.join(keyboard.get_keys())
-                        keyboard.keys_erase()
-                        app.draw_text += task_ip + "\nEnter first port: \n"
-                        app.task = "ip_first"
-                    elif app.task == "ip_first":
-                        first_port = int(''.join(keyboard.get_keys()))
-                        keyboard.keys_erase()
-                        app.draw_text += str(first_port) + "\nEnter end port: \n"
-                        app.task = "ip_end"
-                    elif app.task == "ip_end":
-                        end_port = int(''.join(keyboard.get_keys()))
-                        keyboard.keys_erase()
-                        app.task = "ip_ports_start"
-
-                    app.enter_pressed = False
-            except Exception as e:
-                app.exception()
-            # Проверка задания
-            task.check_task(app)
-            try:
-                if app.task == "ip_ports_start":
-                    app.draw_text += str(end_port) + '\nStarting task... \n'
-                    open_ports = port.scan_ports(task_ip, first_port, end_port)
-                    app.draw_text += "Open ports in " + task_ip + \
-                        ":" + "\n" + str(open_ports) + "\n"
-                    app.task = ""
-                elif app.task == "all_info":
-                    pr.begin_drawing()
-                    pr.draw_text("Checking info this may take a while", 550, 125, 10, colors.BLACK)
-                    pr.clear_background(colors.WHITE)
-                    pr.end_drawing()
-                    pr.begin_drawing()
-                    app.draw_text = "All information: \nNetwork devicess info \n"
-                    if os.name == 'nt':
-                        app.draw_text += subprocess.check_output("ipconfig" ).decode('utf-8')
-                    else:
-                        app.draw_text += subprocess.check_output("ifconfig" ).decode('utf-8')
-
-                    app.draw_text += "Checking open ports... \n"
-                    for ip_l in ip.get_ip4_addresses():
-                        open_ports = port.scan_ports(ip_l, 1, 49151)
-                        if len(open_ports) != 0:
-                            app.draw_text += "Open ports in " + ip_l + \
-                                ":" + "\n" + str(open_ports) + "\n \n"
-                        else:
-                            app.draw_text += 'All ports are closed in ' + ip_l
-                    app.task = ""
-            except Exception as e:
-                app.exception(e)
-
+            task.check_task(app, ip, port, keyboard)
             app.draw_terminal(keyboard.get_keys())
             pr.clear_background(colors.WHITE)
             pr.end_drawing()
@@ -287,7 +303,6 @@ def main():
     except Exception as e:
         app.error_init(e)
     logging.info("App is closed")
-
 
 if __name__ == '__main__':
     main()
