@@ -11,8 +11,6 @@ class App():
         self.height = height
         self.fps = fps
         self.app_name = app_name
-        self.terminal_active = False
-        self.task = ""
         self.first_port = 0
         self.end_port = 0
         logging.info("App class initialized")
@@ -54,11 +52,11 @@ class App():
             pr.end_drawing()
             pr.begin_drawing()
 
-    def exception(self, text, e, terminal):
+    def exception(self, text, e, terminal, task):
         """ Обработка исключений """
         logging.error(text)
         logging.error(str(e))
-        self.terminal_active = False
-        self.task = ""
+        terminal.terminal_active = False
+        task.task = ""
         self.enter_pressed = False
         terminal.draw_text += "An error has occurred"

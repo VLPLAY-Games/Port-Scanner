@@ -37,7 +37,7 @@ class Port:
             logging.error("Error while scan ports: " + str(e))
 
 
-    def scan_all_ports(self, pr, colors, app, ip, terminal):
+    def scan_all_ports(self, pr, colors, app, ip, terminal, task):
         try:
             logging.info("Started task 'main ports'")
             pr.begin_drawing()
@@ -56,4 +56,13 @@ class Port:
                     terminal.draw_text += 'All ports are closed in ' + ip_l
         except Exception as e:
             app.exception("Error while perfoming task 'all info': ", str(e))
-        app.task = ""
+        task.task = ""
+
+    def check_port_num(self, port):
+        if port > 65535:
+            logging.warning("Port is too big")
+            return "Port is too big"
+        elif port < 1:
+            logging.warning("Port cannot be smaller than 1")
+            return "Port cannot be smaller than 1"
+        return "OK"

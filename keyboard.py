@@ -29,11 +29,11 @@ class Keyboard:
         """ Удалить 1 смивол с конца"""
         self.keys = self.keys[:-1]
 
-    def check_key(self, app, pr):
+    def check_key(self, app, pr, terminal):
         """ Добавление текста с клавиатуры """
         # Получение нажатия всех кнопок с клавиатуры
         while value := pr.get_key_pressed():
-            if app.terminal_active:
+            if terminal.terminal_active:
                 if pr.is_key_pressed(257):
                     self.enter_pressed = True
                 elif pr.is_key_pressed(259):

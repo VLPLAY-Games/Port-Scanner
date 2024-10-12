@@ -6,6 +6,7 @@ class Terminal:
         """ Инициализация """
         self.page = 0
         self.draw_text = ""
+        self.terminal_active = False
         logging.info("Terminal class initialized")
     
     def __del__(self):
@@ -27,6 +28,25 @@ class Terminal:
 
     def draw_terminal_text(self, app, keys, pr, colors):
         """ Отрисовка терминала """
-        pr.draw_text(self.draw_text + str(''.join(keys)) if app.terminal_active \
+        self.draw_text = self.check_text()
+        pr.draw_text(self.draw_text + str(''.join(keys)) if self.terminal_active \
                     else self.draw_text, \
                     550, 125, 10, colors.BLACK)
+        
+    def check_text(self):
+        """ Проверка переноса строки и 2 страницы"""
+        temp = ""
+        temp_count = 0
+        for string in self.draw_text:
+            for letter in string:
+                if letter != "\n":
+                    temp_count += 1
+                    if temp_count > 80:
+                        temp += "\n"
+                        temp_count = 0
+                else:
+                    temp_count = 0
+                temp += letter
+        return temp
+            
+            
