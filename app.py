@@ -1,6 +1,7 @@
-from config import width, height, fps, app_name, version
-from keyboard import Keyboard
+""" Файл для работы с приложением"""
+
 import logging
+from config import width, height, fps, app_name, version
 
 class App():
     """ Основной класс приложения"""
@@ -13,6 +14,7 @@ class App():
         self.app_name = app_name
         self.first_port = 0
         self.end_port = 0
+        self.enter_pressed = False
         logging.info("App class initialized")
 
     def __del__(self):

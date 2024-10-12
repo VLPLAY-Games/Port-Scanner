@@ -1,5 +1,7 @@
-import netifaces
+""" Файл для работы с IP"""
+
 import logging
+import netifaces
 from config import version
 
 class Ip:

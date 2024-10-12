@@ -1,3 +1,5 @@
+""" Файл для работы с клавиатурой"""
+
 import logging
 
 
@@ -29,7 +31,7 @@ class Keyboard:
         """ Удалить 1 смивол с конца"""
         self.keys = self.keys[:-1]
 
-    def check_key(self, app, pr, terminal):
+    def check_key(self, pr, terminal):
         """ Добавление текста с клавиатуры """
         # Получение нажатия всех кнопок с клавиатуры
         while value := pr.get_key_pressed():

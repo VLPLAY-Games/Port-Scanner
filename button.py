@@ -1,5 +1,6 @@
-import logging
+""" Файл для работы с кнопками"""
 
+import logging
 
 class Button:
     """ Класс для работы с кнопками"""
@@ -11,14 +12,14 @@ class Button:
         """ Деинициализация """
         logging.info("Button class deinitialized")
 
-    def but_all_info(self, app, pr, task):
+    def but_all_info(self, pr, task):
         """ Отрисовка и отработка кнопки вся информация """
         if pr.gui_button(
                 pr.Rectangle(350, 100, 100, 50),
                 'All info'):   
             task.task = 'all_info'
 
-    def but_custom_task(self, app, pr, terminal, task):
+    def but_custom_task(self, pr, terminal, task):
         """ Отрисовка и отработка кнопки кастом """
         if pr.gui_button(
                 pr.Rectangle(50, 200, 100, 50),
@@ -27,14 +28,13 @@ class Button:
             terminal.terminal_active = True
             task.task = "ip_ports"
 
-    def but_main_ports(self, app, ip, port, pr, colors, task):
+    def but_main_ports(self, pr, task):
         """ Отрисовка и обработка кнопки проверить основные порты """
         # Получение открытых портов собственного IP
         if pr.gui_button(
                     pr.Rectangle(200, 100, 100, 50),
                     'Check all ports'):
             task.task = "all_ports"
-            
 
     def but_ip(self, ip, pr, terminal):
         """ Отрисовка и обработка кнопки получения всех ip """
@@ -57,11 +57,11 @@ class Button:
                     '<<'):
             terminal.term_prev()
 
-    def check_all_but(self, app, ip, port, pr, colors, terminal, task):
+    def check_all_but(self, ip, pr, terminal, task):
         """ Проверка всех кнопок """
-        self.but_all_info(app, pr, task)
-        self.but_custom_task(app, pr, terminal, task)
+        self.but_all_info(pr, task)
+        self.but_custom_task(pr, terminal, task)
         self.but_ip(ip, pr, terminal)
-        self.but_main_ports(app, ip, port, pr, colors, task)
+        self.but_main_ports(pr, task)
         self.but_next_console(pr, terminal)
         self.but_prev_console(pr, terminal)

@@ -1,3 +1,5 @@
+""" Файл для работы с портами"""
+
 import logging
 import socket
 from concurrent.futures import ThreadPoolExecutor
@@ -38,6 +40,7 @@ class Port:
 
 
     def scan_all_ports(self, pr, colors, app, ip, terminal, task):
+        """ Сканирование всех портов на всех IP"""
         try:
             logging.info("Started task 'main ports'")
             pr.begin_drawing()
@@ -59,10 +62,11 @@ class Port:
         task.task = ""
 
     def check_port_num(self, port):
+        """ Проверка на большое и маленькое число порта"""
         if port > 65535:
             logging.warning("Port is too big")
             return "Port is too big"
-        elif port < 1:
+        if port < 1:
             logging.warning("Port cannot be smaller than 1")
             return "Port cannot be smaller than 1"
         return "OK"

@@ -1,3 +1,5 @@
+""" Файл для работы с задачами"""
+
 import logging
 import subprocess
 import os
@@ -34,7 +36,8 @@ class Task:
                         terminal.draw_text += str(port.first_port) + "\nEnter end port: \n"
                         self.task = "ip_end"
                     else:
-                        terminal.draw_text += str(port.first_port) + "\n" + self.status + ". Try again"
+                        terminal.draw_text += str(port.first_port) + \
+                            "\n" + self.status + ". Try again"
                         self.task = ""
                         terminal.terminal_active = False
                 elif self.task == "ip_end":
@@ -46,7 +49,8 @@ class Task:
                     if self.status == "OK":
                         self.task = "ip_ports_start"
                     else:
-                        terminal.draw_text += str(port.end_port) + "\n" + self.status + ". Try again"
+                        terminal.draw_text += str(port.end_port) + \
+                            "\n" + self.status + ". Try again"
                         self.task = ""
                         terminal.terminal_active = False
 
