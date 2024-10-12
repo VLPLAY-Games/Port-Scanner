@@ -11,6 +11,17 @@ import netifaces
 from raylib import colors
 from config import width, height, fps, app_name, version
 
+class Terminal:
+    """ Класс для работы с Терминалом """
+    def __init__(self):
+        """ Инициализация """
+        self.page = 0
+        logging.info("Terminal class initialized")
+    
+    def __del__(self):
+        """ Деинициализация """
+        logging.info("Terminal class deinitialized")
+
 class Ip:
     """ Класс для работы с IP """
     def __init__(self):
@@ -330,12 +341,28 @@ class Button:
                     'Check your IP'):
             app.draw_text = ip.get_all_ip()
 
+    def but_next_console(self):
+        """ Отрисовка и обработка кнопки следующей страницы терминала """
+        if pr.gui_button(
+                    pr.Rectangle(950, 550, 25, 25),
+                    '>>'):
+            pass
+
+    def but_prev_console(self):
+        """ Отрисовка и обработка кнопки предыдущей страницы терминала """
+        if pr.gui_button(
+                    pr.Rectangle(900, 550, 25, 25),
+                    '<<'):
+            pass
+
     def check_all_but(self, app, ip, port):
         """ Проверка всех кнопок """
         self.but_all_info(app)
         self.but_custom_task(app)
         self.but_ip(app, ip)
         self.but_main_ports(app, ip, port)
+        self.but_next_console()
+        self.but_prev_console()
 
 def main():
     """ Основная функция """
@@ -351,6 +378,7 @@ def main():
     port = Port()
     keyboard = Keyboard()
     button = Button()
+    terminal = Terminal()
     try:
         app.init_app()
         while not pr.window_should_close():
@@ -366,7 +394,7 @@ def main():
         pr.close_window()
     except Exception as e:
         app.error_init(e)
-    del app, ip, task, port, keyboard, button
+    del app, ip, task, port, keyboard, button, terminal
     logging.info("App is closed")
 
 if __name__ == '__main__':
