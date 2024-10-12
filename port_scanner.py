@@ -32,8 +32,8 @@ def main():
         app.init_app(pr)
         while not pr.window_should_close():
             pr.begin_drawing()
-            app.draw_main(pr, colors, terminal)
-            button.check_all_but(ip, pr, terminal, task)
+            app.draw_main(pr, colors, terminal, task)
+            button.check_all_but(ip, pr, terminal, task, app)
             keyboard.check_key(pr, terminal)
             task.check_task(app, ip, port, keyboard, pr, colors, terminal, task)
             terminal.draw_terminal_text(keyboard.get_keys(), pr, colors)

@@ -1,0 +1,48 @@
+2024-10-12 15:40:39,217 - INFO -              Port scanner                 
+2024-10-12 15:40:39,217 - INFO - App started
+2024-10-12 15:40:39,218 - INFO - App class initialized
+2024-10-12 15:40:39,218 - INFO - IP class initialized
+2024-10-12 15:40:39,218 - INFO - Task class initialized
+2024-10-12 15:40:39,218 - INFO - Port class initialized
+2024-10-12 15:40:39,218 - INFO - Keyboard class initialized
+2024-10-12 15:40:39,218 - INFO - Button class initialized
+2024-10-12 15:40:39,218 - INFO - Terminal class initialized
+2024-10-12 15:40:39,352 - INFO - App initialized
+2024-10-12 15:40:40,619 - INFO - Started task 'get all ip'
+2024-10-12 15:40:40,620 - INFO - Started task 'get IP v4'
+2024-10-12 15:40:40,621 - INFO - Finished task 'get IP v4'
+2024-10-12 15:40:40,621 - INFO - Started task 'get IP v6'
+2024-10-12 15:40:40,622 - ERROR - 10 v0.6
+2024-10-12 15:40:40,623 - INFO - Finished task 'get IP v6'
+2024-10-12 15:40:40,623 - INFO - Finished task 'get all ip'
+2024-10-12 15:40:46,269 - INFO - Started custom task
+2024-10-12 15:40:46,302 - INFO - Started task 'scan ports'
+2024-10-12 15:40:47,335 - INFO - Finished task 'scan ports'
+2024-10-12 15:40:48,890 - INFO - Started task 'all info'
+2024-10-12 15:40:48,923 - INFO - Started task 'get ip config'
+2024-10-12 15:40:48,927 - INFO - Finished task 'get ip config'
+2024-10-12 15:40:48,940 - INFO - Started task 'get IP v4'
+2024-10-12 15:40:48,941 - INFO - Finished task 'get IP v4'
+2024-10-12 15:40:48,957 - INFO - Started task 'scan ports'
+2024-10-12 15:40:54,069 - INFO - Finished task 'scan ports'
+2024-10-12 15:40:54,127 - INFO - Started task 'scan ports'
+2024-10-12 15:40:59,335 - INFO - Finished task 'scan ports'
+2024-10-12 15:40:59,397 - INFO - Started task 'scan ports'
+2024-10-12 15:41:04,284 - INFO - Finished task 'scan ports'
+2024-10-12 15:41:06,873 - INFO - Started task 'main ports'
+2024-10-12 15:41:06,889 - INFO - Started task 'get IP v4'
+2024-10-12 15:41:06,891 - INFO - Finished task 'get IP v4'
+2024-10-12 15:41:06,906 - INFO - Started task 'scan ports'
+2024-10-12 15:41:11,837 - INFO - Finished task 'scan ports'
+2024-10-12 15:41:11,889 - INFO - Started task 'scan ports'
+2024-10-12 15:41:17,500 - INFO - Finished task 'scan ports'
+2024-10-12 15:41:17,543 - INFO - Started task 'scan ports'
+2024-10-12 15:41:22,825 - INFO - Finished task 'scan ports'
+2024-10-12 15:41:25,272 - INFO - App class deinitialized
+2024-10-12 15:41:25,272 - INFO - IP class deinitialized
+2024-10-12 15:41:25,272 - INFO - Task class deinitialized
+2024-10-12 15:41:25,275 - INFO - Port class deinitialized
+2024-10-12 15:41:25,276 - INFO - Keyboard class deinitialized
+2024-10-12 15:41:25,276 - INFO - Button class deinitialized
+2024-10-12 15:41:25,276 - INFO - Terminal class deinitialized
+2024-10-12 15:41:25,276 - INFO - App is closed

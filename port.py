@@ -27,6 +27,7 @@ class Port:
     def scan_ports(self, host, start_port, end_port):
         """Сканирует порты в заданном диапазоне."""
         try:
+            logging.info("Started task 'scan ports'")
             with ThreadPoolExecutor(max_workers=100) as executor:
                 futures = {executor.submit(self.scan_port, host, port):
                         port for port in range(start_port, end_port + 1)}
@@ -34,6 +35,7 @@ class Port:
                     port, is_open = future.result()
                     if is_open:
                         self.open_ports.append(port)
+            logging.info("Finished task 'scan ports'")
             return self.open_ports
         except Exception as e:
             logging.error("Error while scan ports: " + str(e))
@@ -43,22 +45,24 @@ class Port:
         """ Сканирование всех портов на всех IP"""
         try:
             logging.info("Started task 'main ports'")
-            pr.begin_drawing()
-            pr.draw_text("Checking open ports...", 550, 125, 10, colors.BLACK)
-            pr.clear_background(colors.WHITE)
-            pr.end_drawing()
-            pr.begin_drawing()
+            task.status = "WORK"
+            app.fast_draw_text("Checking open ports...", pr, colors, terminal, task)
             terminal.draw_text = "Checking open ports... \n \n"
             for ip_l in ip.get_ip4_addresses():
+                terminal.draw_text += "Open ports in " + ip_l + ":\n"
+                app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task)
                 self.open_ports = self.scan_ports(ip_l, 1, 49151)
                 if len(self.open_ports) != 0:
-                    terminal.draw_text += "Open ports in " + ip_l + \
-                        ":" + "\n" + str(self.open_ports)[1:-1] + "\n \n"
+                    terminal.draw_text += str(self.open_ports)[1:-1] + "\n \n"
+                    app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task)
                     self.open_ports = []
                 else:
                     terminal.draw_text += 'All ports are closed in ' + ip_l
+                    app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task)
+            task.status = "OK"
         except Exception as e:
-            app.exception("Error while perfoming task 'all info': ", str(e))
+            task.status = "ERR"
+            app.exception("Error while perfoming task 'all info': ", str(e), terminal, task)
         task.task = ""
 
     def check_port_num(self, port):

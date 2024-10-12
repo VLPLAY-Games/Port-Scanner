@@ -10,15 +10,25 @@ class Terminal:
         self.draw_text = ""
         self.terminal_active = False
         self.pages = 0
+        self.temp = ""
         logging.info("Terminal class initialized")
 
     def __del__(self):
         """ Деинициализация """
         logging.info("Terminal class deinitialized")
 
-    def draw_terminal(self, pr, colors):
+    def draw_terminal(self, pr, colors, task):
         """ Отрисовка дизайна терминала """
-        pr.draw_text("Result", 550,50,25,colors.BLACK)
+        self.temp = "Result "
+        if task.status == "WORK":
+            self.temp += "(Working)"
+        elif task.status == "OK":
+            self.temp += "(Complete)"
+        elif task.status == "ERR":
+            self.temp += "(Error)"
+        elif task.status == "WAIT":
+            self.temp += "(Wait input)"
+        pr.draw_text(self.temp, 550,50,25,colors.BLACK)
         pr.draw_rectangle_lines(525, 100, 450, 450, colors.BLACK)
 
     def term_prev(self):
