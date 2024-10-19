@@ -26,8 +26,17 @@ class Task:
                 if self.task == "ip_ports":
                     ip.task_ip = ''.join(keyboard.get_keys())
                     keyboard.keys_erase()
-                    terminal.draw_text += ip.task_ip + "\nEnter first port: \n"
-                    self.task = "ip_first"
+                    self.check = ip.check_ip(ip.task_ip)
+
+                    if self.check == "OK":
+                        terminal.draw_text += ip.task_ip + "\nEnter first port: \n"
+                        self.task = "ip_first"
+                    else:
+                        terminal.draw_text += str(ip.task_ip) + \
+                            "\n" + self.check + ". Try again"
+                        self.task = ""
+                        terminal.terminal_active = False
+
                 elif self.task == "ip_first":
                     port.first_port = int(''.join(keyboard.get_keys()))
                     keyboard.keys_erase()
@@ -38,7 +47,7 @@ class Task:
                         self.task = "ip_end"
                     else:
                         terminal.draw_text += str(port.first_port) + \
-                            "\n" + self.status + ". Try again"
+                            "\n" + self.check + ". Try again"
                         self.task = ""
                         terminal.terminal_active = False
                 elif self.task == "ip_end":
@@ -51,7 +60,7 @@ class Task:
                         self.task = "ip_ports_start"
                     else:
                         terminal.draw_text += str(port.end_port) + \
-                            "\n" + self.status + ". Try again"
+                            "\n" + self.check + ". Try again"
                         self.task = ""
                         terminal.terminal_active = False
 
@@ -101,7 +110,11 @@ class Task:
                 terminal.draw_text += str(port.end_port) + '\nStarting task... \nOpen ports in ' + ip.task_ip + ":\n"
                 app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task)
                 open_ports = port.scan_ports(ip.task_ip, port.first_port, port.end_port)
-                terminal.draw_text += str(open_ports)[1:-1] + "\n"
+                terminal.draw_text += "\n"
+                if len(open_ports) != 0:
+                    terminal.draw_text += str(open_ports)[1:-1] + "\n"
+                else:
+                    terminal.draw_text += "All ports are closed in: " + ip.task_ip +"\n"
                 task.status = "OK"
             except Exception as e:
                 task.status = "ERR"

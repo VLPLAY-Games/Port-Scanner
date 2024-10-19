@@ -70,7 +70,7 @@ class Port:
         if port > 65535:
             logging.warning("Port is too big")
             return "Port is too big"
-        if port < 1:
+        elif port < 1:
             logging.warning("Port cannot be smaller than 1")
             return "Port cannot be smaller than 1"
         return "OK"

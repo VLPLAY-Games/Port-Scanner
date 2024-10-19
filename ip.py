@@ -3,6 +3,7 @@
 import logging
 import netifaces
 from config import version
+from ipaddress import ip_address
 
 class Ip:
     """ Класс для работы с IP """
@@ -59,4 +60,14 @@ class Ip:
         except Exception as e:
             self.status = "ERR"
             app.exception("Error while perfoming task 'all info': ", str(e), terminal, task)
+
+    def check_ip(self, ip):
+        """ Проверка правильности написания ip адреса"""
+        try:
+            ip_address(ip)
+        except Exception as e:
+            logging.warning("IP Adress is not valid")
+            return "IP Adress is not valid"
+        return "OK"
+
 
