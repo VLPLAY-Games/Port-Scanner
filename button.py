@@ -60,7 +60,21 @@ class Button:
                     '<<'):
             terminal.term_prev()
 
-    def check_all_but(self, ip, pr, terminal, task, app):
+    def but_lang_rus(self, pr, language):
+        """ Отрисовка и обработка кнопки смены языка русский """
+        if pr.gui_button(
+                    pr.Rectangle(400, 50, 50, 25),
+                    'Russian'):
+            language.change_language(pr, "RU")
+
+    def but_lang_eng(self, pr, language):
+        """ Отрисовка и обработка кнопки смены языка английский """
+        if pr.gui_button(
+                    pr.Rectangle(340, 50, 50, 25),
+                    'English'):
+            language.change_language(pr, "EN")
+    
+    def check_all_but(self, ip, pr, terminal, task, app, language):
         """ Проверка всех кнопок """
         self.but_all_info(pr, task)
         self.but_custom_task(pr, terminal, task)
@@ -68,3 +82,5 @@ class Button:
         self.but_main_ports(pr, task)
         self.but_next_console(pr, terminal)
         self.but_prev_console(pr, terminal)
+        self.but_lang_eng(pr,language)
+        self.but_lang_rus(pr, language)
