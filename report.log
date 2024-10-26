@@ -1,0 +1,20 @@
+2024-10-26 13:32:14,456 - INFO -              Port scanner                 
+2024-10-26 13:32:14,457 - INFO - App started
+2024-10-26 13:32:14,457 - INFO - App class initialized
+2024-10-26 13:32:14,457 - INFO - IP class initialized
+2024-10-26 13:32:14,457 - INFO - Task class initialized
+2024-10-26 13:32:14,457 - INFO - Port class initialized
+2024-10-26 13:32:14,457 - INFO - Keyboard class initialized
+2024-10-26 13:32:14,457 - INFO - Button class initialized
+2024-10-26 13:32:14,457 - INFO - Terminal class initialized
+2024-10-26 13:32:14,458 - INFO - Language class initialized
+2024-10-26 13:32:14,579 - INFO - App initialized
+2024-10-26 13:32:33,864 - INFO - App class deinitialized
+2024-10-26 13:32:33,864 - INFO - IP class deinitialized
+2024-10-26 13:32:33,865 - INFO - Task class deinitialized
+2024-10-26 13:32:33,865 - INFO - Port class deinitialized
+2024-10-26 13:32:33,865 - INFO - Keyboard class deinitialized
+2024-10-26 13:32:33,865 - INFO - Button class deinitialized
+2024-10-26 13:32:33,865 - INFO - Terminal class deinitialized
+2024-10-26 13:32:33,865 - INFO - Language class deinitialized
+2024-10-26 13:32:33,865 - INFO - App is closed

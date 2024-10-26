@@ -29,8 +29,8 @@ class Button:
             task.task = "ip_ports"
             task.status = "WAIT"
 
-    def but_main_ports(self, pr, task):
-        """ Отрисовка и обработка кнопки проверить основные порты """
+    def but_all_ports(self, pr, task):
+        """ Отрисовка и обработка кнопки проверить все порты """
         # Получение открытых портов собственного IP
         if pr.gui_button(
                     pr.Rectangle(200, 100, 100, 50),
@@ -79,7 +79,7 @@ class Button:
         self.but_all_info(pr, task)
         self.but_custom_task(pr, terminal, task)
         self.but_ip(ip, pr, terminal, app, task)
-        self.but_main_ports(pr, task)
+        self.but_all_ports(pr, task)
         self.but_next_console(pr, terminal)
         self.but_prev_console(pr, terminal)
         self.but_lang_eng(pr,language)

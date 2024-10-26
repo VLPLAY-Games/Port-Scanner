@@ -29,22 +29,22 @@ def main():
     keyboard = Keyboard()
     button = Button()
     terminal = Terminal()
-    language = Language()
+    language = Language(pr)
     try:
         app.init_app(pr)
         while not pr.window_should_close():
             pr.begin_drawing()
-            app.draw_main(pr, colors, terminal, task)
+            app.draw_main(pr, colors, terminal, task, language)
             button.check_all_but(ip, pr, terminal, task, app, language)
             keyboard.check_key(pr, terminal)
-            task.check_task(app, ip, port, keyboard, pr, colors, terminal, task)
-            terminal.draw_terminal_text(keyboard.get_keys(), pr, colors)
+            task.check_task(app, ip, port, keyboard, pr, colors, terminal, task, language)
+            terminal.draw_terminal_text(keyboard.get_keys(), pr, colors, language)
             pr.clear_background(colors.WHITE)
             pr.end_drawing()
 
         pr.close_window()
     except Exception as e:
-        app.error_init(e, pr, colors)
+        app.error_init(e, pr, colors, language)
     del app, ip, task, port, keyboard, button, terminal, language
     logging.info("App is closed")
 

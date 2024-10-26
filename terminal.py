@@ -17,7 +17,7 @@ class Terminal:
         """ Деинициализация """
         logging.info("Terminal class deinitialized")
 
-    def draw_terminal(self, pr, colors, task):
+    def draw_terminal(self, pr, colors, task, language):
         """ Отрисовка дизайна терминала """
         self.temp = "Result "
         if task.status == "WORK":
@@ -28,7 +28,7 @@ class Terminal:
             self.temp += "(Error)"
         elif task.status == "WAIT":
             self.temp += "(Wait input)"
-        pr.draw_text(self.temp, 550,50,25,colors.BLACK)
+        pr.draw_text_ex(language.font, self.temp, pr.Vector2(550,50), 25, 1, colors.BLACK)
         pr.draw_rectangle_lines(525, 100, 450, 450, colors.BLACK)
 
     def term_prev(self):
@@ -39,12 +39,12 @@ class Terminal:
         """ Следующая страница """
         pass
 
-    def draw_terminal_text(self, keys, pr, colors):
+    def draw_terminal_text(self, keys, pr, colors, language):
         """ Отрисовка терминала """
         self.draw_text = self.check_text()
-        pr.draw_text(self.draw_text + str(''.join(keys)) if self.terminal_active \
+        pr.draw_text_ex(language.font, self.draw_text + str(''.join(keys)) if self.terminal_active \
                     else self.draw_text, \
-                    550, 125, 10, colors.BLACK)
+                    pr.Vector2(550, 125), 10, 1, colors.BLACK)
 
     def check_text(self):
         """ Проверка переноса строки и 2 страницы"""

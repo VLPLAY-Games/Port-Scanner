@@ -41,28 +41,28 @@ class Port:
             logging.error("Error while scan ports: " + str(e))
 
 
-    def scan_all_ports(self, pr, colors, app, ip, terminal, task):
+    def scan_all_ports(self, pr, colors, app, ip, terminal, task, language):
         """ Сканирование всех портов на всех IP"""
         try:
-            logging.info("Started task 'main ports'")
+            logging.info("Started task 'All ports'")
             task.status = "WORK"
-            app.fast_draw_text("Checking open ports...", pr, colors, terminal, task)
+            app.fast_draw_text("Checking open ports...", pr, colors, terminal, task, language)
             terminal.draw_text = "Checking open ports... \n \n"
             for ip_l in ip.get_ip4_addresses():
                 terminal.draw_text += "Open ports in " + ip_l + ":\n"
-                app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task)
+                app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language)
                 self.open_ports = self.scan_ports(ip_l, 1, 49151)
                 if len(self.open_ports) != 0:
                     terminal.draw_text += str(self.open_ports)[1:-1] + "\n \n"
-                    app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task)
+                    app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language)
                     self.open_ports = []
                 else:
                     terminal.draw_text += 'All ports are closed in ' + ip_l
-                    app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task)
+                    app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language)
             task.status = "OK"
         except Exception as e:
             task.status = "ERR"
-            app.exception("Error while perfoming task 'all info': ", str(e), terminal, task)
+            app.exception("Error while perfoming task 'All ports': ", str(e), terminal, task)
         task.task = ""
 
     def check_port_num(self, port):

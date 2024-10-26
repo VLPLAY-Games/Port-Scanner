@@ -31,17 +31,17 @@ class App():
         except Exception as e:
             logging.critical("Error while initializing App window: " + str(e))
 
-    def draw_main(self, pr, colors, terminal, task):
+    def draw_main(self, pr, colors, terminal, task, language):
         """ Отрисовка дизайна приложения """
         pr.draw_line(500,25,500,575,colors.BLACK)
         pr.draw_line(25,575,975,575,colors.BLACK)
         pr.draw_line(25,25,975,25,colors.BLACK)
-        pr.draw_text("Select option", 50,50,25,colors.BLACK)
-        pr.draw_text("Enter IP and ports", 50, 175, 15, colors.BLACK)
-        terminal.draw_terminal(pr, colors, task)
-        pr.draw_text(app_name + " by VL_PLAY Games " + version, 725, 585, 12, colors.BLACK)
+        pr.draw_text_ex(language.font, "Select option", pr.Vector2(50,50), 25, 1,colors.BLACK)
+        pr.draw_text_ex(language.font, "Enter IP and ports", pr.Vector2(50, 175), 15, 1, colors.BLACK)
+        terminal.draw_terminal(pr, colors, task, language)
+        pr.draw_text_ex(language.font, app_name + " by VL_PLAY Games " + version, pr.Vector2(725, 585), 12, 1, colors.BLACK)
 
-    def error_init(self, e, pr, colors):
+    def error_init(self, e, pr, colors, language):
         """ Отрисовка ошибки """
         logging.critical(str(e) + version)
         pr.close_window()
@@ -52,8 +52,8 @@ class App():
         while not pr.window_should_close():
             pr.begin_drawing()
             pr.clear_background(colors.WHITE)
-            pr.draw_text("Critical Error", 75, 75, 25, colors.BLACK)
-            pr.draw_text("Check report.log", 25, 75, 25, colors.BLACK)
+            pr.draw_text_ex(language.font, "Critical Error", pr.Vector2(75, 75), 25, 1, colors.BLACK)
+            pr.draw_text_ex(language.font, "Check report.log", pr.Vector2(75, 125), 15, 1, colors.BLACK)
             pr.end_drawing()
 
     def exception(self, text, e, terminal, task):
@@ -65,11 +65,11 @@ class App():
         self.enter_pressed = False
         terminal.draw_text += "An error has occurred"
 
-    def fast_draw_text(self, text, pr, colors, terminal, task):
+    def fast_draw_text(self, text, pr, colors, terminal, task, language):
         """ Отрисовать перед выполнением задачи текст"""
-        self.draw_main(pr, colors, terminal,task)
+        self.draw_main(pr, colors, terminal, task, language)
         pr.begin_drawing()
-        pr.draw_text(text, 550, 125, 10, colors.BLACK)
+        pr.draw_text_ex(language.font, text, pr.Vector2(550, 125), 10, 1, colors.BLACK)
         pr.clear_background(colors.WHITE)
         pr.end_drawing()
         pr.begin_drawing()

@@ -1,8 +1,10 @@
 """ Файл для работы с языком"""
 import logging
 class Language:
-    def __init__(self):
+    def __init__(self, pr):
         """ Инициализация """
+        self.font = pr.load_font_ex('fonts/english.ttf', 35, None, 0)
+        self.selected_lang = "EN"
         logging.info("Language class initialized")
 
     def __del__(self):
@@ -13,10 +15,10 @@ class Language:
         """ Функция смены языка"""
         try:
             if lang_name == "RU":
-                pass
-                # pr.load_font_from_memory()
+                self.selected_lang = "RU"
+                self.font = pr.load_font_ex('fonts/cyrillic.ttf', 35, None, 0)
             elif lang_name == "EN":
-                pass
-                # pr.load_font_from_memory()
+                self.selected_lang = "EN"
+                self.font = pr.load_font_ex('fonts/english.ttf', 35, None, 0)
         except Exception as e:
             logging.error("Error while changing language " + str(e))
