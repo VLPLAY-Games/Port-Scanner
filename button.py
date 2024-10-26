@@ -73,7 +73,7 @@ class Button:
                     pr.Rectangle(340, 50, 50, 25),
                     'English'):
             language.change_language(pr, "EN")
-    
+
     def check_all_but(self, ip, pr, terminal, task, app, language):
         """ Проверка всех кнопок """
         self.but_all_info(pr, task)

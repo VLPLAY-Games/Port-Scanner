@@ -69,5 +69,3 @@ class Ip:
             logging.warning("IP Adress is not valid")
             return "IP Adress is not valid"
         return "OK"
-
-

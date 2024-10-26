@@ -73,7 +73,8 @@ class Task:
             try:
                 logging.info("Started task 'all info'")
                 self.status = "WORK"
-                app.fast_draw_text("Checking info this may take a while", pr, colors, terminal, task, language)
+                app.fast_draw_text("Checking info this may take a while", \
+                                   pr, colors, terminal, task, language)
                 terminal.draw_text = "All information: \nNetwork devicess info \n"
                 app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language)
                 logging.info("Started task 'get ip config'")
@@ -107,7 +108,8 @@ class Task:
                 logging.info("Started custom task")
                 task.status = "WORK"
                 app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language)
-                terminal.draw_text += str(port.end_port) + '\nStarting task... \nOpen ports in ' + ip.task_ip + ":\n"
+                terminal.draw_text += str(port.end_port) + \
+                    '\nStarting task... \nOpen ports in ' + ip.task_ip + ":\n"
                 app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language)
                 open_ports = port.scan_ports(ip.task_ip, port.first_port, port.end_port)
                 terminal.draw_text += "\n"

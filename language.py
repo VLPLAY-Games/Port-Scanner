@@ -1,6 +1,7 @@
 """ Файл для работы с языком"""
 import logging
 class Language:
+    """ Класс для работы с языком"""
     def __init__(self, pr):
         """ Инициализация """
         self.font = pr.load_font_ex('fonts/english.ttf', 35, None, 0)
