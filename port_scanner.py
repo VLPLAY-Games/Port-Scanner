@@ -30,6 +30,7 @@ def main():
     button = Button()
     terminal = Terminal()
     language = Language(pr)
+    pr.set_trace_log_level(4)
     try:
         app.init_app(pr)
         while not pr.window_should_close():
