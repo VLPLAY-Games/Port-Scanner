@@ -5,5 +5,4 @@ __pycache__/
 other/
 report.log
 build/
-dist/
 port_scanner.spec
