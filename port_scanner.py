@@ -13,6 +13,7 @@ from task import Task
 from button import Button
 from terminal import Terminal
 from language import Language
+from info import Information
 
 def main():
     """ Основная функция """
@@ -29,6 +30,7 @@ def main():
     keyboard = Keyboard()
     button = Button()
     terminal = Terminal()
+    information = Information()
     language = Language(pr)
     pr.set_trace_log_level(4)
     try:
@@ -36,7 +38,7 @@ def main():
         while not pr.window_should_close():
             pr.begin_drawing()
             app.draw_main(pr, colors, terminal, task, language)
-            button.check_all_but(ip, pr, terminal, task, app, language)
+            button.check_all_but(ip, pr, terminal, task, app, language, information)
             keyboard.check_key(pr, terminal)
             task.check_task(app, ip, port, keyboard, pr, colors, terminal, task, language)
             terminal.draw_terminal_text(keyboard.get_keys(), pr, colors, language)
@@ -46,7 +48,7 @@ def main():
         pr.close_window()
     except Exception as e:
         app.error_init(e, pr, colors, language)
-    del app, ip, task, port, keyboard, button, terminal, language
+    del app, ip, task, port, keyboard, button, terminal, language, information
     logging.info("App is closed")
 
 if __name__ == '__main__':

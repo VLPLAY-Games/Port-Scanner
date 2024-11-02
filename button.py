@@ -1,6 +1,7 @@
 """ Файл для работы с кнопками"""
 
 import logging
+from raylib import colors
 
 class Button:
     """ Класс для работы с кнопками"""
@@ -12,14 +13,16 @@ class Button:
         """ Деинициализация """
         logging.info("Button class deinitialized")
 
-    def but_all_info(self, pr, task):
+    def but_all_info(self, pr, task, language):
         """ Отрисовка и отработка кнопки вся информация """
         if pr.gui_button(
-                pr.Rectangle(350, 100, 100, 50),
-                'All info'):   
+            pr.Rectangle(350, 100, 100, 50),
+            'All info'):   
             task.task = 'all_info'
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(350, 100, 100, 50), colors.BLUE, colors.BLUE, colors.RED, colors.RED)
+        pr.draw_text_ex(language.font, 'All info', pr.Vector2(370,115), 18, 1, colors.WHITE)
 
-    def but_custom_task(self, pr, terminal, task):
+    def but_custom_task(self, pr, terminal, task, language):
         """ Отрисовка и отработка кнопки кастом """
         if pr.gui_button(
                 pr.Rectangle(50, 200, 100, 50),
@@ -28,16 +31,20 @@ class Button:
             terminal.terminal_active = True
             task.task = "ip_ports"
             task.status = "WAIT"
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(50, 200, 100, 50), colors.RED, colors.RED, colors.BLUE, colors.BLUE)
+        pr.draw_text_ex(language.font, 'Start', pr.Vector2(70,215), 18, 1, colors.WHITE)
 
-    def but_all_ports(self, pr, task):
+    def but_all_ports(self, pr, task, language):
         """ Отрисовка и обработка кнопки проверить все порты """
         # Получение открытых портов собственного IP
         if pr.gui_button(
                     pr.Rectangle(200, 100, 100, 50),
                     'Check all ports'):
             task.task = "all_ports"
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(200, 100, 100, 50), colors.RED, colors.RED, colors.BLUE, colors.BLUE)
+        pr.draw_text_ex(language.font, 'Check all ports', pr.Vector2(205,115), 12, 1, colors.WHITE)
 
-    def but_ip(self, ip, pr, terminal, app, task):
+    def but_ip(self, ip, pr, terminal, app, task, language):
         """ Отрисовка и обработка кнопки получения всех ip """
         if pr.gui_button(
                     pr.Rectangle(50, 100, 100, 50),
@@ -45,6 +52,8 @@ class Button:
             terminal.draw_text = ip.get_all_ip(app, terminal, task)
             task.status = "OK"
             logging.info("Finished task 'get all ip'")
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(50, 100, 100, 50), colors.BLUE, colors.BLUE, colors.RED, colors.RED)
+        pr.draw_text_ex(language.font, 'Check your IP', pr.Vector2(50,115), 14, 1, colors.WHITE)
 
     def but_next_console(self, pr, terminal):
         """ Отрисовка и обработка кнопки следующей страницы терминала """
@@ -73,14 +82,24 @@ class Button:
                     pr.Rectangle(340, 50, 50, 25),
                     'English'):
             language.change_language(pr, "EN")
+    
+    def but_info(self, pr, information, terminal, language):
+        """ Отрисовка и обработка кнопки смены языка английский """
+        if pr.gui_button(
+                    pr.Rectangle(50, 500, 100, 50),
+                    'Info'):
+            terminal.draw_text = information.all_info_of_task
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(50, 500, 100, 50), colors.PURPLE, colors.PURPLE, colors.BLACK, colors.BLACK)
+        pr.draw_text_ex(language.font, 'Info', pr.Vector2(70,515), 18, 1, colors.WHITE)
 
-    def check_all_but(self, ip, pr, terminal, task, app, language):
+    def check_all_but(self, ip, pr, terminal, task, app, language, information):
         """ Проверка всех кнопок """
-        self.but_all_info(pr, task)
-        self.but_custom_task(pr, terminal, task)
-        self.but_ip(ip, pr, terminal, app, task)
-        self.but_all_ports(pr, task)
+        self.but_all_info(pr, task, language)
+        self.but_custom_task(pr, terminal, task, language)
+        self.but_ip(ip, pr, terminal, app, task, language)
+        self.but_all_ports(pr, task, language)
         self.but_next_console(pr, terminal)
         self.but_prev_console(pr, terminal)
         self.but_lang_eng(pr,language)
         self.but_lang_rus(pr, language)
+        self.but_info(pr, information, terminal, language)
