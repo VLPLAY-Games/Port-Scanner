@@ -55,10 +55,11 @@ class App():
         while not pr.window_should_close():
             pr.begin_drawing()
             pr.clear_background(colors.WHITE)
+            pr.draw_rectangle_gradient_ex(pr.Rectangle(0, 0, 300, 300), colors.DARKGRAY, colors.DARKGRAY, colors.BLACK, colors.BLACK)
             pr.draw_text_ex(language.font, "Critical Error", \
-                            pr.Vector2(75, 75), 25, 1, colors.BLACK)
+                            pr.Vector2(75, 75), 25, 1, colors.WHITE)
             pr.draw_text_ex(language.font, "Check report.log", \
-                            pr.Vector2(90, 125), 15, 1, colors.BLACK)
+                            pr.Vector2(90, 125), 15, 1, colors.WHITE)
             """ Отрисовка и обработка кнопки предыдущей страницы терминала """
             if pr.gui_button(
                     pr.Rectangle(125, 175, 50, 25),

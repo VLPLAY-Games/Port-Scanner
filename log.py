@@ -26,13 +26,16 @@ class Log:
         """ Деинициализация """
         logging.info("Log class deinitialized")
 
-    def get_log(self):
-        if self.is_drawed == False:
+    def get_log(self, terminal = False):
+        if (self.is_drawed == False):
+            self.log = []
+            self.log_lines = []
             with open("report.log") as file:
                 self.log_lines = [line.rstrip() for line in file]
             for line in self.log_lines:
                 self.log.append(line + '\n')
-            self.is_drawed = True
+            if (terminal == False):
+                self.is_drawed = True
         return ''.join(self.log)
 
     def open_log_window(self, pr, language):
@@ -43,11 +46,13 @@ class Log:
         while not pr.window_should_close():
             pr.begin_drawing()
             pr.clear_background(colors.WHITE)
+            pr.draw_rectangle_gradient_ex(pr.Rectangle(0, 0, 750, 850), colors.DARKGRAY, colors.DARKGRAY, colors.BLACK, colors.BLACK)
+            pr.draw_line(25,50,725,50,colors.WHITE)
             pr.draw_text_ex(language.font, "Log:", \
-                            pr.Vector2(5, 5), 25, 1, colors.BLACK)
+                            pr.Vector2(5, 5), 25, 1, colors.WHITE)
             
             pr.draw_text_ex(language.font, self.get_log(), \
-                            pr.Vector2(5, 50), 12, 1, colors.BLACK)
+                            pr.Vector2(5, 75), 12, 1, colors.WHITE)
             
             pr.end_drawing()
         pr.close_window()
