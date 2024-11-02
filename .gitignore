@@ -6,3 +6,4 @@ other/
 report.log
 build/
 port_scanner.spec
+dist/
