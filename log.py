@@ -1,7 +1,6 @@
 """ Файл для работы с логами"""
 import logging
 import os
-import sys
 from raylib import colors
 class Log:
     """ Класс для работы с логами"""
@@ -11,14 +10,14 @@ class Log:
         self.log_lines = []
         self.log = []
         self.is_drawed = False
+        temp = open("report.log", "a")
+        temp.close()
         os.remove("report.log")
         # Логирование приложения
         logging.basicConfig(filename='report.log', \
                     format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
         logging.info("             Port scanner                 ")
         logging.info("App started")
-        self.log_file = open("report.log", 'a+')
-        sys.stdout = self.log_file
         logging.info("Log class initialized")
 
 
