@@ -91,14 +91,14 @@ class Button:
         pr.draw_rectangle_gradient_ex(pr.Rectangle(340, 50, 50, 25), colors.BROWN, colors.BROWN, colors.DARKGRAY, colors.DARKGRAY)
         pr.draw_text_ex(language.font, 'English', pr.Vector2(345,60), 11, 1, colors.WHITE)
     
-    def but_info(self, pr, information, terminal, language):
+    def but_help(self, pr, information, terminal, language):
         """ Отрисовка и обработка кнопки информации о функциях """
         if pr.gui_button(
                     pr.Rectangle(50, 525, 60, 30),
-                    'Info'):
-            terminal.draw_text = information.all_info_of_task
+                    'Help'):
+            terminal.draw_text = information
         pr.draw_rectangle_gradient_ex(pr.Rectangle(50, 525, 60, 30), colors.PURPLE, colors.PURPLE, colors.BLACK, colors.BLACK)
-        pr.draw_text_ex(language.font, 'Info', pr.Vector2(60,535), 16, 1, colors.WHITE)
+        pr.draw_text_ex(language.font, 'Help', pr.Vector2(60,535), 16, 1, colors.WHITE)
 
     def but_log(self, pr, terminal, language, log):
         """ Отрисовка и обработка кнопки отрисовки лога """
@@ -119,5 +119,5 @@ class Button:
         self.but_prev_console(pr, terminal, language)
         self.but_lang_eng(pr,language)
         self.but_lang_rus(pr, language)
-        self.but_info(pr, information, terminal, language)
+        self.but_help(pr, information, terminal, language)
         self.but_log(pr, terminal, language, log)

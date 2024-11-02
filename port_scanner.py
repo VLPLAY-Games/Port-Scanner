@@ -12,8 +12,8 @@ from task import Task
 from button import Button
 from terminal import Terminal
 from language import Language
-from info import Information
 from log import Log
+from config import information
 
 def log_to_file(log_type, message, _):
         with open("report.log", "a+") as log_file:
@@ -29,7 +29,6 @@ def main():
     keyboard = Keyboard()
     button = Button()
     terminal = Terminal()
-    information = Information()
     language = Language(pr)
     pr.set_trace_log_level(4)
     try:
@@ -47,7 +46,7 @@ def main():
         pr.close_window()
     except Exception as e:
         app.error_init(e, pr, colors, language, log)
-    del app, ip, task, port, keyboard, button, terminal, language, information, log
+    del app, ip, task, port, keyboard, button, terminal, language, log
     logging.info("App is closed")
 
 if __name__ == '__main__':
