@@ -5,7 +5,7 @@ class Language:
     """ Класс для работы с языком"""
     def __init__(self, pr):
         """ Инициализация """
-        self.font = pr.load_font_ex('fonts/english.ttf', 35, None, 0)
+        self.font = pr.load_font_ex('fonts/english.ttf', 40, None, 0)
         self.selected_lang = "EN"
         logging.info("Language class initialized")
 

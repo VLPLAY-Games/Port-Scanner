@@ -28,8 +28,8 @@ class Terminal:
             self.temp += "(Error)"
         elif task.status == "WAIT":
             self.temp += "(Wait input)"
-        pr.draw_text_ex(language.font, self.temp, pr.Vector2(550,50), 25, 1, colors.BLACK)
-        pr.draw_rectangle_lines(525, 100, 450, 450, colors.BLACK)
+        pr.draw_text_ex(language.font, self.temp, pr.Vector2(550,50), 25, 1, colors.WHITE)
+        pr.draw_rectangle_lines(525, 100, 450, 450, colors.WHITE)
 
     def term_prev(self):
         """ Предыдущая страница """
@@ -44,7 +44,7 @@ class Terminal:
         self.draw_text = self.check_text()
         pr.draw_text_ex(language.font, self.draw_text + str(''.join(keys)) if self.terminal_active \
                     else self.draw_text, \
-                    pr.Vector2(550, 125), 10, 1, colors.BLACK)
+                    pr.Vector2(550, 125), 10, 1, colors.WHITE)
 
     def check_text(self):
         """ Проверка переноса строки и 2 страницы"""

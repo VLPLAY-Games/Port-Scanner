@@ -14,6 +14,12 @@ from button import Button
 from terminal import Terminal
 from language import Language
 from info import Information
+from log import Log
+from ctypes import *
+
+def log_to_file(log_type, message, _):
+        with open("report.log", "a+") as log_file:
+            log_file.write(f"{log_type}: {message}n")
 
 def main():
     """ Основная функция """
@@ -23,6 +29,7 @@ def main():
                 level=logging.INFO)
     logging.info("             Port scanner                 ")
     logging.info("App started")
+    log = Log()
     app = App()
     ip = Ip()
     task = Task()
@@ -48,7 +55,7 @@ def main():
         pr.close_window()
     except Exception as e:
         app.error_init(e, pr, colors, language)
-    del app, ip, task, port, keyboard, button, terminal, language, information
+    del app, ip, task, port, keyboard, button, terminal, language, information, log
     logging.info("App is closed")
 
 if __name__ == '__main__':

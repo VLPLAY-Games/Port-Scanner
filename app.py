@@ -36,12 +36,13 @@ class App():
         pr.draw_line(500,25,500,575,colors.BLACK)
         pr.draw_line(25,575,975,575,colors.BLACK)
         pr.draw_line(25,25,975,25,colors.BLACK)
-        pr.draw_text_ex(language.font, "Select option", pr.Vector2(50,50), 25, 1,colors.BLACK)
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(0, 0, width, height), colors.DARKGRAY, colors.DARKGRAY, colors.BLACK, colors.BLACK)
+        pr.draw_text_ex(language.font, "Select option", pr.Vector2(50,50), 25, 1,colors.WHITE)
         pr.draw_text_ex(language.font, "Enter IP and ports", \
-                        pr.Vector2(50, 175), 15, 1, colors.BLACK)
+                        pr.Vector2(50, 175), 15, 1, colors.WHITE)
         terminal.draw_terminal(pr, colors, task, language)
         pr.draw_text_ex(language.font, app_name + " by VL_PLAY Games " + version,\
-                         pr.Vector2(725, 585), 12, 1, colors.BLACK)
+                         pr.Vector2(725, 585), 12, 1, colors.WHITE)
 
     def error_init(self, e, pr, colors, language):
         """ Отрисовка ошибки """
@@ -73,7 +74,7 @@ class App():
         """ Отрисовать перед выполнением задачи текст"""
         self.draw_main(pr, colors, terminal, task, language)
         pr.begin_drawing()
-        pr.draw_text_ex(language.font, text, pr.Vector2(550, 125), 10, 1, colors.BLACK)
+        pr.draw_text_ex(language.font, text, pr.Vector2(550, 125), 10, 1, colors.WHITE)
         pr.clear_background(colors.WHITE)
         pr.end_drawing()
         pr.begin_drawing()
