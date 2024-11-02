@@ -19,7 +19,8 @@ class Button:
             pr.Rectangle(350, 100, 100, 50),
             'All info'):   
             task.task = 'all_info'
-        pr.draw_rectangle_gradient_ex(pr.Rectangle(350, 100, 100, 50), colors.BLUE, colors.BLUE, colors.RED, colors.RED)
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(350, 100, 100, 50), \
+                                      colors.BLUE, colors.BLUE, colors.RED, colors.RED)
         pr.draw_text_ex(language.font, 'All info', pr.Vector2(370,115), 18, 1, colors.WHITE)
 
     def but_custom_task(self, pr, terminal, task, language):
@@ -31,7 +32,8 @@ class Button:
             terminal.terminal_active = True
             task.task = "ip_ports"
             task.status = "WAIT"
-        pr.draw_rectangle_gradient_ex(pr.Rectangle(50, 200, 100, 50), colors.RED, colors.RED, colors.BLUE, colors.BLUE)
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(50, 200, 100, 50), \
+                                      colors.RED, colors.RED, colors.BLUE, colors.BLUE)
         pr.draw_text_ex(language.font, 'Start', pr.Vector2(70,215), 18, 1, colors.WHITE)
 
     def but_all_ports(self, pr, task, language):
@@ -41,7 +43,8 @@ class Button:
                     pr.Rectangle(200, 100, 100, 50),
                     'Check all ports'):
             task.task = "all_ports"
-        pr.draw_rectangle_gradient_ex(pr.Rectangle(200, 100, 100, 50), colors.RED, colors.RED, colors.BLUE, colors.BLUE)
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(200, 100, 100, 50), \
+                                      colors.RED, colors.RED, colors.BLUE, colors.BLUE)
         pr.draw_text_ex(language.font, 'Check all ports', pr.Vector2(205,115), 12, 1, colors.WHITE)
 
     def but_ip(self, ip, pr, terminal, app, task, language):
@@ -52,7 +55,8 @@ class Button:
             terminal.draw_text = ip.get_all_ip(app, terminal, task)
             task.status = "OK"
             logging.info("Finished task 'get all ip'")
-        pr.draw_rectangle_gradient_ex(pr.Rectangle(50, 100, 100, 50), colors.BLUE, colors.BLUE, colors.RED, colors.RED)
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(50, 100, 100, 50), \
+                                      colors.BLUE, colors.BLUE, colors.RED, colors.RED)
         pr.draw_text_ex(language.font, 'Check your IP', pr.Vector2(50,115), 14, 1, colors.WHITE)
 
     def but_next_console(self, pr, terminal, language):
@@ -61,7 +65,8 @@ class Button:
                     pr.Rectangle(950, 550, 25, 25),
                     '>>'):
             terminal.term_next()
-        pr.draw_rectangle_gradient_ex(pr.Rectangle(950, 550, 25, 25), colors.BROWN, colors.BROWN, colors.DARKGRAY, colors.DARKGRAY)
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(950, 550, 25, 25), \
+                                      colors.BROWN, colors.BROWN, colors.DARKGRAY, colors.DARKGRAY)
         pr.draw_text_ex(language.font, '>>', pr.Vector2(960,560), 11, 1, colors.WHITE)
 
     def but_prev_console(self, pr, terminal, language):
@@ -70,7 +75,8 @@ class Button:
                     pr.Rectangle(900, 550, 25, 25),
                     '<<'):
             terminal.term_prev()
-        pr.draw_rectangle_gradient_ex(pr.Rectangle(900, 550, 25, 25), colors.DARKGREEN, colors.DARKGREEN, colors.DARKBLUE, colors.DARKBLUE)
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(900, 550, 25, 25), \
+                            colors.DARKGREEN, colors.DARKGREEN, colors.DARKBLUE, colors.DARKBLUE)
         pr.draw_text_ex(language.font, '<<', pr.Vector2(910,560), 11, 1, colors.WHITE)
 
     def but_lang_rus(self, pr, language):
@@ -79,7 +85,8 @@ class Button:
                     pr.Rectangle(400, 50, 50, 25),
                     'Russian'):
             language.change_language(pr, "RU")
-        pr.draw_rectangle_gradient_ex(pr.Rectangle(400, 50, 50, 25), colors.BROWN, colors.BROWN, colors.DARKGRAY, colors.DARKGRAY)
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(400, 50, 50, 25), \
+                                      colors.BROWN, colors.BROWN, colors.DARKGRAY, colors.DARKGRAY)
         pr.draw_text_ex(language.font, 'Russian', pr.Vector2(405,60), 11, 1, colors.WHITE)
 
     def but_lang_eng(self, pr, language):
@@ -88,16 +95,18 @@ class Button:
                     pr.Rectangle(340, 50, 50, 25),
                     'English'):
             language.change_language(pr, "EN")
-        pr.draw_rectangle_gradient_ex(pr.Rectangle(340, 50, 50, 25), colors.BROWN, colors.BROWN, colors.DARKGRAY, colors.DARKGRAY)
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(340, 50, 50, 25), \
+                                      colors.BROWN, colors.BROWN, colors.DARKGRAY, colors.DARKGRAY)
         pr.draw_text_ex(language.font, 'English', pr.Vector2(345,60), 11, 1, colors.WHITE)
-    
+
     def but_help(self, pr, information, terminal, language):
         """ Отрисовка и обработка кнопки информации о функциях """
         if pr.gui_button(
                     pr.Rectangle(50, 525, 60, 30),
                     'Help'):
             terminal.draw_text = information
-        pr.draw_rectangle_gradient_ex(pr.Rectangle(50, 525, 60, 30), colors.PURPLE, colors.PURPLE, colors.BLACK, colors.BLACK)
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(50, 525, 60, 30), \
+                                      colors.PURPLE, colors.PURPLE, colors.BLACK, colors.BLACK)
         pr.draw_text_ex(language.font, 'Help', pr.Vector2(60,535), 16, 1, colors.WHITE)
 
     def but_log(self, pr, terminal, language, log):
@@ -106,7 +115,8 @@ class Button:
                     pr.Rectangle(125, 525, 60, 30),
                     'Log'):
             terminal.draw_text = log.get_log(True)
-        pr.draw_rectangle_gradient_ex(pr.Rectangle(125, 525, 60, 30), colors.PURPLE, colors.PURPLE, colors.BLACK, colors.BLACK)
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(125, 525, 60, 30), \
+                                      colors.PURPLE, colors.PURPLE, colors.BLACK, colors.BLACK)
         pr.draw_text_ex(language.font, 'Log', pr.Vector2(130,535), 16, 1, colors.WHITE)
 
     def check_all_but(self, ip, pr, terminal, task, app, language, information, log):

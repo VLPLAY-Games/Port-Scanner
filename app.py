@@ -1,17 +1,17 @@
 """ Файл для работы с приложением"""
 
 import logging
-from config import width, height, fps, app_name, version
+from config import WIDTH, HEIGHT, FPS, APP_NAME, VERSION
 
 class App():
     """ Основной класс приложения"""
     def __init__(self):
         """ Инициализация класса """
-        self.version = version
-        self.width = width
-        self.height = height
-        self.fps = fps
-        self.app_name = app_name
+        self.version = VERSION
+        self.width = WIDTH
+        self.height = HEIGHT
+        self.fps = FPS
+        self.app_name = APP_NAME
         self.first_port = 0
         self.end_port = 0
         self.enter_pressed = False
@@ -33,7 +33,8 @@ class App():
 
     def draw_main(self, pr, colors, terminal, task, language):
         """ Отрисовка дизайна приложения """
-        pr.draw_rectangle_gradient_ex(pr.Rectangle(0, 0, width, height), colors.DARKGRAY, colors.DARKGRAY, colors.BLACK, colors.BLACK)
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(0, 0, self.width, self.height), \
+                                      colors.DARKGRAY, colors.DARKGRAY, colors.BLACK, colors.BLACK)
         pr.draw_line(500,25,500,575,colors.WHITE)
         pr.draw_line(25,575,975,575,colors.WHITE)
         pr.draw_line(25,25,975,25,colors.WHITE)
@@ -41,12 +42,12 @@ class App():
         pr.draw_text_ex(language.font, "Enter IP and ports", \
                         pr.Vector2(50, 175), 15, 1, colors.WHITE)
         terminal.draw_terminal(pr, colors, task, language)
-        pr.draw_text_ex(language.font, app_name + " by VL_PLAY Games " + version,\
+        pr.draw_text_ex(language.font, APP_NAME + " by VL_PLAY Games " + self.version,\
                          pr.Vector2(725, 585), 12, 1, colors.WHITE)
 
     def error_init(self, e, pr, colors, language, log):
         """ Отрисовка ошибки """
-        logging.critical(str(e) + version)
+        logging.critical(str(e) + self.version)
         pr.close_window()
         pr.init_window(300, 300, "Port Scanner Critical Error")
         pr.set_target_fps(30)
@@ -55,7 +56,8 @@ class App():
         while not pr.window_should_close():
             pr.begin_drawing()
             pr.clear_background(colors.WHITE)
-            pr.draw_rectangle_gradient_ex(pr.Rectangle(0, 0, 300, 300), colors.DARKGRAY, colors.DARKGRAY, colors.BLACK, colors.BLACK)
+            pr.draw_rectangle_gradient_ex(pr.Rectangle(0, 0, 300, 300), \
+                            colors.DARKGRAY, colors.DARKGRAY, colors.BLACK, colors.BLACK)
             pr.draw_text_ex(language.font, "Critical Error", \
                             pr.Vector2(75, 75), 25, 1, colors.WHITE)
             pr.draw_text_ex(language.font, "Check report.log", \
@@ -66,7 +68,8 @@ class App():
                     'Log'):
                 pr.close_window()
                 log.open_log_window(pr, language)
-            pr.draw_rectangle_gradient_ex(pr.Rectangle(125, 175, 50, 25), colors.DARKGREEN, colors.DARKGREEN, colors.DARKBLUE, colors.DARKBLUE)
+            pr.draw_rectangle_gradient_ex(pr.Rectangle(125, 175, 50, 25), \
+                            colors.DARKGREEN, colors.DARKGREEN, colors.DARKBLUE, colors.DARKBLUE)
             pr.draw_text_ex(language.font, 'Log', pr.Vector2(135,185), 11, 1, colors.WHITE)
             pr.end_drawing()
         pr.close_window()

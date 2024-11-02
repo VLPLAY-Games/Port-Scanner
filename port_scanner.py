@@ -13,11 +13,7 @@ from button import Button
 from terminal import Terminal
 from language import Language
 from log import Log
-from config import information
-
-def log_to_file(log_type, message, _):
-        with open("report.log", "a+") as log_file:
-            log_file.write(f"{log_type}: {message}n")
+from config import INFORMATION
 
 def main():
     """ Основная функция """
@@ -36,7 +32,7 @@ def main():
         while not pr.window_should_close():
             pr.begin_drawing()
             app.draw_main(pr, colors, terminal, task, language)
-            button.check_all_but(ip, pr, terminal, task, app, language, information, log)
+            button.check_all_but(ip, pr, terminal, task, app, language, INFORMATION, log)
             keyboard.check_key(pr, terminal)
             task.check_task(app, ip, port, keyboard, pr, colors, terminal, task, language)
             terminal.draw_terminal_text(keyboard.get_keys(), pr, colors, language)

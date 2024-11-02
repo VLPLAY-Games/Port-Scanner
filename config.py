@@ -1,9 +1,10 @@
-width = 1000
-height = 600
-fps = 30
-app_name = "Port Scanner"
-version = ' v0.8'
-information = (
+""" Конфиг """
+WIDTH = 1000
+HEIGHT = 600
+FPS = 30
+APP_NAME = "Port Scanner"
+VERSION = ' v0.8'
+INFORMATION = (
     "Help:\n\n\n"
     "Check your IP - displays all IP addresses of computers on the network\n\n"
     "Check all ports - displays all open ports on each IP address of a computer on the network\n\n"

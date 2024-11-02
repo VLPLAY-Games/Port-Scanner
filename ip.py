@@ -2,7 +2,7 @@
 
 import logging
 import netifaces
-from config import version
+from config import VERSION
 from ipaddress import ip_address
 
 class Ip:
@@ -44,7 +44,7 @@ class Ip:
                     for link in netifaces.ifaddresses(interface)[netifaces.AF_INET6]:
                         self.ipv6_list.append(link['addr'])
                 except Exception as e:
-                    logging.error(str(e) + version)
+                    logging.error(str(e) + VERSION)
             logging.info("Finished task 'get IP v6'")
             return self.ipv6_list
         except Exception as e:
