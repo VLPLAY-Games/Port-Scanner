@@ -33,10 +33,10 @@ class App():
 
     def draw_main(self, pr, colors, terminal, task, language):
         """ Отрисовка дизайна приложения """
-        pr.draw_line(500,25,500,575,colors.BLACK)
-        pr.draw_line(25,575,975,575,colors.BLACK)
-        pr.draw_line(25,25,975,25,colors.BLACK)
         pr.draw_rectangle_gradient_ex(pr.Rectangle(0, 0, width, height), colors.DARKGRAY, colors.DARKGRAY, colors.BLACK, colors.BLACK)
+        pr.draw_line(500,25,500,575,colors.WHITE)
+        pr.draw_line(25,575,975,575,colors.WHITE)
+        pr.draw_line(25,25,975,25,colors.WHITE)
         pr.draw_text_ex(language.font, "Select option", pr.Vector2(50,50), 25, 1,colors.WHITE)
         pr.draw_text_ex(language.font, "Enter IP and ports", \
                         pr.Vector2(50, 175), 15, 1, colors.WHITE)

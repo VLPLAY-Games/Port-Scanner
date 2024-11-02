@@ -55,19 +55,23 @@ class Button:
         pr.draw_rectangle_gradient_ex(pr.Rectangle(50, 100, 100, 50), colors.BLUE, colors.BLUE, colors.RED, colors.RED)
         pr.draw_text_ex(language.font, 'Check your IP', pr.Vector2(50,115), 14, 1, colors.WHITE)
 
-    def but_next_console(self, pr, terminal):
+    def but_next_console(self, pr, terminal, language):
         """ Отрисовка и обработка кнопки следующей страницы терминала """
         if pr.gui_button(
                     pr.Rectangle(950, 550, 25, 25),
                     '>>'):
             terminal.term_next()
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(950, 550, 25, 25), colors.BROWN, colors.BROWN, colors.DARKGRAY, colors.DARKGRAY)
+        pr.draw_text_ex(language.font, '>>', pr.Vector2(960,560), 11, 1, colors.WHITE)
 
-    def but_prev_console(self, pr, terminal):
+    def but_prev_console(self, pr, terminal, language):
         """ Отрисовка и обработка кнопки предыдущей страницы терминала """
         if pr.gui_button(
                     pr.Rectangle(900, 550, 25, 25),
                     '<<'):
             terminal.term_prev()
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(900, 550, 25, 25), colors.DARKGREEN, colors.DARKGREEN, colors.DARKBLUE, colors.DARKBLUE)
+        pr.draw_text_ex(language.font, '<<', pr.Vector2(910,560), 11, 1, colors.WHITE)
 
     def but_lang_rus(self, pr, language):
         """ Отрисовка и обработка кнопки смены языка русский """
@@ -75,6 +79,8 @@ class Button:
                     pr.Rectangle(400, 50, 50, 25),
                     'Russian'):
             language.change_language(pr, "RU")
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(400, 50, 50, 25), colors.BROWN, colors.BROWN, colors.DARKGRAY, colors.DARKGRAY)
+        pr.draw_text_ex(language.font, 'Russian', pr.Vector2(405,60), 11, 1, colors.WHITE)
 
     def but_lang_eng(self, pr, language):
         """ Отрисовка и обработка кнопки смены языка английский """
@@ -82,6 +88,8 @@ class Button:
                     pr.Rectangle(340, 50, 50, 25),
                     'English'):
             language.change_language(pr, "EN")
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(340, 50, 50, 25), colors.BROWN, colors.BROWN, colors.DARKGRAY, colors.DARKGRAY)
+        pr.draw_text_ex(language.font, 'English', pr.Vector2(345,60), 11, 1, colors.WHITE)
     
     def but_info(self, pr, information, terminal, language):
         """ Отрисовка и обработка кнопки смены языка английский """
@@ -98,8 +106,8 @@ class Button:
         self.but_custom_task(pr, terminal, task, language)
         self.but_ip(ip, pr, terminal, app, task, language)
         self.but_all_ports(pr, task, language)
-        self.but_next_console(pr, terminal)
-        self.but_prev_console(pr, terminal)
+        self.but_next_console(pr, terminal, language)
+        self.but_prev_console(pr, terminal, language)
         self.but_lang_eng(pr,language)
         self.but_lang_rus(pr, language)
         self.but_info(pr, information, terminal, language)
