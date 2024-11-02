@@ -92,7 +92,7 @@ class Button:
         pr.draw_text_ex(language.font, 'English', pr.Vector2(345,60), 11, 1, colors.WHITE)
     
     def but_info(self, pr, information, terminal, language):
-        """ Отрисовка и обработка кнопки смены языка английский """
+        """ Отрисовка и обработка кнопки информации о функциях """
         if pr.gui_button(
                     pr.Rectangle(50, 500, 100, 50),
                     'Info'):
@@ -100,7 +100,16 @@ class Button:
         pr.draw_rectangle_gradient_ex(pr.Rectangle(50, 500, 100, 50), colors.PURPLE, colors.PURPLE, colors.BLACK, colors.BLACK)
         pr.draw_text_ex(language.font, 'Info', pr.Vector2(70,515), 18, 1, colors.WHITE)
 
-    def check_all_but(self, ip, pr, terminal, task, app, language, information):
+    def but_log(self, pr, terminal, language, log):
+        """ Отрисовка и обработка кнопки отрисовки лога """
+        if pr.gui_button(
+                    pr.Rectangle(175, 500, 100, 50),
+                    'Log'):
+            terminal.draw_text = log.get_log()
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(175, 500, 100, 50), colors.PURPLE, colors.PURPLE, colors.BLACK, colors.BLACK)
+        pr.draw_text_ex(language.font, 'Log', pr.Vector2(185,515), 18, 1, colors.WHITE)
+
+    def check_all_but(self, ip, pr, terminal, task, app, language, information, log):
         """ Проверка всех кнопок """
         self.but_all_info(pr, task, language)
         self.but_custom_task(pr, terminal, task, language)
@@ -111,3 +120,4 @@ class Button:
         self.but_lang_eng(pr,language)
         self.but_lang_rus(pr, language)
         self.but_info(pr, information, terminal, language)
+        self.but_log(pr, terminal, language, log)

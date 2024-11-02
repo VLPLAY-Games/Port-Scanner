@@ -1,7 +1,6 @@
 """ Сканер портов """
 
 # Библиотеки
-import os
 import logging
 import pyray as pr
 from raylib import colors
@@ -15,7 +14,6 @@ from terminal import Terminal
 from language import Language
 from info import Information
 from log import Log
-from ctypes import *
 
 def log_to_file(log_type, message, _):
         with open("report.log", "a+") as log_file:
@@ -23,12 +21,6 @@ def log_to_file(log_type, message, _):
 
 def main():
     """ Основная функция """
-    os.remove("report.log")
-    # Логирование приложения
-    logging.basicConfig(filename='report.log', format='%(asctime)s - %(levelname)s - %(message)s', \
-                level=logging.INFO)
-    logging.info("             Port scanner                 ")
-    logging.info("App started")
     log = Log()
     app = App()
     ip = Ip()
@@ -45,7 +37,7 @@ def main():
         while not pr.window_should_close():
             pr.begin_drawing()
             app.draw_main(pr, colors, terminal, task, language)
-            button.check_all_but(ip, pr, terminal, task, app, language, information)
+            button.check_all_but(ip, pr, terminal, task, app, language, information, log)
             keyboard.check_key(pr, terminal)
             task.check_task(app, ip, port, keyboard, pr, colors, terminal, task, language)
             terminal.draw_terminal_text(keyboard.get_keys(), pr, colors, language)
@@ -54,7 +46,7 @@ def main():
 
         pr.close_window()
     except Exception as e:
-        app.error_init(e, pr, colors, language)
+        app.error_init(e, pr, colors, language, log)
     del app, ip, task, port, keyboard, button, terminal, language, information, log
     logging.info("App is closed")
 

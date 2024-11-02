@@ -44,11 +44,11 @@ class App():
         pr.draw_text_ex(language.font, app_name + " by VL_PLAY Games " + version,\
                          pr.Vector2(725, 585), 12, 1, colors.WHITE)
 
-    def error_init(self, e, pr, colors, language):
+    def error_init(self, e, pr, colors, language, log):
         """ Отрисовка ошибки """
         logging.critical(str(e) + version)
         pr.close_window()
-        pr.init_window(300, 200, "Port Scanner Critical Error")
+        pr.init_window(300, 300, "Port Scanner Critical Error")
         pr.set_target_fps(30)
         pr.set_window_icon(pr.load_image('portscanner.png'))
         logging.info("Error window initialized")
@@ -58,8 +58,17 @@ class App():
             pr.draw_text_ex(language.font, "Critical Error", \
                             pr.Vector2(75, 75), 25, 1, colors.BLACK)
             pr.draw_text_ex(language.font, "Check report.log", \
-                            pr.Vector2(75, 125), 15, 1, colors.BLACK)
+                            pr.Vector2(90, 125), 15, 1, colors.BLACK)
+            """ Отрисовка и обработка кнопки предыдущей страницы терминала """
+            if pr.gui_button(
+                    pr.Rectangle(125, 175, 50, 25),
+                    'Log'):
+                pr.close_window()
+                log.open_log_window(pr, language)
+            pr.draw_rectangle_gradient_ex(pr.Rectangle(125, 175, 50, 25), colors.DARKGREEN, colors.DARKGREEN, colors.DARKBLUE, colors.DARKBLUE)
+            pr.draw_text_ex(language.font, 'Log', pr.Vector2(135,185), 11, 1, colors.WHITE)
             pr.end_drawing()
+        pr.close_window()
 
     def exception(self, text, e, terminal, task):
         """ Обработка исключений """
