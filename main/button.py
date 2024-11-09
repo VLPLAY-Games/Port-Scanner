@@ -22,7 +22,7 @@ class Button:
         pr.draw_rectangle_rounded(pr.Rectangle(350, 100, 100, 50), 0.5, 5, colors.DARKGREEN)
 
         pr.draw_text_ex(language.font, language.get_text_tr("All_info"), \
-                        pr.Vector2(370,115), 18, 1, colors.WHITE)
+                        pr.Vector2(370, 115), 18, 1, colors.WHITE)
 
     def but_custom_task(self, pr, terminal, task, language):
         """ Отрисовка и отработка кнопки кастом """
@@ -35,7 +35,7 @@ class Button:
             task.status = "WAIT"
         pr.draw_rectangle_rounded(pr.Rectangle(50, 200, 100, 50), 0.5, 5, colors.DARKBYZAN)
         pr.draw_text_ex(language.font, language.get_text_tr('Start'),\
-                         pr.Vector2(70,215), 18, 1, colors.WHITE)
+                         pr.Vector2(80, 215), 18, 1, colors.WHITE)
 
     def but_all_ports(self, pr, task, language):
         """ Отрисовка и обработка кнопки проверить все порты """
@@ -46,7 +46,7 @@ class Button:
             task.task = "all_ports"
         pr.draw_rectangle_rounded(pr.Rectangle(200, 100, 100, 50), 0.5, 5, colors.DARKPURPLE)
         pr.draw_text_ex(language.font, language.get_text_tr('Check_all_ports'),\
-                         pr.Vector2(205,115), 12, 1, colors.WHITE)
+                         pr.Vector2(205, 119), 12, 1, colors.WHITE)
 
     def but_ip(self, ip, pr, terminal, app, task, language):
         """ Отрисовка и обработка кнопки получения всех ip """
@@ -58,7 +58,7 @@ class Button:
             logging.info("Finished task 'get all ip'")
         pr.draw_rectangle_rounded(pr.Rectangle(50, 100, 100, 50), 0.5, 5, colors.DARKRED)
         pr.draw_text_ex(language.font, language.get_text_tr('Check_your_ip'), \
-                        pr.Vector2(50,115), 14, 1, colors.WHITE)
+                        pr.Vector2(55, 117), 14, 1, colors.WHITE)
 
     def but_next_console(self, pr, terminal, language):
         """ Отрисовка и обработка кнопки следующей страницы терминала """
@@ -67,7 +67,7 @@ class Button:
                     '>>'):
             terminal.term_next()
         pr.draw_rectangle_rounded(pr.Rectangle(950, 550, 25, 25), 0.5, 5, colors.AQUA)
-        pr.draw_text_ex(language.font, '>>', pr.Vector2(960,560), 11, 1, colors.WHITE)
+        pr.draw_text_ex(language.font, '>>', pr.Vector2(957, 558), 11, 1, colors.WHITE)
 
     def but_prev_console(self, pr, terminal, language):
         """ Отрисовка и обработка кнопки предыдущей страницы терминала """
@@ -76,7 +76,7 @@ class Button:
                     '<<'):
             terminal.term_prev()
         pr.draw_rectangle_rounded(pr.Rectangle(900, 550, 25, 25), 0.5, 5, colors.AQUA)
-        pr.draw_text_ex(language.font, '<<', pr.Vector2(910,560), 11, 1, colors.WHITE)
+        pr.draw_text_ex(language.font, '<<', pr.Vector2(907, 558), 11, 1, colors.WHITE)
 
     def but_lang_rus(self, pr, language):
         """ Отрисовка и обработка кнопки смены языка русский """
@@ -85,7 +85,7 @@ class Button:
                     'Russian'):
             language.change_language(pr, "RU")
         pr.draw_rectangle_rounded(pr.Rectangle(400, 50, 50, 25), 0.5, 5, colors.DARKGREENBLUE)
-        pr.draw_text_ex(language.font, 'Russian', pr.Vector2(405,60), 11, 1, colors.WHITE)
+        pr.draw_text_ex(language.font, 'Russian', pr.Vector2(405, 58), 11, 1, colors.WHITE)
 
     def but_lang_eng(self, pr, language):
         """ Отрисовка и обработка кнопки смены языка английский """
@@ -94,7 +94,7 @@ class Button:
                     'English'):
             language.change_language(pr, "EN")
         pr.draw_rectangle_rounded(pr.Rectangle(340, 50, 50, 25), 0.5, 5, colors.DARKGREENBLUE)
-        pr.draw_text_ex(language.font, 'English', pr.Vector2(345,60), 11, 1, colors.WHITE)
+        pr.draw_text_ex(language.font, 'English', pr.Vector2(347, 58), 11, 1, colors.WHITE)
 
     def but_help(self, pr, information, terminal, language):
         """ Отрисовка и обработка кнопки информации о функциях """
@@ -104,7 +104,7 @@ class Button:
             terminal.draw_text = information
         pr.draw_rectangle_rounded(pr.Rectangle(50, 525, 60, 30), 0.5, 5, colors.DARKBLUE)
         pr.draw_text_ex(language.font, language.get_text_tr('Help'), \
-                        pr.Vector2(60,535), 16, 1, colors.WHITE)
+                        pr.Vector2(63, 533), 16, 1, colors.WHITE)
 
     def but_log(self, pr, terminal, language, log):
         """ Отрисовка и обработка кнопки отрисовки лога """
@@ -114,7 +114,7 @@ class Button:
             terminal.draw_text = log.get_log(True)
         pr.draw_rectangle_rounded(pr.Rectangle(125, 525, 60, 30), 0.5, 5, colors.DARKBLUE)
         pr.draw_text_ex(language.font, language.get_text_tr('Log'), \
-                        pr.Vector2(130,535), 16, 1, colors.WHITE)
+                        pr.Vector2(140, 532), 16, 1, colors.WHITE)
 
     def check_all_but(self, ip, pr, terminal, task, app, language, information, log):
         """ Проверка всех кнопок """
