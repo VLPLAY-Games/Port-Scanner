@@ -27,8 +27,8 @@ class Ip:
                 try:
                     for link in netifaces.ifaddresses(interface)[netifaces.AF_INET]:
                         self.ipv4_list.append(link['addr'])
-                except:
-                    pass
+                except Exception as e:
+                    logging.error(str(e) + VERSION)
             logging.info("Finished task 'get IP v4'")
             return self.ipv4_list
         except Exception as e:

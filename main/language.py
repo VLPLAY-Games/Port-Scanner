@@ -4,31 +4,10 @@ from os.path import exists
 
 class Language:
     """ Класс для работы с языком"""
-    def __init__(self, pr):
+    def __init__(self):
         """ Инициализация """
         self.font = []
-        if (exists("lang.cfg") == False):
-            self.lang_file = open("lang.cfg", "w")
-            self.lang_file.write("EN")
-            self.lang_file.close()
-        self.lang_file = open("lang.cfg", "r")
-        try:
-            self.selected_lang = self.lang_file.readline()
-            self.lang_file.close()
-            if (self.selected_lang == "EN"):
-                self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
-            elif (self.selected_lang == "RU"):
-                self.font = pr.load_font_ex('fonts/cyrillic.ttf', 50, None, 0) 
-          
-
-        except Exception as e:
-            logging.warning("Error while reading language file " + str(e))
-            self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
-            self.selected_lang = "EN"
-            self.lang_file = open("lang.cfg", "w")
-            self.lang_file.write("EN")
-            self.lang_file.close()
-
+        self.lang_file = __file__
 
         self.translates_ru = {
             "Select_option" : "Выберите опцию",
@@ -81,4 +60,30 @@ class Language:
             return self.translates_en[text]
         elif self.selected_lang == "RU":
             return self.translates_ru[text]
+        
+    def set_lang_startup(self, pr):
+        if (exists("lang.cfg") == False):
+            logging.warning("Language file doesn't exist")
+            self.lang_file = open("lang.cfg", "w")
+            self.lang_file.write("EN")
+            self.lang_file.close()
+            logging.info("Created language file successfuly")
+        self.lang_file = open("lang.cfg", "r")
+        try:
+            self.selected_lang = self.lang_file.readline()
+            self.lang_file.close()
+            if (self.selected_lang == "EN"):
+                self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
+            elif (self.selected_lang == "RU"):
+                self.font = pr.load_font_ex('fonts/cyrillic.ttf', 50, None, 0) 
+            logging.info("Set language " + self.selected_lang + " sucessfully")
+
+        except Exception as e:
+            logging.error("Error while reading language file " + str(e))
+            logging.info("Set default language")
+            self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
+            self.selected_lang = "EN"
+            self.lang_file = open("lang.cfg", "w")
+            self.lang_file.write("EN")
+            self.lang_file.close()
         

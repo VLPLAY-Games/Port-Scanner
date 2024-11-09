@@ -25,10 +25,11 @@ def main():
     keyboard = Keyboard()
     button = Button()
     terminal = Terminal()
-    language = Language(pr)
+    language = Language()
     pr.set_trace_log_level(4)
     try:
         app.init_app(pr)
+        language.set_lang_startup(pr)
         while not pr.window_should_close():
             pr.begin_drawing()
             app.draw_main(pr, colors, terminal, task, language)
