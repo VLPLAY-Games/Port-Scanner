@@ -8,7 +8,7 @@ class Language:
         """ Инициализация """
         self.font = []
         self.lang_file = __file__
-
+        self.selected_lang = ""
         self.translates_ru = {
             "Select_option" : "Выберите опцию",
             "Check_your_ip" : "Проверить IP",
@@ -39,7 +39,7 @@ class Language:
     def change_language(self, pr, lang_name):
         """ Функция смены языка"""
         try:
-            self.lang_file = open("lang.cfg", "w")
+            self.lang_file = open("lang.cfg", "w", encoding="utf-8")
             if lang_name == "RU":
                 self.selected_lang = "RU"
                 self.lang_file.write("RU")
@@ -56,13 +56,15 @@ class Language:
             logging.error("Error while changing language " + str(e))
 
     def get_text_tr(self, text):
+        """ Получение текста по языку"""
         if self.selected_lang == "EN":
             return self.translates_en[text]
         elif self.selected_lang == "RU":
             return self.translates_ru[text]
-        
+
     def set_lang_startup(self, pr):
-        if (exists("lang.cfg") == False):
+        """ Изменение языка при запуске программы"""
+        if (exists('lang.cfg') is False):
             logging.warning("Language file doesn't exist")
             self.lang_file = open("lang.cfg", "w")
             self.lang_file.write("EN")
@@ -75,7 +77,7 @@ class Language:
             if (self.selected_lang == "EN"):
                 self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
             elif (self.selected_lang == "RU"):
-                self.font = pr.load_font_ex('fonts/cyrillic.ttf', 50, None, 0) 
+                self.font = pr.load_font_ex('fonts/cyrillic.ttf', 50, None, 0)
             logging.info("Set language " + self.selected_lang + " sucessfully")
 
         except Exception as e:
@@ -83,7 +85,6 @@ class Language:
             logging.info("Set default language")
             self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
             self.selected_lang = "EN"
-            self.lang_file = open("lang.cfg", "w")
+            self.lang_file = open("lang.cfg", "w", encoding="utf-8")
             self.lang_file.write("EN")
             self.lang_file.close()
-        

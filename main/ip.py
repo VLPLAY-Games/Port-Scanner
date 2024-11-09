@@ -1,9 +1,9 @@
 """ Файл для работы с IP"""
 
 import logging
+from ipaddress import ip_address
 import netifaces
 from config import VERSION
-from ipaddress import ip_address
 
 class Ip:
     """ Класс для работы с IP """
@@ -12,6 +12,7 @@ class Ip:
         self.ipv4_list = []
         self.ipv6_list = []
         self.task_ip = ""
+        self.status = ""
         logging.info("IP class initialized")
 
     def __del__(self):
@@ -66,6 +67,6 @@ class Ip:
         try:
             ip_address(ip)
         except Exception as e:
-            logging.warning("IP Adress is not valid")
+            logging.warning("IP Adress is not valid " + str(e))
             return "IP Adress is not valid"
         return "OK"

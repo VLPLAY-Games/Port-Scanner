@@ -27,14 +27,14 @@ class Log:
 
     def get_log(self, terminal = False):
         """ Получение лога"""
-        if (self.is_drawed == False):
+        if (self.is_drawed is False):
             self.log = []
             self.log_lines = []
             with open("report.log") as file:
                 self.log_lines = [line.rstrip() for line in file]
             for line in self.log_lines:
                 self.log.append(line + '\n')
-            if (terminal == False):
+            if (terminal is False):
                 self.is_drawed = True
         return ''.join(self.log)
 
