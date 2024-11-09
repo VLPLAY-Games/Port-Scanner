@@ -3,7 +3,7 @@
 # Библиотеки
 import logging
 import pyray as pr
-from raylib import colors
+import colors
 from app import App
 from ip import Ip
 from port import Port

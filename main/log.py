@@ -1,7 +1,7 @@
 """ Файл для работы с логами"""
 import logging
 import os
-from raylib import colors
+import colors
 class Log:
     """ Класс для работы с логами"""
     def __init__(self):
