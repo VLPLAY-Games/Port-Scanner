@@ -17,47 +17,47 @@ class Button:
         """ Отрисовка и отработка кнопки вся информация """
         if pr.gui_button(
             pr.Rectangle(350, 100, 100, 50),
-            'All info'):   
+            language.get_text_tr('All_info')):   
             task.task = 'all_info'
         pr.draw_rectangle_gradient_ex(pr.Rectangle(350, 100, 100, 50), \
                                       colors.BLUE, colors.BLUE, colors.RED, colors.RED)
-        pr.draw_text_ex(language.font, 'All info', pr.Vector2(370,115), 18, 1, colors.WHITE)
+        pr.draw_text_ex(language.font, language.get_text_tr("All_info"), pr.Vector2(370,115), 18, 1, colors.WHITE)
 
     def but_custom_task(self, pr, terminal, task, language):
         """ Отрисовка и отработка кнопки кастом """
         if pr.gui_button(
                 pr.Rectangle(50, 200, 100, 50),
-                'Start'):   
+                language.get_text_tr('Start')):   
             terminal.draw_text = "Enter IP address to check: \n"
             terminal.terminal_active = True
             task.task = "ip_ports"
             task.status = "WAIT"
         pr.draw_rectangle_gradient_ex(pr.Rectangle(50, 200, 100, 50), \
                                       colors.RED, colors.RED, colors.BLUE, colors.BLUE)
-        pr.draw_text_ex(language.font, 'Start', pr.Vector2(70,215), 18, 1, colors.WHITE)
+        pr.draw_text_ex(language.font, language.get_text_tr('Start'), pr.Vector2(70,215), 18, 1, colors.WHITE)
 
     def but_all_ports(self, pr, task, language):
         """ Отрисовка и обработка кнопки проверить все порты """
         # Получение открытых портов собственного IP
         if pr.gui_button(
                     pr.Rectangle(200, 100, 100, 50),
-                    'Check all ports'):
+                    language.get_text_tr('Check_all_ports')):
             task.task = "all_ports"
         pr.draw_rectangle_gradient_ex(pr.Rectangle(200, 100, 100, 50), \
                                       colors.RED, colors.RED, colors.BLUE, colors.BLUE)
-        pr.draw_text_ex(language.font, 'Check all ports', pr.Vector2(205,115), 12, 1, colors.WHITE)
+        pr.draw_text_ex(language.font, language.get_text_tr('Check_all_ports'), pr.Vector2(205,115), 12, 1, colors.WHITE)
 
     def but_ip(self, ip, pr, terminal, app, task, language):
         """ Отрисовка и обработка кнопки получения всех ip """
         if pr.gui_button(
                     pr.Rectangle(50, 100, 100, 50),
-                    'Check your IP'):
+                    language.get_text_tr('Check_your_ip')):
             terminal.draw_text = ip.get_all_ip(app, terminal, task)
             task.status = "OK"
             logging.info("Finished task 'get all ip'")
         pr.draw_rectangle_gradient_ex(pr.Rectangle(50, 100, 100, 50), \
                                       colors.BLUE, colors.BLUE, colors.RED, colors.RED)
-        pr.draw_text_ex(language.font, 'Check your IP', pr.Vector2(50,115), 14, 1, colors.WHITE)
+        pr.draw_text_ex(language.font, language.get_text_tr('Check_your_ip'), pr.Vector2(50,115), 14, 1, colors.WHITE)
 
     def but_next_console(self, pr, terminal, language):
         """ Отрисовка и обработка кнопки следующей страницы терминала """
@@ -103,21 +103,21 @@ class Button:
         """ Отрисовка и обработка кнопки информации о функциях """
         if pr.gui_button(
                     pr.Rectangle(50, 525, 60, 30),
-                    'Help'):
+                    language.get_text_tr('Help')):
             terminal.draw_text = information
         pr.draw_rectangle_gradient_ex(pr.Rectangle(50, 525, 60, 30), \
                                       colors.PURPLE, colors.PURPLE, colors.BLACK, colors.BLACK)
-        pr.draw_text_ex(language.font, 'Help', pr.Vector2(60,535), 16, 1, colors.WHITE)
+        pr.draw_text_ex(language.font, language.get_text_tr('Help'), pr.Vector2(60,535), 16, 1, colors.WHITE)
 
     def but_log(self, pr, terminal, language, log):
         """ Отрисовка и обработка кнопки отрисовки лога """
         if pr.gui_button(
                     pr.Rectangle(125, 525, 60, 30),
-                    'Log'):
+                    language.get_text_tr('Log')):
             terminal.draw_text = log.get_log(True)
         pr.draw_rectangle_gradient_ex(pr.Rectangle(125, 525, 60, 30), \
                                       colors.PURPLE, colors.PURPLE, colors.BLACK, colors.BLACK)
-        pr.draw_text_ex(language.font, 'Log', pr.Vector2(130,535), 16, 1, colors.WHITE)
+        pr.draw_text_ex(language.font, language.get_text_tr('Log'), pr.Vector2(130,535), 16, 1, colors.WHITE)
 
     def check_all_but(self, ip, pr, terminal, task, app, language, information, log):
         """ Проверка всех кнопок """

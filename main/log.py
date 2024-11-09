@@ -10,8 +10,8 @@ class Log:
         self.log_lines = []
         self.log = []
         self.is_drawed = False
-        temp = open("report.log", "a")
-        temp.close()
+        self.temp = open("report.log", "a")
+        self.temp.close()
         os.remove("report.log")
         # Логирование приложения
         logging.basicConfig(filename='report.log', \

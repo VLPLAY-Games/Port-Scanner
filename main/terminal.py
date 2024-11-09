@@ -44,7 +44,7 @@ class Terminal:
         self.draw_text = self.check_text()
         pr.draw_text_ex(language.font, self.draw_text + str(''.join(keys)) if self.terminal_active \
                     else self.draw_text, \
-                    pr.Vector2(550, 125), 10, 1, colors.WHITE)
+                    pr.Vector2(550, 125), 12, 1, colors.WHITE)
 
     def check_text(self):
         """ Проверка переноса строки и 2 страницы"""

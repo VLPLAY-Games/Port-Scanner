@@ -26,7 +26,7 @@ class App():
         try:
             pr.init_window(self.width, self.height, self.app_name)
             pr.set_target_fps(self.fps)
-            pr.set_window_icon(pr.load_image('portscanner.png'))
+            pr.set_window_icon(pr.load_image("images/portscanner.png"))
             logging.info("App initialized")
         except Exception as e:
             logging.critical("Error while initializing App window: " + str(e))
@@ -38,7 +38,7 @@ class App():
         pr.draw_line(500,25,500,575,colors.WHITE)
         pr.draw_line(25,575,975,575,colors.WHITE)
         pr.draw_line(25,25,975,25,colors.WHITE)
-        pr.draw_text_ex(language.font, "Select option", pr.Vector2(50,50), 25, 1,colors.WHITE)
+        pr.draw_text_ex(language.font, language.get_text_tr("Select_option"), pr.Vector2(50,50), 25, 1,colors.WHITE)
         pr.draw_text_ex(language.font, "Enter IP and ports", \
                         pr.Vector2(50, 175), 15, 1, colors.WHITE)
         terminal.draw_terminal(pr, colors, task, language)
@@ -51,7 +51,7 @@ class App():
         pr.close_window()
         pr.init_window(300, 300, "Port Scanner Critical Error")
         pr.set_target_fps(30)
-        pr.set_window_icon(pr.load_image('portscanner.png'))
+        pr.set_window_icon(pr.load_image('images/portscanner.png'))
         logging.info("Error window initialized")
         while not pr.window_should_close():
             pr.begin_drawing()
@@ -87,7 +87,7 @@ class App():
         """ Отрисовать перед выполнением задачи текст"""
         self.draw_main(pr, colors, terminal, task, language)
         pr.begin_drawing()
-        pr.draw_text_ex(language.font, text, pr.Vector2(550, 125), 10, 1, colors.WHITE)
+        pr.draw_text_ex(language.font, text, pr.Vector2(550, 125), 12, 1, colors.WHITE)
         pr.clear_background(colors.WHITE)
         pr.end_drawing()
         pr.begin_drawing()
