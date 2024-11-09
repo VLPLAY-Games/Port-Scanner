@@ -52,6 +52,7 @@ class App():
         pr.init_window(300, 300, "Port Scanner Critical Error")
         pr.set_target_fps(30)
         pr.set_window_icon(pr.load_image('images/portscanner.png'))
+        language.set_lang_startup(pr)
         logging.info("Error window initialized")
         while not pr.window_should_close():
             pr.begin_drawing()
