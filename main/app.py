@@ -38,7 +38,8 @@ class App():
         pr.draw_line(500,25,500,575,colors.WHITE)
         pr.draw_line(25,575,975,575,colors.WHITE)
         pr.draw_line(25,25,975,25,colors.WHITE)
-        pr.draw_text_ex(language.font, language.get_text_tr("Select_option"), pr.Vector2(50,50), 25, 1,colors.WHITE)
+        pr.draw_text_ex(language.font, language.get_text_tr("Select_option"), \
+                        pr.Vector2(50,50), 25, 1,colors.WHITE)
         pr.draw_text_ex(language.font, "Enter IP and ports", \
                         pr.Vector2(50, 175), 15, 1, colors.WHITE)
         terminal.draw_terminal(pr, colors, task, language)
@@ -63,7 +64,6 @@ class App():
                             pr.Vector2(75, 75), 25, 1, colors.WHITE)
             pr.draw_text_ex(language.font, "Check report.log", \
                             pr.Vector2(90, 125), 15, 1, colors.WHITE)
-            """ Отрисовка и обработка кнопки предыдущей страницы терминала """
             if pr.gui_button(
                     pr.Rectangle(125, 175, 50, 25),
                     'Log'):

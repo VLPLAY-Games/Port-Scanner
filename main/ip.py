@@ -64,7 +64,7 @@ class Ip:
             for ip in self.get_ip6_addresses():
                 self.result.append(ip)
             return self.result
-            
+
         except Exception as e:
             self.status = "ERR"
             app.exception("Error while perfoming task 'all info': ", str(e), terminal, task)

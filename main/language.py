@@ -10,14 +10,14 @@ class Language:
         self.lang_file = __file__
         self.selected_lang = ""
         self.translates_ru = {
-            "Select_option" : u"Выберите опцию",
-            "Check_your_ip" : u"Проверить IP",
-            "Check_all_ports" : u"Проверить все порты",
-            "All_info" : u"Вся информация",
-            "Start": u"Старт",
-            "Help" : u"Помощь",
-            "Log" : u"Логи",
-            "Result" : u"Результаты",
+            "Select_option" : "Выберите опцию",
+            "Check_your_ip" : "Проверить IP",
+            "Check_all_ports" : "Проверить все порты",
+            "All_info" : "Вся информация",
+            "Start": "Старт",
+            "Help" : "Помощь",
+            "Log" : "Логи",
+            "Result" : "Результаты",
         }
 
         self.translates_en = {
