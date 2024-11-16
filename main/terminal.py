@@ -34,12 +34,12 @@ class Terminal:
     def term_prev(self):
         """ Предыдущая страница """
         if self.page > 0:
-            self.page += 1
+            self.page -= 1
 
     def term_next(self):
         """ Следующая страница """
-        if self.page < self.pages:
-            self.page -= 1
+        if self.page < self.pages - 1:
+            self.page += 1
 
     def draw_terminal_text(self, keys, pr, colors, language):
         """ Отрисовка терминала """
