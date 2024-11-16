@@ -33,21 +33,37 @@ class Terminal:
 
     def term_prev(self):
         """ Предыдущая страница """
-        pass
+        if self.page > 0:
+            self.page += 1
 
     def term_next(self):
         """ Следующая страница """
-        pass
+        if self.page < self.pages:
+            self.page -= 1
 
     def draw_terminal_text(self, keys, pr, colors, language):
         """ Отрисовка терминала """
-        self.draw_text = self.check_text()
-        pr.draw_text_ex(language.font, self.draw_text + str(''.join(keys)) if self.terminal_active \
-                    else self.draw_text, \
-                    pr.Vector2(550, 125), 12, 1, colors.WHITE)
+        self.draw_text = str(self.check_text())
+        temp = 0
+        arr = []
+        temp_str = ""
+        for string in self.draw_text.split(sep="\n"):
+            temp_str += string + "\n"
+            if temp > 20:
+                arr.append(temp_str)
+                temp_str = ""
+                temp = 0
+            temp += 1
+        if temp <= 20:
+            arr.append(temp_str)
+        self.pages = len(arr)
+        if len(arr) != 0:
+            pr.draw_text_ex(language.font, str(arr[self.page]) + str(''.join(keys)) if self.terminal_active \
+                        else str(arr[self.page]), \
+                        pr.Vector2(550, 125), 12, 1, colors.WHITE)
 
     def check_text(self):
-        """ Проверка переноса строки и 2 страницы"""
+        """ Проверка переноса строки"""
         temp = ""
         temp_count = 0
         for string in self.draw_text:
