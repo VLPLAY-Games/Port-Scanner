@@ -13,6 +13,7 @@ class Ip:
         self.ipv6_list = []
         self.task_ip = ""
         self.status = ""
+        self.result = []
         logging.info("IP class initialized")
 
     def __del__(self):
@@ -56,8 +57,14 @@ class Ip:
         try:
             logging.info("Started task 'get all ip'")
             task.status = "WORK"
-            return "Your IP v4 is: \n" + str(self.get_ip4_addresses())[1:-1] + \
-                        "\n \nYour IP v6 is:\n" + str(self.get_ip6_addresses())[1:-1]
+            self.result.append("Your IP v4 is: \n")
+            for ip in self.get_ip4_addresses():
+                self.result.append(ip)
+            self.result.append("\n \nYour IP v6 is:\n")
+            for ip in self.get_ip6_addresses():
+                self.result.append(ip)
+            return self.result
+            
         except Exception as e:
             self.status = "ERR"
             app.exception("Error while perfoming task 'all info': ", str(e), terminal, task)

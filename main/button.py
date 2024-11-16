@@ -53,7 +53,8 @@ class Button:
         if pr.gui_button(
                     pr.Rectangle(55, 103, 90, 45),
                     language.get_text_tr('Check_your_ip')):
-            terminal.draw_text = ip.get_all_ip(app, terminal, task)
+            for res in ip.get_all_ip(app, terminal, task):
+                terminal.draw_text += res + '\n'
             task.status = "OK"
             logging.info("Finished task 'get all ip'")
         pr.draw_rectangle_rounded(pr.Rectangle(50, 100, 100, 50), 0.5, 5, colors.DARKRED)
@@ -110,7 +111,7 @@ class Button:
         """ Отрисовка и обработка кнопки отрисовки лога """
         if pr.gui_button(
                     pr.Rectangle(128, 528, 55, 25),
-                    language.get_text_tr('Log')):
+                    language.get_text_tr('Log')):                
             terminal.draw_text = log.get_log(True)
         pr.draw_rectangle_rounded(pr.Rectangle(125, 525, 60, 30), 0.5, 5, colors.DARKBLUE)
         pr.draw_text_ex(language.font, language.get_text_tr('Log'), \

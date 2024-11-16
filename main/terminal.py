@@ -54,10 +54,11 @@ class Terminal:
             for letter in string:
                 if letter != "\n":
                     temp_count += 1
-                    if temp_count > 80:
+                    if temp_count > 75:
                         temp += "\n"
                         temp_count = 0
                 else:
                     temp_count = 0
                 temp += letter
         return temp
+

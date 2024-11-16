@@ -43,6 +43,7 @@ def main():
         pr.close_window()
     except Exception as e:
         app.error_init(e, pr, colors, language, log)
+    pr.unload_font(language.font)
     del app, ip, task, port, keyboard, button, terminal, language, log
     logging.info("App is closed")
 
