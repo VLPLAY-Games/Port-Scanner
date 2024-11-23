@@ -1,7 +1,8 @@
 """ Файл для работы с языком"""
 import logging
 from os.path import exists
-
+from time import sleep
+from russian_lang import RUSSIAN_LANGUAGE
 class Language:
     """ Класс для работы с языком"""
     def __init__(self):
@@ -73,10 +74,14 @@ class Language:
 
     def get_text_tr(self, text):
         """ Получение текста по языку"""
+        self.temp = ""
         if self.selected_lang == "EN":
             return self.translates_en[text]
         elif self.selected_lang == "RU":
-            return self.translates_ru[text]
+            return chr(48)
+            # for letter in self.translates_ru[text]:
+            #     self.temp += RUSSIAN_LANGUAGE[letter]
+            # return self.temp
 
     def set_lang_startup(self, pr):
         """ Изменение языка при запуске программы"""
