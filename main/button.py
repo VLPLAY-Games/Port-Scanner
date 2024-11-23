@@ -63,7 +63,7 @@ class Button:
                         pr.Vector2(60, 117), BUT_FONT_SIZE, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('IP'), \
                         pr.Vector2(100, 132), BUT_FONT_SIZE, 1, colors.WHITE)
-        
+
     def but_next_console(self, pr, terminal, language):
         """ Отрисовка и обработка кнопки следующей страницы терминала """
         if pr.gui_button(
@@ -117,7 +117,7 @@ class Button:
         pr.draw_rectangle_rounded(pr.Rectangle(125, 525, 60, 30), 0.5, 5, colors.DARKBLUE)
         pr.draw_text_ex(language.font, language.get_text_tr('Log'), \
                         pr.Vector2(140, 532), 16, 1, colors.WHITE)
-        
+
     def but_ping(self, pr, terminal, language, task):
         """ Отрисовка и обработка кнопки пинга """
         if pr.gui_button(
@@ -127,10 +127,10 @@ class Button:
             task.task = "ping_start"
             task.status = "WAIT"
             logging.info("Ping command started")
-        pr.draw_rectangle_rounded(pr.Rectangle(200, 200, 112, 62), 0.5, 5, colors.DARKBLUE)
+        pr.draw_rectangle_rounded(pr.Rectangle(200, 200, 112, 62), 0.5, 5, colors.DARKORANGE)
         pr.draw_text_ex(language.font, language.get_text_tr('Ping'), \
                         pr.Vector2(235, 220), BUT_FONT_SIZE, 1, colors.WHITE)
-        
+
     def but_terminal(self, pr, terminal, language, task):
         """ Отрисовка и обработка кнопки кастомного терминала"""
         if pr.gui_button(
@@ -140,10 +140,10 @@ class Button:
             task.task = "cus_terminal"
             task.status = "WAIT"
             logging.info("Custom terminal command started")
-        pr.draw_rectangle_rounded(pr.Rectangle(350, 200, 112, 62), 0.5, 5, colors.DARKBLUE)
+        pr.draw_rectangle_rounded(pr.Rectangle(350, 200, 112, 62), 0.5, 5, colors.DARKAQUA)
         pr.draw_text_ex(language.font, language.get_text_tr('Terminal'), \
                         pr.Vector2(370, 222), BUT_FONT_SIZE, 1, colors.WHITE)
-        
+
     def but_active_devices(self, pr, terminal, language, task):
         """ Отрисовка и обработка кнопки проверки активных устройств в сети"""
         if pr.gui_button(
@@ -153,7 +153,7 @@ class Button:
             task.task = "act_devices"
             task.status = "WAIT"
             logging.info("Active devices command started")
-        pr.draw_rectangle_rounded(pr.Rectangle(50, 300, 112, 62), 0.5, 5, colors.DARKBLUE)
+        pr.draw_rectangle_rounded(pr.Rectangle(50, 300, 112, 62), 0.5, 5, colors.DARKGREENORANGE)
         pr.draw_text_ex(language.font, language.get_text_tr('Active'), \
                         pr.Vector2(80, 313), BUT_FONT_SIZE, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('devices'), \
