@@ -25,6 +25,7 @@ class Language:
             "IP" : "IP",
             "ports" : "порты",
             "devices" : "устройства",
+            "and ports" : "и порты",
         }
 
         self.translates_en = {
