@@ -7,15 +7,21 @@ class App():
     """ Основной класс приложения"""
     def __init__(self):
         """ Инициализация класса """
+        logging.info("Started App class initializing")
         self.version = VERSION
+        logging.info("Set App version to " + self.version)
         self.width = WIDTH
+        logging.info("Set App width to " + str(self.width))
         self.height = HEIGHT
+        logging.info("Set App height to " + str(self.height))
         self.fps = FPS
+        logging.info("Set App FPS to " + str(self.fps))
         self.app_name = APP_NAME
+        logging.info("Set App name to " + self.app_name)
         self.first_port = 0
         self.end_port = 0
         self.enter_pressed = False
-        logging.info("App class initialized")
+        logging.info("App class initialized successfully")
 
     def __del__(self):
         """ Деинициализация """

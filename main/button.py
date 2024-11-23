@@ -8,7 +8,8 @@ class Button:
     """ Класс для работы с кнопками"""
     def __init__(self):
         """ Инициализация """
-        logging.info("Button class initialized")
+        logging.info("Started Button class initializing")
+        logging.info("Button class initialized successfully")
 
     def __del__(self):
         """ Деинициализация """

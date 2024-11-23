@@ -13,12 +13,13 @@ class Ip:
     """ Класс для работы с IP """
     def __init__(self):
         """ Инициализация """
+        logging.info("Started Ip class initializing")
         self.ipv4_list = []
         self.ipv6_list = []
         self.task_ip = ""
         self.status = ""
         self.result = []
-        logging.info("IP class initialized")
+        logging.info("IP class initialized successfully")
 
     def __del__(self):
         """ Деинициализация """

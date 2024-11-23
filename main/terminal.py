@@ -7,6 +7,7 @@ class Terminal:
     """ Класс для работы с Терминалом """
     def __init__(self):
         """ Инициализация """
+        logging.info("Started Terminal class initializing")
         self.page = 0
         self.draw_text = ""
         self.terminal_active = False
@@ -14,7 +15,7 @@ class Terminal:
         self.temp = ""
         self.arr_text = []
         self.custom_task = ""
-        logging.info("Terminal class initialized")
+        logging.info("Terminal class initialized successfully")
 
     def __del__(self):
         """ Деинициализация """

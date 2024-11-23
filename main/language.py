@@ -6,6 +6,7 @@ class Language:
     """ Класс для работы с языком"""
     def __init__(self):
         """ Инициализация """
+        logging.info("Started Language class initializing")
         self.font = []
         self.lang_file = __file__
         self.selected_lang = ""
@@ -27,7 +28,7 @@ class Language:
             "devices" : "устройства",
             "and ports" : "и порты",
         }
-
+        logging.info("Loaded translates to Russian language")
         self.translates_en = {
             "Select_option" : "Select option",
             "Check_your" : "Check your",
@@ -46,8 +47,9 @@ class Language:
             "ports" : "ports",
             "devices" : "devices",
         }
+        logging.info("Loaded translates to English language")
         self.temp = ""
-        logging.info("Language class initialized")
+        logging.info("Language class initialized successfully")
 
     def __del__(self):
         """ Деинициализация """

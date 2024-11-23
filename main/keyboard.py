@@ -7,9 +7,10 @@ class Keyboard:
     """ Класс для работы с клавиатурой"""
     def __init__(self):
         """ Инициализация """
+        logging.info("Started Keyboard class initializing")
         self.keys = []
         self.enter_pressed = False
-        logging.info("Keyboard class initialized")
+        logging.info("Keyboard class initialized successfully")
 
     def __del__(self):
         """ Деинициализация """

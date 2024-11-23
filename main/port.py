@@ -8,10 +8,11 @@ class Port:
     """ Класс для работы с портами"""
     def __init__(self):
         """ Инициализация """
+        logging.info("Started Port class initializing")
         self.open_ports = []
         self.first_port = 0
         self.end_port = 0
-        logging.info("Port class initialized")
+        logging.info("Port class initialized successfully")
 
     def __del__(self):
         """ Деинициализация """

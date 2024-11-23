@@ -8,11 +8,12 @@ class Task:
     """ Класс для работы с заданиями"""
     def __init__(self):
         """ Инициализация """
+        logging.info("Started Task class initializing")
         self.name_task = ""
         self.task = ""
         self.status = ""
         self.check = ""
-        logging.info("Task class initialized")
+        logging.info("Task class initialized successfully")
 
     def __del__(self):
         """ Деинициализация """
