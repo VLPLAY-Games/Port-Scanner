@@ -94,17 +94,23 @@ class Ip:
             logging.error("Error while pinging " + self.task_ip + " " + str(e))
         logging.info("Ping command completed")
 
-    def active_devices(self, ip, terminal):
-        self.temp = 0
-        for i in ip_network(ip, False):
-            try:
-                terminal.draw_text += subprocess.check_output("ping -c 1 " + str(i), shell=True).decode("utf-8")
-                self.temp += 1
-            except:
-                pass
-        if self.temp == 0:
-            terminal.draw_text += "No active devices found"
-        else:
-            terminal.draw_text += "Found " + str(self.temp) + " active devices"
-        
+    def active_devices(self, terminal, task):
+        try:
+            self.temp = 0
+            for i in ip_network(self.task_ip, False):
+                try:
+                    terminal.draw_text += subprocess.check_output("ping -c 1 " + str(i), shell=True).decode("utf-8")
+                    self.temp += 1
+                except:
+                    pass
+            if self.temp == 0:
+                terminal.draw_text += "No active devices found"
+            else:
+                terminal.draw_text += "Found " + str(self.temp) + " active devices"
+            task.status = "OK"
+            logging.info("Active devices command successfully")
+        except Exception as e:
+            terminal.draw_text += "\nAn error was occured"
+            task.status = "ERR"
+            logging.error("Error while perfoming active devices command task " + str(e))
         logging.info("Active devices command completed")

@@ -81,6 +81,9 @@ class Task:
                     if self.task == "cus_terminal":
                         terminal.custom_task = ''.join(keyboard.get_keys())
                         keyboard.keys_erase()
+                        self.status = "WORK"
+                        app.fast_draw_text("Perfoming task...", \
+                                   pr, colors, terminal, self, language)
                         terminal.custom_terminal()
                 
                 except Exception as e:
@@ -88,9 +91,9 @@ class Task:
 
                 try:
                     if self.task == "act_devices":
-                        terminal.custom_task = ''.join(keyboard.get_keys())
+                        ip.task_ip = ''.join(keyboard.get_keys())
                         keyboard.keys_erase()
-                        ip.active_devices(ip, terminal)
+                        ip.active_devices(terminal, self)
                 
                 except Exception as e:
                     app.exception("Error while perfoming active devices task: ", str(e),terminal, task)  
