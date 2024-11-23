@@ -6,6 +6,7 @@ from ipaddress import ip_address, ip_network
 import netifaces
 from config import VERSION
 import subprocess
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 class Ip:
     """ Класс для работы с IP """
@@ -94,23 +95,25 @@ class Ip:
             logging.error("Error while pinging " + self.task_ip + " " + str(e))
         logging.info("Ping command completed")
 
-    def active_devices(self, terminal, task):
+    def ping_device(self, ip):
         try:
-            self.temp = 0
-            for i in ip_network(self.task_ip, False):
-                try:
-                    terminal.draw_text += subprocess.check_output("ping -c 1 " + str(i), shell=True).decode("utf-8")
-                    self.temp += 1
-                except:
-                    pass
-            if self.temp == 0:
-                terminal.draw_text += "No active devices found"
-            else:
-                terminal.draw_text += "Found " + str(self.temp) + " active devices"
-            task.status = "OK"
-            logging.info("Active devices command successfully")
-        except Exception as e:
-            terminal.draw_text += "\nAn error was occured"
-            task.status = "ERR"
-            logging.error("Error while perfoming active devices command task " + str(e))
-        logging.info("Active devices command completed")
+            subprocess.check_output(f"ping -c 1 -W 1 {ip}", shell=True)
+            return ip
+        except subprocess.CalledProcessError:
+            return None
+
+    def active_devices(self, terminal, task):
+        active_ips = []
+        with ThreadPoolExecutor(max_workers=100) as executor:
+            futures = {executor.submit(self.ping_device, str(ip)): str(ip) for ip in ip_network(self.task_ip, False)}
+            for future in futures:
+                ip = future.result()
+                if ip: 
+                    active_ips.append(ip)
+        if active_ips:
+            terminal.draw_text += f"Found {len(active_ips)} active devices: \n"
+            for active in active_ips:
+                terminal.draw_text += active + "\n"
+        else:
+            terminal.draw_text += "No active devices found"
+        task.status = "OK" if active_ips else "ERR"
