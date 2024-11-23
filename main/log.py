@@ -13,7 +13,6 @@ class Log:
         self.temp = open("report.log", "a")
         self.temp.close()
         os.remove("report.log")
-        # Логирование приложения
         logging.basicConfig(filename='report.log', \
                     format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
         logging.info("             Port scanner                 ")

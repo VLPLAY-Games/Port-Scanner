@@ -11,8 +11,8 @@ class Language:
         self.selected_lang = ""
         self.translates_ru = {
             "Select_option" : "Выберите опцию",
-            "Check_your_ip" : "Проверить IP",
-            "Check_all_ports" : "Проверить все порты",
+            "Check_your" : "Проверить IP",
+            "Check_all" : "Проверить все",
             "All_info" : "Вся информация",
             "Start": "Старт",
             "Help" : "Помощь",
@@ -20,13 +20,17 @@ class Language:
             "Result" : "Результаты",
             "Ping" : "Пинг",
             "Terminal" : "Терминал",
-            "Active devices" : "Активные устройства",
+            "Active" : "Активные",
+            "Custom IP" : "Кастом IP",
+            "IP" : "IP",
+            "ports" : "порты",
+            "devices" : "устройства",
         }
 
         self.translates_en = {
             "Select_option" : "Select option",
-            "Check_your_ip" : "Check your IP",
-            "Check_all_ports" : "Check all ports",
+            "Check_your" : "Check your",
+            "Check_all" : "Check all",
             "All_info" : "All info",
             "Start": "Start",
             "Help" : "Help",
@@ -34,7 +38,12 @@ class Language:
             "Result" : "Result",
             "Ping" : "Ping",
             "Terminal" : "Terminal",
-            "Active devices" : "Active devices",
+            "Active" : "Active",
+            "Custom IP" : "Custom IP",
+            "and ports" : "and ports",
+            "IP" : "IP",
+            "ports" : "ports",
+            "devices" : "devices",
         }
         logging.info("Language class initialized")
 
