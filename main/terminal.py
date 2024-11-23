@@ -2,8 +2,6 @@
 
 import logging
 import subprocess
-import os
-import colors
 
 class Terminal:
     """ Класс для работы с Терминалом """
@@ -77,20 +75,22 @@ class Terminal:
         """ Проверка на несколько страниц"""
         self.arr_text = []
         temp_str = []
-        
+
         for string in self.draw_text.split(sep="\n"):
             temp_str.append(string)
-            
+
             if len(temp_str) >= 25:
                 self.arr_text.append("\n".join(temp_str))
                 temp_str = []
-        
+
         if temp_str:
             self.arr_text.append("\n".join(temp_str))
 
-    def custom_terminal(self):   
+    def custom_terminal(self):
+        """ Кастомная задача """
         try:
-            self.draw_text += subprocess.check_output(self.custom_task.lower(), shell=True).decode("utf-8")
+            self.draw_text += subprocess.check_output(self.custom_task.lower(), \
+                                                      shell=True).decode("utf-8")
             logging.info("Custom terminal task command completed")
         except Exception as e:
             logging.error(f"Command execution error: {str(e)}")

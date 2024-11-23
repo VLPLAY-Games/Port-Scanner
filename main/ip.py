@@ -3,11 +3,11 @@
 import logging
 import os
 from ipaddress import ip_address, ip_network
-import netifaces
-from config import VERSION
 import subprocess
 from concurrent.futures import ThreadPoolExecutor
 import socket
+import netifaces
+from config import VERSION
 
 class Ip:
     """ Класс для работы с IP """
@@ -81,7 +81,7 @@ class Ip:
             logging.warning("IP Adress is not valid " + str(e))
             return "IP Adress is not valid"
         return "OK"
-    
+
     def ping(self, terminal, task):
         """ Функция пинга """
         parameter = '-n' if os.name == 'nt' else '-c'
@@ -97,6 +97,7 @@ class Ip:
         logging.info("Ping command completed")
 
     def ping_device(self, ip):
+        """ Пропинговать IP """
         try:
             subprocess.check_output(f"ping -c 1 -W 1 {ip}", shell=True)
             return ip
@@ -104,6 +105,7 @@ class Ip:
             return None
 
     def get_mac_address(self, ip):
+        """ Получить мак адрес устройства """
         try:
             # Выполняем arp для получения MAC-адреса
             output = subprocess.check_output(f"arp {ip}", shell=True).decode()
@@ -117,6 +119,7 @@ class Ip:
             return None
 
     def get_device_name(self, ip):
+        """ Получить имя устройства"""
         try:
             # Получаем имя устройства по IP
             return socket.gethostbyaddr(str(ip))[0]
@@ -124,11 +127,13 @@ class Ip:
             return None
 
     def active_devices(self, terminal, task):
+        """ Найти активные устройства в локальной сети"""
         active_devices_info = []
-        
+
         with ThreadPoolExecutor(max_workers=100) as executor:
-            futures = {executor.submit(self.ping_device, str(ip)): str(ip) for ip in ip_network(self.task_ip, False)}
-            
+            futures = {executor.submit(self.ping_device, str(ip)): \
+                       str(ip) for ip in ip_network(self.task_ip, False)}
+
             for future in futures:
                 ip = future.result()
                 if ip:
@@ -139,8 +144,9 @@ class Ip:
         if active_devices_info:
             terminal.draw_text += f"Found {len(active_devices_info)} active devices: \n"
             for ip, mac, name in active_devices_info:
-                terminal.draw_text += f"IP: {ip}, MAC: {mac if mac else 'N/A'}, Name: {name if name else 'N/A'}\n"
+                terminal.draw_text += f"IP: {ip}, MAC: {mac if mac else 'N/A'},\
+                      Name: {name if name else 'N/A'}\n"
         else:
             terminal.draw_text += "No active devices found"
-        
+
         task.status = "OK" if active_devices_info else "ERR"

@@ -1,7 +1,6 @@
 """ Файл для работы с языком"""
 import logging
 from os.path import exists
-from time import sleep
 from translators import RUSSIAN_LANGUAGE
 class Language:
     """ Класс для работы с языком"""
@@ -47,6 +46,7 @@ class Language:
             "ports" : "ports",
             "devices" : "devices",
         }
+        self.temp = ""
         logging.info("Language class initialized")
 
     def __del__(self):
@@ -74,7 +74,6 @@ class Language:
 
     def get_text_tr(self, text):
         """ Получение текста по языку"""
-        self.temp = ""
         if self.selected_lang == "EN":
             return self.translates_en[text]
         elif self.selected_lang == "RU":
