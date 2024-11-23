@@ -18,6 +18,7 @@ class Language:
             "Help" : "Помощь",
             "Log" : "Логи",
             "Result" : "Результаты",
+            "Ping" : "Пинг",
         }
 
         self.translates_en = {
@@ -29,6 +30,7 @@ class Language:
             "Help" : "Help",
             "Log" : "Log",
             "Result" : "Result",
+            "Ping" : "Ping",
         }
         logging.info("Language class initialized")
 

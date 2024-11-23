@@ -1,9 +1,11 @@
 """ Файл для работы с IP"""
 
 import logging
+import os
 from ipaddress import ip_address
 import netifaces
 from config import VERSION
+import subprocess
 
 class Ip:
     """ Класс для работы с IP """
@@ -77,3 +79,10 @@ class Ip:
             logging.warning("IP Adress is not valid " + str(e))
             return "IP Adress is not valid"
         return "OK"
+    
+    def ping(self, terminal):
+        """ Функция пинга """
+        parameter = '-n' if os.name == 'nt' else '-c'
+        command = ['ping', parameter, '5', self.task_ip]
+        terminal.draw_text += subprocess.check_output(command).decode("utf-8")
+        logging.info("Ping command completed")

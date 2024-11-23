@@ -23,50 +23,59 @@ class Task:
         # Проверка Enter
         if keyboard.enter_pressed:
             try:
-                if self.task == "ip_ports":
-                    ip.task_ip = ''.join(keyboard.get_keys())
-                    keyboard.keys_erase()
-                    self.check = ip.check_ip(ip.task_ip)
+                try:
+                    if self.task == "ip_ports":
+                        ip.task_ip = ''.join(keyboard.get_keys())
+                        keyboard.keys_erase()
+                        self.check = ip.check_ip(ip.task_ip)
 
-                    if self.check == "OK":
-                        terminal.draw_text += ip.task_ip + "\nEnter first port: \n"
-                        self.task = "ip_first"
-                    else:
-                        terminal.draw_text += str(ip.task_ip) + \
-                            "\n" + self.check + ". Try again"
-                        self.task = ""
-                        terminal.terminal_active = False
+                        if self.check == "OK":
+                            terminal.draw_text += ip.task_ip + "\nEnter first port: \n"
+                            self.task = "ip_first"
+                        else:
+                            terminal.draw_text += str(ip.task_ip) + \
+                                "\n" + self.check + ". Try again"
+                            self.task = ""
+                            terminal.terminal_active = False
 
-                elif self.task == "ip_first":
-                    port.first_port = int(''.join(keyboard.get_keys()))
-                    keyboard.keys_erase()
-                    self.check = port.check_port_num(port.first_port)
+                    elif self.task == "ip_first":
+                        port.first_port = int(''.join(keyboard.get_keys()))
+                        keyboard.keys_erase()
+                        self.check = port.check_port_num(port.first_port)
 
-                    if self.check == "OK":
-                        terminal.draw_text += str(port.first_port) + "\nEnter end port: \n"
-                        self.task = "ip_end"
-                    else:
-                        terminal.draw_text += str(port.first_port) + \
-                            "\n" + self.check + ". Try again"
-                        self.task = ""
-                        terminal.terminal_active = False
-                elif self.task == "ip_end":
-                    port.end_port = int(''.join(keyboard.get_keys()))
-                    keyboard.keys_erase()
+                        if self.check == "OK":
+                            terminal.draw_text += str(port.first_port) + "\nEnter end port: \n"
+                            self.task = "ip_end"
+                        else:
+                            terminal.draw_text += str(port.first_port) + \
+                                "\n" + self.check + ". Try again"
+                            self.task = ""
+                            terminal.terminal_active = False
+                    elif self.task == "ip_end":
+                        port.end_port = int(''.join(keyboard.get_keys()))
+                        keyboard.keys_erase()
 
-                    self.check = port.check_port_num(port.end_port)
+                        self.check = port.check_port_num(port.end_port)
 
-                    if self.check == "OK":
-                        self.task = "ip_ports_start"
-                    else:
-                        terminal.draw_text += str(port.end_port) + \
-                            "\n" + self.check + ". Try again"
-                        self.task = ""
-                        terminal.terminal_active = False
-
+                        if self.check == "OK":
+                            self.task = "ip_ports_start"
+                        else:
+                            terminal.draw_text += str(port.end_port) + \
+                                "\n" + self.check + ". Try again"
+                            self.task = ""
+                            terminal.terminal_active = False
+                except Exception as e:
+                    app.exception("Error while perfoming custom task: ", str(e),terminal, task)
+                try:
+                    if self.task == "ping_start":
+                        ip.task_ip = ''.join(keyboard.get_keys())
+                        keyboard.keys_erase()
+                        ip.ping(terminal)
+                except Exception as e:
+                    app.exception("Error while perfoming ping task: ", str(e),terminal, task)
                 keyboard.enter_pressed = False
             except Exception as e:
-                app.exception("Error while perfoming custom task: ", str(e),terminal, task)
+                app.exception("Error while checking task: ", str(e),terminal, task)
 
         # Вся информация
         if self.task == "all_info":

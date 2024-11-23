@@ -54,31 +54,33 @@ class Terminal:
 
     def check_text(self):
         """ Проверка переноса строки"""
-        temp = ""
+        temp = []
         temp_count = 0
         for string in self.draw_text:
             for letter in string:
                 if letter != "\n":
                     temp_count += 1
                     if temp_count > 75:
-                        temp += "\n"
-                        temp_count = 0
+                        temp.append("\n")
+                        temp_count = 1
                 else:
                     temp_count = 0
-                temp += letter
-        return temp
+                temp.append(letter)
+        return ''.join(temp)
+
 
     def check_pages(self):
         """ Проверка на несколько страниц"""
-        temp = 0
         self.arr_text = []
-        temp_str = ""
+        temp_str = []
+        
         for string in self.draw_text.split(sep="\n"):
-            temp_str += string + "\n"
-            if temp > 25:
-                self.arr_text.append(temp_str)
-                temp_str = ""
-                temp = 0
-            temp += 1
-        if temp <= 25:
-            self.arr_text.append(temp_str)
+            temp_str.append(string)
+            
+            if len(temp_str) >= 25:
+                self.arr_text.append("\n".join(temp_str))
+                temp_str = []
+        
+        if temp_str:
+            self.arr_text.append("\n".join(temp_str))
+

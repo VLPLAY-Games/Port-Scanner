@@ -116,6 +116,20 @@ class Button:
         pr.draw_rectangle_rounded(pr.Rectangle(125, 525, 60, 30), 0.5, 5, colors.DARKBLUE)
         pr.draw_text_ex(language.font, language.get_text_tr('Log'), \
                         pr.Vector2(140, 532), 16, 1, colors.WHITE)
+        
+    def but_ping(self, pr, terminal, language, task):
+        """ Отрисовка и обработка кнопки пинга """
+        if pr.gui_button(
+                    pr.Rectangle(205, 203, 90, 45),
+                    language.get_text_tr('Ping')):
+            terminal.draw_text = "Enter IP or link to ping: \n"
+            terminal.terminal_active = True
+            task.task = "ping_start"
+            task.status = "WAIT"
+            logging.info("Ping command started")
+        pr.draw_rectangle_rounded(pr.Rectangle(200, 200, 100, 50), 0.5, 5, colors.DARKBLUE)
+        pr.draw_text_ex(language.font, language.get_text_tr('Ping'), \
+                        pr.Vector2(230, 215), 16, 1, colors.WHITE)
 
     def check_all_but(self, ip, pr, terminal, task, app, language, information, log):
         """ Проверка всех кнопок """
@@ -129,3 +143,4 @@ class Button:
         self.but_lang_rus(pr, language)
         self.but_help(pr, information, terminal, language)
         self.but_log(pr, terminal, language, log)
+        self.but_ping(pr, terminal, language, task)
