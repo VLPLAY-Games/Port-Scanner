@@ -70,9 +70,31 @@ class Task:
                     if self.task == "ping_start":
                         ip.task_ip = ''.join(keyboard.get_keys())
                         keyboard.keys_erase()
-                        ip.ping(terminal)
+                        self.status = "WORK"
+                        app.fast_draw_text("Pinging...", \
+                                   pr, colors, terminal, task, language)
+                        ip.ping(terminal, self)
                 except Exception as e:
                     app.exception("Error while perfoming ping task: ", str(e),terminal, task)
+
+                try:
+                    if self.task == "cus_terminal":
+                        terminal.custom_task = ''.join(keyboard.get_keys())
+                        keyboard.keys_erase()
+                        terminal.custom_terminal()
+                
+                except Exception as e:
+                    app.exception("Error while perfoming custom terminal task: ", str(e),terminal, task)  
+
+                try:
+                    if self.task == "act_devices":
+                        terminal.custom_task = ''.join(keyboard.get_keys())
+                        keyboard.keys_erase()
+                        ip.active_devices(ip, terminal)
+                
+                except Exception as e:
+                    app.exception("Error while perfoming active devices task: ", str(e),terminal, task)  
+
                 keyboard.enter_pressed = False
             except Exception as e:
                 app.exception("Error while checking task: ", str(e),terminal, task)

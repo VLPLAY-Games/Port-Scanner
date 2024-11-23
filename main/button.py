@@ -2,6 +2,7 @@
 
 import logging
 import colors
+from config import INFORMATION
 
 class Button:
     """ Класс для работы с кнопками"""
@@ -97,12 +98,12 @@ class Button:
         pr.draw_rectangle_rounded(pr.Rectangle(340, 50, 50, 25), 0.5, 5, colors.DARKGREENBLUE)
         pr.draw_text_ex(language.font, 'English', pr.Vector2(347, 58), 11, 1, colors.WHITE)
 
-    def but_help(self, pr, information, terminal, language):
+    def but_help(self, pr, terminal, language):
         """ Отрисовка и обработка кнопки информации о функциях """
         if pr.gui_button(
                     pr.Rectangle(53, 528, 55, 25),
                     language.get_text_tr('Help')):
-            terminal.draw_text = information
+            terminal.draw_text = INFORMATION
         pr.draw_rectangle_rounded(pr.Rectangle(50, 525, 60, 30), 0.5, 5, colors.DARKBLUE)
         pr.draw_text_ex(language.font, language.get_text_tr('Help'), \
                         pr.Vector2(63, 533), 16, 1, colors.WHITE)
@@ -130,8 +131,36 @@ class Button:
         pr.draw_rectangle_rounded(pr.Rectangle(200, 200, 100, 50), 0.5, 5, colors.DARKBLUE)
         pr.draw_text_ex(language.font, language.get_text_tr('Ping'), \
                         pr.Vector2(230, 215), 16, 1, colors.WHITE)
+        
+    def but_terminal(self, pr, terminal, language, task):
+        """ Отрисовка и обработка кнопки кастомного терминала"""
+        if pr.gui_button(
+                    pr.Rectangle(355, 203, 90, 45),
+                    language.get_text_tr('Terminal')):
+            terminal.draw_text = "Enter command: \n"
+            terminal.terminal_active = True
+            task.task = "cus_terminal"
+            task.status = "WAIT"
+            logging.info("Custom terminal command started")
+        pr.draw_rectangle_rounded(pr.Rectangle(350, 200, 100, 50), 0.5, 5, colors.DARKBLUE)
+        pr.draw_text_ex(language.font, language.get_text_tr('Terminal'), \
+                        pr.Vector2(380, 215), 16, 1, colors.WHITE)
+        
+    def but_active_devices(self, pr, terminal, language, task):
+        """ Отрисовка и обработка кнопки проверки активных устройств в сети"""
+        if pr.gui_button(
+                    pr.Rectangle(55, 303, 90, 45),
+                    language.get_text_tr('Active devices')):
+            terminal.draw_text = "Enter command: \n"
+            terminal.terminal_active = True
+            task.task = "act_devices"
+            task.status = "WAIT"
+            logging.info("Active devices command started")
+        pr.draw_rectangle_rounded(pr.Rectangle(50, 300, 100, 50), 0.5, 5, colors.DARKBLUE)
+        pr.draw_text_ex(language.font, language.get_text_tr('Active devices'), \
+                        pr.Vector2(80, 315), 16, 1, colors.WHITE)
 
-    def check_all_but(self, ip, pr, terminal, task, app, language, information, log):
+    def check_all_but(self, ip, pr, terminal, task, app, language, log):
         """ Проверка всех кнопок """
         self.but_all_info(pr, task, language)
         self.but_custom_task(pr, terminal, task, language)
@@ -141,6 +170,8 @@ class Button:
         self.but_prev_console(pr, terminal, language)
         self.but_lang_eng(pr,language)
         self.but_lang_rus(pr, language)
-        self.but_help(pr, information, terminal, language)
+        self.but_help(pr, terminal, language)
         self.but_log(pr, terminal, language, log)
         self.but_ping(pr, terminal, language, task)
+        self.but_terminal(pr, terminal, language, task)
+        self.but_active_devices(pr, terminal, language, task)

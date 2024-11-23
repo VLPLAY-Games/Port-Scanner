@@ -19,6 +19,8 @@ class Language:
             "Log" : "Логи",
             "Result" : "Результаты",
             "Ping" : "Пинг",
+            "Terminal" : "Терминал",
+            "Active devices" : "Активные устройства",
         }
 
         self.translates_en = {
@@ -31,6 +33,8 @@ class Language:
             "Log" : "Log",
             "Result" : "Result",
             "Ping" : "Ping",
+            "Terminal" : "Terminal",
+            "Active devices" : "Active devices",
         }
         logging.info("Language class initialized")
 

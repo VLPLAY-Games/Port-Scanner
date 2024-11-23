@@ -1,6 +1,9 @@
 """ Файл для работы с терминалом"""
 
 import logging
+import subprocess
+import os
+import colors
 
 class Terminal:
     """ Класс для работы с Терминалом """
@@ -12,6 +15,7 @@ class Terminal:
         self.pages = 0
         self.temp = ""
         self.arr_text = []
+        self.custom_task = ""
         logging.info("Terminal class initialized")
 
     def __del__(self):
@@ -84,3 +88,9 @@ class Terminal:
         if temp_str:
             self.arr_text.append("\n".join(temp_str))
 
+    def custom_terminal(self):   
+        try:
+            self.draw_text += subprocess.check_output(self.custom_task.lower(), shell=True).decode("utf-8")
+            logging.info("Custom terminal task command completed")
+        except Exception as e:
+            logging.error(f"Command execution error: {str(e)}")

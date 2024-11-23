@@ -2,7 +2,7 @@
 
 import logging
 import os
-from ipaddress import ip_address
+from ipaddress import ip_address, ip_network
 import netifaces
 from config import VERSION
 import subprocess
@@ -80,9 +80,31 @@ class Ip:
             return "IP Adress is not valid"
         return "OK"
     
-    def ping(self, terminal):
+    def ping(self, terminal, task):
         """ Функция пинга """
         parameter = '-n' if os.name == 'nt' else '-c'
         command = ['ping', parameter, '5', self.task_ip]
-        terminal.draw_text += subprocess.check_output(command).decode("utf-8")
+        try:
+            terminal.draw_text += subprocess.check_output(command).decode("utf-8")
+            task.status = "OK"
+            logging.info("Ping successfull")
+        except Exception as e:
+            terminal.draw_text += "\nAn error was occured"
+            task.status = "ERR"
+            logging.error("Error while pinging " + self.task_ip + " " + str(e))
         logging.info("Ping command completed")
+
+    def active_devices(self, ip, terminal):
+        self.temp = 0
+        for i in ip_network(ip, False):
+            try:
+                terminal.draw_text += subprocess.check_output("ping -c 1 " + str(i), shell=True).decode("utf-8")
+                self.temp += 1
+            except:
+                pass
+        if self.temp == 0:
+            terminal.draw_text += "No active devices found"
+        else:
+            terminal.draw_text += "Found " + str(self.temp) + " active devices"
+        
+        logging.info("Active devices command completed")
