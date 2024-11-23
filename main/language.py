@@ -2,7 +2,7 @@
 import logging
 from os.path import exists
 from time import sleep
-from russian_lang import RUSSIAN_LANGUAGE
+from translators import RUSSIAN_LANGUAGE
 class Language:
     """ Класс для работы с языком"""
     def __init__(self):
@@ -12,7 +12,7 @@ class Language:
         self.selected_lang = ""
         self.translates_ru = {
             "Select_option" : "Выберите опцию",
-            "Check_your" : "Проверить IP",
+            "Check_your" : "Проверить",
             "Check_all" : "Проверить все",
             "All_info" : "Вся информация",
             "Start": "Старт",
@@ -22,8 +22,8 @@ class Language:
             "Ping" : "Пинг",
             "Terminal" : "Терминал",
             "Active" : "Активные",
-            "Custom IP" : "Кастом IP",
-            "IP" : "IP",
+            "Custom IP" : "Кастом айпи",
+            "IP" : "айпи",
             "ports" : "порты",
             "devices" : "устройства",
             "and ports" : "и порты",
@@ -78,10 +78,9 @@ class Language:
         if self.selected_lang == "EN":
             return self.translates_en[text]
         elif self.selected_lang == "RU":
-            return chr(48)
-            # for letter in self.translates_ru[text]:
-            #     self.temp += RUSSIAN_LANGUAGE[letter]
-            # return self.temp
+            for letter in self.translates_ru[text]:
+                self.temp += chr(RUSSIAN_LANGUAGE[letter])
+            return self.temp
 
     def set_lang_startup(self, pr):
         """ Изменение языка при запуске программы"""
