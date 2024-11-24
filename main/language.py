@@ -76,6 +76,7 @@ class Language:
 
     def get_text_tr(self, text):
         """ Получение текста по языку"""
+        self.temp = ""
         if self.selected_lang == "EN":
             return self.translates_en[text]
         elif self.selected_lang == "RU":
