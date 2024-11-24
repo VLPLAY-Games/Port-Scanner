@@ -1,5 +1,7 @@
 """ Для работы с переводами """
 
+from config import VERSION
+
 RUSSIAN_LANGUAGE = {
     ' ': 32,
     '—': 33,
@@ -99,3 +101,63 @@ RUSSIAN_LANGUAGE = {
 }
 
 ENGLISH_ALP = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y']
+
+TRANSLATES_EN = {
+            "Select_option" : "Select option",
+            "Check_your" : "Check your",
+            "Check_all" : "Check all",
+            "All_info" : "All info",
+            "Start": "Start",
+            "Help" : "Help",
+            "Log" : "Log",
+            "Result " : "Result ",
+            "Ping" : "Ping",
+            "Terminal" : "Terminal",
+            "Active" : "Active",
+            "Custom IP" : "Custom IP",
+            "and ports" : "and ports",
+            "IP" : "IP",
+            "ports" : "ports",
+            "devices" : "devices",
+            "(Working)" : "(Working)",
+            "(Complete)" : "(Complete)",
+            "(Error)" : "(Error)",
+            "(Wait input)" : "(Wait input)",
+            "Russian" : "Russian",
+            "English" : "English",
+            "<<" : "<<",
+            ">>" : ">>",
+            "Port Scanner" : "Port Scanner",
+            VERSION : VERSION,
+            " by VL_PLAY Games " : " by VL_PLAY Games ",
+        }
+
+TRANSLATES_RU = {
+            "Select_option" : "Выберите опцию",
+            "Check_your" : "Проверить",
+            "Check_all" : "Проверить все",
+            "All_info" : "Вся информация",
+            "Start": "Старт",
+            "Help" : "Помощь",
+            "Log" : "Логи",
+            "Result " : "Результат ",
+            "Ping" : "Пинг",
+            "Terminal" : "Терминал",
+            "Active" : "Активные",
+            "Custom IP" : "Кастом айпи",
+            "IP" : "айпи",
+            "ports" : "порты",
+            "devices" : "устройства",
+            "and ports" : "и порты",
+            "(Working)" : "(Выполняется)",
+            "(Complete)" : "(Выполнено)",
+            "(Error)" : "(Ошибка)",
+            "(Wait input)" : "(Ожидание ввода)",
+            "Russian" : "Русский",
+            "English" : "Английский",
+            "<<" : "<<",
+            ">>" : ">>",
+            "Port Scanner" : "Порт Сканер",
+            VERSION : " версии 0.97",
+            " by VL_PLAY Games " : "",
+        }

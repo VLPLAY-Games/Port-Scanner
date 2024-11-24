@@ -1,7 +1,7 @@
 """ Файл для работы с языком"""
 import logging
 from os.path import exists
-from translators import RUSSIAN_LANGUAGE
+from translators import RUSSIAN_LANGUAGE, TRANSLATES_EN, TRANSLATES_RU
 class Language:
     """ Класс для работы с языком"""
     def __init__(self):
@@ -10,43 +10,9 @@ class Language:
         self.font = []
         self.lang_file = __file__
         self.selected_lang = ""
-        self.translates_ru = {
-            "Select_option" : "Выберите опцию",
-            "Check_your" : "Проверить",
-            "Check_all" : "Проверить все",
-            "All_info" : "Вся информация",
-            "Start": "Старт",
-            "Help" : "Помощь",
-            "Log" : "Логи",
-            "Result" : "Результаты",
-            "Ping" : "Пинг",
-            "Terminal" : "Терминал",
-            "Active" : "Активные",
-            "Custom IP" : "Кастом айпи",
-            "IP" : "айпи",
-            "ports" : "порты",
-            "devices" : "устройства",
-            "and ports" : "и порты",
-        }
+        self.translates_ru = TRANSLATES_RU
         logging.info("Loaded translates to Russian language")
-        self.translates_en = {
-            "Select_option" : "Select option",
-            "Check_your" : "Check your",
-            "Check_all" : "Check all",
-            "All_info" : "All info",
-            "Start": "Start",
-            "Help" : "Help",
-            "Log" : "Log",
-            "Result" : "Result",
-            "Ping" : "Ping",
-            "Terminal" : "Terminal",
-            "Active" : "Active",
-            "Custom IP" : "Custom IP",
-            "and ports" : "and ports",
-            "IP" : "IP",
-            "ports" : "ports",
-            "devices" : "devices",
-        }
+        self.translates_en = TRANSLATES_EN
         logging.info("Loaded translates to English language")
         self.temp = ""
         logging.info("Language class initialized successfully")
@@ -62,11 +28,13 @@ class Language:
             if lang_name == "RU":
                 self.selected_lang = "RU"
                 self.lang_file.write("RU")
+                pr.unload_font(self.font)
                 self.font = pr.load_font_ex('fonts/cyrillic.ttf', 50, None, 0)
                 logging.info("Changed language to Russian")
             elif lang_name == "EN":
                 self.selected_lang = "EN"
                 self.lang_file.write("EN")
+                pr.unload_font(self.font)
                 self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
                 logging.info("Changed language to English")
                 self.lang_file.close()
@@ -110,3 +78,12 @@ class Language:
             self.lang_file = open("lang.cfg", "w", encoding="utf-8")
             self.lang_file.write("EN")
             self.lang_file.close()
+
+
+class Language_English():
+    def __init__(self, pr):
+        self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
+
+    def __del__(self):
+        """ Деинициализация """
+        pass

@@ -68,38 +68,34 @@ class Button:
     def but_next_console(self, pr, terminal, language):
         """ Отрисовка и обработка кнопки следующей страницы терминала """
         if pr.gui_button(
-                    pr.Rectangle(952, 551, 20, 20),
-                    '>>'):
+                    pr.Rectangle(952, 551, 20, 20), ""):
             terminal.term_next()
         pr.draw_rectangle_rounded(pr.Rectangle(950, 550, 25, 25), 0.5, 5, colors.AQUA)
-        pr.draw_text_ex(language.font, '>>', pr.Vector2(957, 558), 11, 1, colors.WHITE)
+        pr.draw_text_ex(language.font, language.get_text_tr('>>'), pr.Vector2(957, 558), 11, 1, colors.WHITE)
 
     def but_prev_console(self, pr, terminal, language):
         """ Отрисовка и обработка кнопки предыдущей страницы терминала """
         if pr.gui_button(
-                    pr.Rectangle(902, 551, 20, 20),
-                    '<<'):
+                    pr.Rectangle(902, 551, 20, 20), ""):
             terminal.term_prev()
         pr.draw_rectangle_rounded(pr.Rectangle(900, 550, 25, 25), 0.5, 5, colors.AQUA)
-        pr.draw_text_ex(language.font, '<<', pr.Vector2(907, 558), 11, 1, colors.WHITE)
+        pr.draw_text_ex(language.font, language.get_text_tr('<<'), pr.Vector2(907, 558), 11, 1, colors.WHITE)
 
     def but_lang_rus(self, pr, language):
         """ Отрисовка и обработка кнопки смены языка русский """
         if pr.gui_button(
-                    pr.Rectangle(403, 53, 45, 20),
-                    'Russian'):
+                    pr.Rectangle(403, 53, 45, 20), ""):
             language.change_language(pr, "RU")
         pr.draw_rectangle_rounded(pr.Rectangle(400, 50, 50, 25), 0.5, 5, colors.DARKGREENBLUE)
-        pr.draw_text_ex(language.font, 'Russian', pr.Vector2(405, 58), 11, 1, colors.WHITE)
+        pr.draw_text_ex(language.font, language.get_text_tr('Russian'), pr.Vector2(405, 58), 11, 1, colors.WHITE)
 
     def but_lang_eng(self, pr, language):
         """ Отрисовка и обработка кнопки смены языка английский """
         if pr.gui_button(
-                    pr.Rectangle(343, 53, 45, 20),
-                    'English'):
+                    pr.Rectangle(343, 53, 45, 20), ""):
             language.change_language(pr, "EN")
         pr.draw_rectangle_rounded(pr.Rectangle(340, 50, 50, 25), 0.5, 5, colors.DARKGREENBLUE)
-        pr.draw_text_ex(language.font, 'English', pr.Vector2(347, 58), 11, 1, colors.WHITE)
+        pr.draw_text_ex(language.font, language.get_text_tr('English'), pr.Vector2(347, 58), 11, 1, colors.WHITE)
 
     def but_help(self, pr, terminal, language):
         """ Отрисовка и обработка кнопки информации о функциях """

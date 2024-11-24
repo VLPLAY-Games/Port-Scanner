@@ -47,7 +47,7 @@ class App():
         pr.draw_text_ex(language.font, language.get_text_tr("Select_option"), \
                         pr.Vector2(50,50), 25, 1,colors.WHITE)
         terminal.draw_terminal(pr, colors, task, language)
-        pr.draw_text_ex(language.font, APP_NAME + " by VL_PLAY Games " + self.version,\
+        pr.draw_text_ex(language.font, language.get_text_tr(APP_NAME) + language.get_text_tr(" by VL_PLAY Games ") + language.get_text_tr(self.version),\
                          pr.Vector2(725, 585), 12, 1, colors.WHITE)
 
     def error_init(self, e, pr, colors, language, log):
@@ -57,7 +57,7 @@ class App():
         pr.init_window(300, 300, "Port Scanner Critical Error")
         pr.set_target_fps(30)
         pr.set_window_icon(pr.load_image('images/portscanner.png'))
-        language.set_lang_startup(pr)
+        # language.set_lang_startup(pr)
         logging.info("Error window initialized")
         while not pr.window_should_close():
             pr.begin_drawing()

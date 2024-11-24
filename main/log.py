@@ -42,7 +42,7 @@ class Log:
         pr.init_window(750, 850, "Port Scanner Log")
         pr.set_target_fps(30)
         pr.set_window_icon(pr.load_image('images/portscanner.png'))
-        language.set_lang_startup(pr)
+        # language.set_lang_startup(pr)
         logging.info("Log window initialized")
         while not pr.window_should_close():
             pr.begin_drawing()

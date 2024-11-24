@@ -23,15 +23,15 @@ class Terminal:
 
     def draw_terminal(self, pr, colors, task, language):
         """ Отрисовка дизайна терминала """
-        self.temp = "Result "
+        self.temp = language.get_text_tr("Result ")
         if task.status == "WORK":
-            self.temp += "(Working)"
+            self.temp += language.get_text_tr("(Working)")
         elif task.status == "OK":
-            self.temp += "(Complete)"
+            self.temp += language.get_text_tr("(Complete)")
         elif task.status == "ERR":
-            self.temp += "(Error)"
+            self.temp += language.get_text_tr("(Error)")
         elif task.status == "WAIT":
-            self.temp += "(Wait input)"
+            self.temp += language.get_text_tr("(Wait input)")
         pr.draw_text_ex(language.font, self.temp, pr.Vector2(550,50), 25, 1, colors.WHITE)
         pr.draw_rectangle_lines(525, 100, 450, 450, colors.WHITE)
 
@@ -80,7 +80,7 @@ class Terminal:
         for string in self.draw_text.split(sep="\n"):
             temp_str.append(string)
 
-            if len(temp_str) >= 25:
+            if len(temp_str) >= 28:
                 self.arr_text.append("\n".join(temp_str))
                 temp_str = []
 
