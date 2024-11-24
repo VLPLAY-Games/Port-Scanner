@@ -1,23 +1,12 @@
 """ Файл для работы с приложением"""
 
 import logging
-from config import WIDTH, HEIGHT, FPS, APP_NAME, VERSION
 
 class App():
     """ Основной класс приложения"""
     def __init__(self):
         """ Инициализация класса """
         logging.info("Started App class initializing")
-        self.version = VERSION
-        logging.info("Set App version to " + self.version)
-        self.width = WIDTH
-        logging.info("Set App width to " + str(self.width))
-        self.height = HEIGHT
-        logging.info("Set App height to " + str(self.height))
-        self.fps = FPS
-        logging.info("Set App FPS to " + str(self.fps))
-        self.app_name = APP_NAME
-        logging.info("Set App name to " + self.app_name)
         self.first_port = 0
         self.end_port = 0
         self.enter_pressed = False
@@ -27,19 +16,19 @@ class App():
         """ Деинициализация """
         logging.info("App class deinitialized")
 
-    def init_app(self, pr):
+    def init_app(self, pr, settings):
         """ Запуск приложения """
         try:
-            pr.init_window(self.width, self.height, self.app_name)
-            pr.set_target_fps(self.fps)
+            pr.init_window(settings.width, settings.height, settings.app_name)
+            pr.set_target_fps(settings.fps)
             pr.set_window_icon(pr.load_image("images/portscanner.png"))
             logging.info("App initialized")
         except Exception as e:
             logging.critical("Error while initializing App window: " + str(e))
 
-    def draw_main(self, pr, colors, terminal, task, language):
+    def draw_main(self, pr, colors, terminal, task, language, settings):
         """ Отрисовка дизайна приложения """
-        pr.draw_rectangle_gradient_ex(pr.Rectangle(0, 0, self.width, self.height), \
+        pr.draw_rectangle_gradient_ex(pr.Rectangle(0, 0, settings.width, settings.height), \
                                       colors.DARKGRAY, colors.DARKGRAY, colors.BLACK, colors.BLACK)
         pr.draw_line(500,25,500,575,colors.WHITE)
         pr.draw_line(25,575,975,575,colors.WHITE)
@@ -47,12 +36,12 @@ class App():
         pr.draw_text_ex(language.font, language.get_text_tr("Select option"), \
                         pr.Vector2(50,50), 25, 1,colors.WHITE)
         terminal.draw_terminal(pr, colors, task, language)
-        pr.draw_text_ex(language.font, language.get_text_tr(APP_NAME) + language.get_text_tr(" by VL_PLAY Games ") + language.get_text_tr(self.version),\
+        pr.draw_text_ex(language.font, language.get_text_tr(settings.app_name) + language.get_text_tr(" by VL_PLAY Games ") + language.get_text_tr(settings.version),\
                          pr.Vector2(725, 585), 12, 1, colors.WHITE)
 
-    def error_init(self, e, pr, colors, language, log):
+    def error_init(self, e, pr, colors, language, log, settings):
         """ Отрисовка ошибки """
-        logging.critical(str(e) + self.version)
+        logging.critical(str(e) + settings.version)
         pr.close_window()
         pr.init_window(300, 300, "Port Scanner Critical Error")
         pr.set_target_fps(30)

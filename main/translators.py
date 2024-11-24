@@ -103,10 +103,10 @@ RUSSIAN_LANGUAGE = {
 ENGLISH_ALP = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y']
 
 TRANSLATES_RU = {
-            "Select_option" : "Выберите опцию",
-            "Check_your" : "Проверить",
-            "Check_all" : "Проверить все",
-            "All_info" : "Вся информация",
+            "Select option" : "Выберите опцию",
+            "Check your" : "Проверить",
+            "Check all" : "Проверить все",
+            "All info" : "Вся информация",
             "Start": "Старт",
             "Help" : "Помощь",
             "Log" : "Логи",

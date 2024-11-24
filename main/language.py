@@ -2,6 +2,7 @@
 import logging
 from os.path import exists
 from translators import RUSSIAN_LANGUAGE, TRANSLATES_RU
+
 class Language:
     """ Класс для работы с языком"""
     def __init__(self):

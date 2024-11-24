@@ -2,6 +2,7 @@
 import logging
 import os
 import colors
+
 class Log:
     """ Класс для работы с логами"""
     def __init__(self):
