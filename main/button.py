@@ -22,7 +22,7 @@ class Button:
             task.task = 'all_info'
         pr.draw_rectangle_rounded(pr.Rectangle(350, 100, 112, 62), 0.5, 5, colors.DARKGREEN)
 
-        pr.draw_text_ex(language.font, language.get_text_tr("All_info"), \
+        pr.draw_text_ex(language.font, language.get_text_tr("All info"), \
                         pr.Vector2(375, 120), BUT_FONT_SIZE, 1, colors.WHITE)
 
     def but_custom_task(self, pr, terminal, task, language):
@@ -46,7 +46,7 @@ class Button:
                     pr.Rectangle(205, 103, BUT_WIDTH, BUT_HEIGHT), ""):
             task.task = "all_ports"
         pr.draw_rectangle_rounded(pr.Rectangle(200, 100, 112, 62), 0.5, 5, colors.DARKPURPLE)
-        pr.draw_text_ex(language.font, language.get_text_tr('Check_all'),\
+        pr.draw_text_ex(language.font, language.get_text_tr('Check all'),\
                          pr.Vector2(220, 116), BUT_FONT_SIZE, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('ports'),\
                          pr.Vector2(235, 131), BUT_FONT_SIZE, 1, colors.WHITE)
@@ -60,7 +60,7 @@ class Button:
             task.status = "OK"
             logging.info("Finished task 'get all ip'")
         pr.draw_rectangle_rounded(pr.Rectangle(50, 100, 112, 62), 0.5, 5, colors.DARKRED)
-        pr.draw_text_ex(language.font, language.get_text_tr('Check_your'), \
+        pr.draw_text_ex(language.font, language.get_text_tr('Check your'), \
                         pr.Vector2(60, 117), BUT_FONT_SIZE, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('IP'), \
                         pr.Vector2(100, 132), BUT_FONT_SIZE, 1, colors.WHITE)

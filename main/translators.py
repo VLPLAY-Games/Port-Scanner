@@ -102,36 +102,6 @@ RUSSIAN_LANGUAGE = {
 
 ENGLISH_ALP = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y']
 
-TRANSLATES_EN = {
-            "Select_option" : "Select option",
-            "Check_your" : "Check your",
-            "Check_all" : "Check all",
-            "All_info" : "All info",
-            "Start": "Start",
-            "Help" : "Help",
-            "Log" : "Log",
-            "Result " : "Result ",
-            "Ping" : "Ping",
-            "Terminal" : "Terminal",
-            "Active" : "Active",
-            "Custom IP" : "Custom IP",
-            "and ports" : "and ports",
-            "IP" : "IP",
-            "ports" : "ports",
-            "devices" : "devices",
-            "(Working)" : "(Working)",
-            "(Complete)" : "(Complete)",
-            "(Error)" : "(Error)",
-            "(Wait input)" : "(Wait input)",
-            "Russian" : "Russian",
-            "English" : "English",
-            "<<" : "<<",
-            ">>" : ">>",
-            "Port Scanner" : "Port Scanner",
-            VERSION : VERSION,
-            " by VL_PLAY Games " : " by VL_PLAY Games ",
-        }
-
 TRANSLATES_RU = {
             "Select_option" : "Выберите опцию",
             "Check_your" : "Проверить",

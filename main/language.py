@@ -1,7 +1,7 @@
 """ Файл для работы с языком"""
 import logging
 from os.path import exists
-from translators import RUSSIAN_LANGUAGE, TRANSLATES_EN, TRANSLATES_RU
+from translators import RUSSIAN_LANGUAGE, TRANSLATES_RU
 class Language:
     """ Класс для работы с языком"""
     def __init__(self):
@@ -12,8 +12,6 @@ class Language:
         self.selected_lang = ""
         self.translates_ru = TRANSLATES_RU
         logging.info("Loaded translates to Russian language")
-        self.translates_en = TRANSLATES_EN
-        logging.info("Loaded translates to English language")
         self.temp = ""
         logging.info("Language class initialized successfully")
 
@@ -46,7 +44,7 @@ class Language:
         """ Получение текста по языку"""
         self.temp = ""
         if self.selected_lang == "EN":
-            return self.translates_en[text]
+            return text
         elif self.selected_lang == "RU":
             for letter in self.translates_ru[text]:
                 self.temp += chr(RUSSIAN_LANGUAGE[letter])
