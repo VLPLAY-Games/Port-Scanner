@@ -2,6 +2,8 @@
 import logging
 import os
 import colors
+from cffi import FFI
+from datetime import datetime
 
 class Log:
     """ Класс для работы с логами"""
@@ -13,6 +15,17 @@ class Log:
         self.is_drawed = False
         self.temp = open("report.log", "a")
         self.temp.close()
+
+        self.LOG_ALL = 0       # All logs
+        self.LOG_TRACE = 1     # Trace logging, intended for debugging
+        self.LOG_DEBUG = 2     # Debug logging
+        self.LOG_INFO = 3      # Info logging
+        self.LOG_WARNING = 4   # Warning logging
+        self.LOG_ERROR = 5     # Error logging
+        self.LOG_FATAL = 6     # Fatal error logging
+        self.LOG_NONE = 7      # Disable logging
+        self.ffi = FFI()
+        self.callback_signature = self.ffi.callback("void(int, const char *, void *)", self.custom_log)
         os.remove("report.log")
         logging.basicConfig(filename='report.log', \
                     format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -59,3 +72,23 @@ class Log:
 
             pr.end_drawing()
         pr.close_window()
+        
+    def custom_log(self, level, message, user_data):
+    
+        now = datetime.now()
+        time_str = now.strftime("%Y-%m-%d %H:%M:%S")
+        
+        log_prefix = {
+            self.LOG_TRACE: "[TRACE]: ",
+            self.LOG_DEBUG: "[DEBUG]: ",
+            self.LOG_INFO: "[INFO] : ",
+            self.LOG_WARNING: "[WARN] : ",
+            self.LOG_ERROR: "[ERROR]: ",
+            self.LOG_FATAL: "[FATAL]: ",
+        }.get(level, "[LOG]  : ")
+
+        formatted_message = f"[{time_str}] {log_prefix}{self.ffi.string(message).decode()}"
+
+
+        with open("report.log", "a+") as log_file:
+            log_file.write(formatted_message + "\n")
