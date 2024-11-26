@@ -76,18 +76,18 @@ class Log:
     def custom_log(self, level, message, user_data):
     
         now = datetime.now()
-        time_str = now.strftime("%Y-%m-%d %H:%M:%S")
+        time_str = (now.strftime("%Y-%m-%d %H:%M:%S") + f",{now.microsecond // 1000:03d}")
         
         log_prefix = {
-            self.LOG_TRACE: "[TRACE]: ",
-            self.LOG_DEBUG: "[DEBUG]: ",
-            self.LOG_INFO: "[INFO] : ",
-            self.LOG_WARNING: "[WARN] : ",
-            self.LOG_ERROR: "[ERROR]: ",
-            self.LOG_FATAL: "[FATAL]: ",
-        }.get(level, "[LOG]  : ")
+            self.LOG_TRACE: "- TRACE - ",
+            self.LOG_DEBUG: "- DEBUG - ",
+            self.LOG_INFO: "- INFO - ",
+            self.LOG_WARNING: "- WARN - ",
+            self.LOG_ERROR: "- ERROR - ",
+            self.LOG_FATAL: "- FATAL - ",
+        }.get(level, "LOG  : ")
 
-        formatted_message = f"[{time_str}] {log_prefix}{self.ffi.string(message).decode()}"
+        formatted_message = f"{time_str} {log_prefix}{self.ffi.string(message).decode()}"
 
 
         with open("report.log", "a+") as log_file:
