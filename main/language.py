@@ -60,6 +60,14 @@ class Language:
             self.lang_file.close()
             logging.info("Created language file successfuly")
         self.lang_file = open("lang.cfg", "r")
+        if (self.lang_file.readline() == ""):
+            logging.warning("Default language int file doesn't exists")
+            self.lang_file.close()
+            self.lang_file = self.lang_file = open("lang.cfg", "w")
+            self.lang_file.write("EN")
+            self.lang_file.close()
+            self.lang_file = open("lang.cfg", "r")
+            logging.info("Write default language in file successfuly")
         try:
             self.selected_lang = self.lang_file.readline()
             self.lang_file.close()
@@ -80,7 +88,10 @@ class Language:
 
 
 class Language_English():
-    def __init__(self, pr):
+    def __init__(self):
+        self.font = list()
+
+    def set_english(self, pr):
         self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
 
     def __del__(self):

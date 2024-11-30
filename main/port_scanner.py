@@ -28,12 +28,13 @@ def main():
     button = Button()
     terminal = Terminal()
     language = Language()
+    language_english = Language_English()
     pr.set_trace_log_callback(log.callback_signature)
     # pr.set_trace_log_level(4)
     try:
         app.init_app(pr, settings)
         language.set_lang_startup(pr)
-        language_english = Language_English(pr)
+        language_english.set_english(pr)
         while not pr.window_should_close():
             pr.begin_drawing()
             app.draw_main(pr, colors, terminal, task, language, settings)
