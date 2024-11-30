@@ -35,7 +35,7 @@ class App():
         pr.draw_line(25,25,975,25,colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr("Select option"), \
                         pr.Vector2(50,50), 25, 1,colors.WHITE)
-        terminal.draw_terminal(pr, colors, task, language)
+        terminal.draw_terminal(pr, task, language)
         pr.draw_text_ex(language.font, language.get_text_tr(settings.app_name) + language.get_text_tr(" by VL_PLAY Games ") + language.get_text_tr(settings.version),\
                          pr.Vector2(725, 585), 12, 1, colors.WHITE)
 

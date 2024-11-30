@@ -2,6 +2,7 @@
 
 import logging
 import subprocess
+import colors
 
 class Terminal:
     """ Класс для работы с Терминалом """
@@ -21,7 +22,7 @@ class Terminal:
         """ Деинициализация """
         logging.info("Terminal class deinitialized")
 
-    def draw_terminal(self, pr, colors, task, language):
+    def draw_terminal(self, pr, task, language):
         """ Отрисовка дизайна терминала """
         self.temp = language.get_text_tr("Result ")
         if task.status == "WORK":
@@ -45,7 +46,7 @@ class Terminal:
         if self.page < self.pages - 1:
             self.page += 1
 
-    def draw_terminal_text(self, keys, pr, colors, language):
+    def draw_terminal_text(self, keys, pr, language):
         """ Отрисовка терминала """
         self.draw_text = str(self.check_text())
         self.check_pages()

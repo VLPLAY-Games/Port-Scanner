@@ -28,19 +28,19 @@ def main():
     button = Button()
     terminal = Terminal()
     language = Language()
-    language_english = Language_English(pr)
     pr.set_trace_log_callback(log.callback_signature)
     # pr.set_trace_log_level(4)
     try:
         app.init_app(pr, settings)
         language.set_lang_startup(pr)
+        language_english = Language_English(pr)
         while not pr.window_should_close():
             pr.begin_drawing()
             app.draw_main(pr, colors, terminal, task, language, settings)
             button.check_all_but(ip, pr, terminal, task, app, language, log, settings)
             keyboard.check_key(pr, terminal)
             task.check_task(app, ip, port, keyboard, pr, colors, terminal, task, language, settings)
-            terminal.draw_terminal_text(keyboard.get_keys(), pr, colors, language_english)
+            terminal.draw_terminal_text(keyboard.get_keys(), pr, language_english)
             pr.clear_background(colors.WHITE)
             pr.end_drawing()
 
