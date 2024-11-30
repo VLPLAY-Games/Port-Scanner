@@ -36,7 +36,7 @@ class Language:
                 pr.unload_font(self.font)
                 self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
                 logging.info("Changed language to English")
-                self.lang_file.close()
+            self.lang_file.close()
         except Exception as e:
             self.lang_file.close()
             logging.error("Error while changing language " + str(e))

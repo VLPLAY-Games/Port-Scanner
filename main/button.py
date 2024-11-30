@@ -54,6 +54,7 @@ class Button:
         """ Отрисовка и обработка кнопки получения всех ip """
         if pr.gui_button(
                     pr.Rectangle(55, 103, settings.but_width, settings.but_height), ""):
+            terminal.draw_text = ""
             for res in ip.get_all_ip(app, terminal, task):
                 terminal.draw_text += res + '\n'
             task.status = "OK"
@@ -113,6 +114,15 @@ class Button:
         pr.draw_rectangle_rounded(pr.Rectangle(125, 525, 60, 30), 0.5, 5, colors.DARKBLUE)
         pr.draw_text_ex(language.font, language.get_text_tr('Log'), \
                         pr.Vector2(140, 532), 16, 1, colors.WHITE)
+        
+    def but_clear(self, pr, terminal, language):
+        """ Отрисовка и обработка кнопки отрисовки очистки терминала """
+        if pr.gui_button(
+                    pr.Rectangle(203, 528, 55, 25), ""):
+            terminal.draw_text = ""
+        pr.draw_rectangle_rounded(pr.Rectangle(200, 525, 60, 30), 0.5, 5, colors.DARKBLUE)
+        pr.draw_text_ex(language.font, language.get_text_tr('Clear'), \
+                        pr.Vector2(213, 532), 16, 1, colors.WHITE)
 
     def but_ping(self, pr, terminal, language, task, settings):
         """ Отрисовка и обработка кнопки пинга """
@@ -168,5 +178,6 @@ class Button:
         self.but_help(pr, terminal, language, settings)
         self.but_log(pr, terminal, language, log)
         self.but_ping(pr, terminal, language, task, settings)
+        self.but_clear(pr, terminal, language)
         self.but_terminal(pr, terminal, language, task, settings)
         self.but_active_devices(pr, terminal, language, task, settings)

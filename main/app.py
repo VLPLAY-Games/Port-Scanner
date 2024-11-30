@@ -77,9 +77,9 @@ class App():
         self.enter_pressed = False
         terminal.draw_text += "An error has occurred"
 
-    def fast_draw_text(self, text, pr, colors, terminal, task, language):
+    def fast_draw_text(self, text, pr, colors, terminal, task, language, settings):
         """ Отрисовать перед выполнением задачи текст"""
-        self.draw_main(pr, colors, terminal, task, language)
+        self.draw_main(pr, colors, terminal, task, language, settings)
         pr.begin_drawing()
         pr.draw_text_ex(language.font, text, pr.Vector2(550, 125), 12, 1, colors.WHITE)
         pr.clear_background(colors.WHITE)

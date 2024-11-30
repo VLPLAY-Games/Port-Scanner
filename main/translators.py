@@ -1,6 +1,6 @@
 """ Для работы с переводами """
 
-from config import VERSION
+from config import VERSION, INFORMATION
 
 RUSSIAN_LANGUAGE = {
     ' ': 32,
@@ -130,4 +130,5 @@ TRANSLATES_RU = {
             "Port Scanner" : "Порт Сканер",
             VERSION : " версии 0.97",
             " by VL_PLAY Games " : "",
+            "Clear" : "Очистить",
         }

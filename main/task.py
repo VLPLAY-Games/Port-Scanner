@@ -19,7 +19,7 @@ class Task:
         """ Деинициализация """
         logging.info("Task class deinitialized")
 
-    def check_task(self, app, ip, port, keyboard, pr, colors, terminal, task, language):
+    def check_task(self, app, ip, port, keyboard, pr, colors, terminal, task, language, settings):
         """ Проверка задания + нажатия Enter """
         # Проверка Enter
         if keyboard.enter_pressed:
@@ -73,7 +73,7 @@ class Task:
                         keyboard.keys_erase()
                         self.status = "WORK"
                         app.fast_draw_text("Pinging...", \
-                                   pr, colors, terminal, task, language)
+                                   pr, colors, terminal, task, language, settings)
                         ip.ping(terminal, self)
                 except Exception as e:
                     app.exception("Error while perfoming ping task: ", str(e),terminal, task)
@@ -84,7 +84,7 @@ class Task:
                         keyboard.keys_erase()
                         self.status = "WORK"
                         app.fast_draw_text("Perfoming task...", \
-                                   pr, colors, terminal, self, language)
+                                   pr, colors, terminal, self, language, settings)
                         terminal.custom_terminal()
 
                 except Exception as e:
@@ -111,9 +111,9 @@ class Task:
                 logging.info("Started task 'all info'")
                 self.status = "WORK"
                 app.fast_draw_text("Checking info this may take a while", \
-                                   pr, colors, terminal, task, language)
+                                   pr, colors, terminal, task, language, settings)
                 terminal.draw_text = "All information: \nNetwork devicess info \n"
-                app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language)
+                app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language, settings)
                 logging.info("Started task 'get ip config'")
                 if os.name == 'nt':
                     terminal.draw_text += subprocess.check_output("ipconfig" ).decode('utf-8')
@@ -121,18 +121,18 @@ class Task:
                     terminal.draw_text += subprocess.check_output("ifconfig" ).decode('utf-8')
                 logging.info("Finished task 'get ip config'")
                 terminal.draw_text += "Checking open ports... \n"
-                app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language)
+                app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language, settings)
                 for ip_l in ip.get_ip4_addresses():
                     terminal.draw_text += "Open ports in " + ip_l + ":\n"
-                    app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language)
+                    app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language, settings)
                     port.open_ports = port.scan_ports(ip_l, 1, 49151)
                     if len(port.open_ports) != 0:
                         terminal.draw_text += str(port.open_ports)[1:-1] + "\n \n"
-                        app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language)
+                        app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language, settings)
                         port.open_ports = []
                     else:
                         terminal.draw_text += 'All ports are closed in ' + ip_l
-                        app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language)
+                        app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language, settings)
                 self.status = "OK"
             except Exception as e:
                 self.status = "ERR"
@@ -144,10 +144,10 @@ class Task:
             try:
                 logging.info("Started custom task")
                 task.status = "WORK"
-                app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language)
+                app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language, settings)
                 terminal.draw_text += str(port.end_port) + \
                     '\nStarting task... \nOpen ports in ' + ip.task_ip + ":\n"
-                app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language)
+                app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language, settings)
                 open_ports = port.scan_ports(ip.task_ip, port.first_port, port.end_port)
                 terminal.draw_text += "\n"
                 if len(open_ports) != 0:
@@ -161,4 +161,4 @@ class Task:
             self.task = ""
 
         elif self.task == "all_ports":
-            port.scan_all_ports(pr, colors, app, ip, terminal, task, language)
+            port.scan_all_ports(pr, colors, app, ip, terminal, task, language, settings)
