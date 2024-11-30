@@ -131,4 +131,5 @@ TRANSLATES_RU = {
             VERSION : " версии 0.97",
             " by VL_PLAY Games " : "",
             "Clear" : "Очистить",
+            "Settings" : "Настройки",
         }
