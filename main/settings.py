@@ -63,12 +63,13 @@ class Settings:
         self.but_height = int(self.but_height)
         self.but_font_size = int(self.but_font_size)
 
-    def settings_window(self, pr):
+    def settings_window(self, ip, pr, terminal, task, app, language, log, settings, button):
         """ Запуск приложения """
         try:
-            pr.init_window(self.width, self.height, self.app_name)
+            pr.init_window(self.width, self.height, self.app_name + " Settings")
             pr.set_target_fps(self.fps)
             pr.set_window_icon(pr.load_image("images/portscanner.png"))
+            language.set_lang_startup(pr)
             logging.info("Settings window initialized")
         except Exception as e:
             logging.critical("Error while initializing Settings window: " + str(e))
@@ -76,6 +77,14 @@ class Settings:
         while not pr.window_should_close():
             pr.begin_drawing()
             pr.clear_background(colors.WHITE)
+            pr.draw_rectangle_gradient_ex(pr.Rectangle(0, 0, self.width, self.height), \
+                                        colors.DARKGRAY, colors.DARKGRAY, \
+                                        colors.BLACK, colors.BLACK)
+            pr.draw_text_ex(language.font, language.get_text_tr("Settings"), \
+                            pr.Vector2(50,50), 25, 1,colors.WHITE)
+            pr.draw_line(25,575,975,575,colors.WHITE)
+            pr.draw_line(25,25,975,25,colors.WHITE)
+            button.check_buttons_settings(ip, pr, terminal, task, app, language, log, self)
             pr.end_drawing()
 
         pr.close_window()
@@ -128,3 +137,8 @@ class Settings:
             self.main_func()
 
         logging.info("Checked App config file")
+
+
+    def exit(self):
+        pass
+

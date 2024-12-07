@@ -128,11 +128,11 @@ class Button:
         pr.draw_text_ex(language.font, language.get_text_tr('Clear'), \
                         pr.Vector2(213, 532), 16, 1, colors.WHITE)
 
-    def but_settings(self, pr, language, settings):
+    def but_settings(self,ip, pr, terminal, task, app, language, log, settings):
         """ Отрисовка и обработка кнопки отрисовки очистки терминала """
         if pr.gui_button(
                     pr.Rectangle(278, 528, 55, 25), ""):
-            settings.settings_window(pr)
+            settings.settings_window(ip, pr, terminal, task, app, language, log, settings, self)
         pr.draw_rectangle_rounded(pr.Rectangle(275, 525, 60, 30), 0.5, 5, colors.DARKBLUE)
         pr.draw_text_ex(language.font, language.get_text_tr('Settings'), \
                         pr.Vector2(275, 532), 16, 1, colors.WHITE)
@@ -190,8 +190,23 @@ class Button:
         self.but_lang_rus(pr, language, settings)
         self.but_help(pr, terminal, language, settings)
         self.but_log(pr, terminal, language, log)
-        self.but_settings(pr, language, settings)
+        self.but_settings(ip, pr, terminal, task, app, language, log, settings)
         self.but_ping(pr, terminal, language, task, settings)
         self.but_clear(pr, terminal, language)
         self.but_terminal(pr, terminal, language, task, settings)
         self.but_active_devices(pr, terminal, language, task, settings)
+
+
+
+
+    def settings_exit(self, pr, terminal, settings, language):
+        """ Отрисовка и обработка кнопки информации о функциях """
+        if pr.gui_button(
+                    pr.Rectangle(53, 528, 55, 25), ""):
+            settings.exit()
+        pr.draw_rectangle_rounded(pr.Rectangle(50, 525, 100, 50), 0.5, 5, colors.DARKBLUE)
+        pr.draw_text_ex(language.font, language.get_text_tr('Exit'), \
+                        pr.Vector2(63, 533), 16, 1, colors.WHITE)
+
+    def check_buttons_settings(self, ip, pr, terminal, task, app, language, log, settings):
+        self.settings_exit(pr, terminal, settings, language)
