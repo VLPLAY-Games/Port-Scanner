@@ -81,19 +81,19 @@ class Button:
         pr.draw_rectangle_rounded(pr.Rectangle(900, 550, 25, 25), 0.5, 5, colors.AQUA)
         pr.draw_text_ex(language.font, language.get_text_tr('<<'), pr.Vector2(907, 558), 11, 1, colors.WHITE)
 
-    def but_lang_rus(self, pr, language):
+    def but_lang_rus(self, pr, language, settings):
         """ Отрисовка и обработка кнопки смены языка русский """
         if pr.gui_button(
                     pr.Rectangle(403, 53, 45, 20), ""):
-            language.change_language(pr, "RU")
+            language.change_language(pr, "RU", settings)
         pr.draw_rectangle_rounded(pr.Rectangle(400, 50, 50, 25), 0.5, 5, colors.DARKGREENBLUE)
         pr.draw_text_ex(language.font, language.get_text_tr('Russian'), pr.Vector2(405, 58), 11, 1, colors.WHITE)
 
-    def but_lang_eng(self, pr, language):
+    def but_lang_eng(self, pr, language, settings):
         """ Отрисовка и обработка кнопки смены языка английский """
         if pr.gui_button(
                     pr.Rectangle(343, 53, 45, 20), ""):
-            language.change_language(pr, "EN")
+            language.change_language(pr, "EN", settings)
         pr.draw_rectangle_rounded(pr.Rectangle(340, 50, 50, 25), 0.5, 5, colors.DARKGREENBLUE)
         pr.draw_text_ex(language.font, language.get_text_tr('English'), pr.Vector2(347, 58), 11, 1, colors.WHITE)
 
@@ -182,8 +182,8 @@ class Button:
         self.but_all_ports(pr, task, language, settings)
         self.but_next_console(pr, terminal, language)
         self.but_prev_console(pr, terminal, language)
-        self.but_lang_eng(pr, language)
-        self.but_lang_rus(pr, language)
+        self.but_lang_eng(pr, language, settings)
+        self.but_lang_rus(pr, language, settings)
         self.but_help(pr, terminal, language, settings)
         self.but_log(pr, terminal, language, log)
         self.but_settings(pr, language, settings)

@@ -20,25 +20,22 @@ class Language:
         """ Деинициализация """
         logging.info("Language class deinitialized")
 
-    def change_language(self, pr, lang_name):
+    def change_language(self, pr, lang_name, settings):
         """ Функция смены языка"""
         try:
-            self.lang_file = open("lang.cfg", "w", encoding="utf-8")
             if lang_name == "RU":
+                settings.write_settings("language", lang_name)
                 self.selected_lang = "RU"
-                self.lang_file.write("RU")
                 pr.unload_font(self.font)
                 self.font = pr.load_font_ex('fonts/cyrillic.ttf', 50, None, 0)
                 logging.info("Changed language to Russian")
             elif lang_name == "EN":
+                settings.write_settings("language", lang_name)
                 self.selected_lang = "EN"
-                self.lang_file.write("EN")
                 pr.unload_font(self.font)
                 self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
                 logging.info("Changed language to English")
-            self.lang_file.close()
         except Exception as e:
-            self.lang_file.close()
             logging.error("Error while changing language " + str(e))
 
     def get_text_tr(self, text):
@@ -53,26 +50,7 @@ class Language:
 
     def set_lang_startup(self, pr):
         """ Изменение языка при запуске программы"""
-        if (exists('lang.cfg') is False):
-            logging.warning("Language file doesn't exist")
-            self.lang_file = open("lang.cfg", "w")
-            self.lang_file.write("EN")
-            self.lang_file.close()
-            logging.info("Created language file successfuly")
-        
-        self.lang_file = open("lang.cfg", "r")
-        if (self.lang_file.readline() == ""):
-            logging.warning("Default language in file doesn't exists")
-            self.lang_file.close()
-            self.lang_file = open("lang.cfg", "w")
-            self.lang_file.write("EN")
-            self.lang_file.close()
-            logging.info("Write default language in file successfuly")
-        self.lang_file.close()
-        self.lang_file = open("lang.cfg", "r")
         try:
-            self.selected_lang = self.lang_file.readline()
-            self.lang_file.close()
             if (self.selected_lang == "EN"):
                 self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
             elif (self.selected_lang == "RU"):
@@ -83,10 +61,6 @@ class Language:
             logging.error("Error while reading language file " + str(e))
             logging.info("Set default language")
             self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
-            self.selected_lang = "EN"
-            self.lang_file = open("lang.cfg", "w", encoding="utf-8")
-            self.lang_file.write("EN")
-            self.lang_file.close()
 
 
 class Language_English():
