@@ -15,6 +15,9 @@ class Log:
         self.is_drawed = False
         self.temp = open("report.log", "a")
         self.temp.close()
+        self.arr_text = []
+        self.page = 0
+        self.draw_text = ""
 
         self.LOG_ALL = 0       # All logs
         self.LOG_TRACE = 1     # Trace logging, intended for debugging
@@ -66,10 +69,10 @@ class Log:
             pr.draw_line(25,50,725,50,colors.WHITE)
             pr.draw_text_ex(language.font, "Log:", \
                             pr.Vector2(5, 5), 25, 1, colors.WHITE)
-
-            pr.draw_text_ex(language.font, self.get_log(), \
-                            pr.Vector2(5, 75), 12, 1, colors.WHITE)
-
+            
+            self.but_next_console(pr, language)
+            self.but_prev_console(pr, language)
+            self.draw_terminal_text(pr, language)
             pr.end_drawing()
         pr.unload_font(language.font)
         pr.close_window()
@@ -93,3 +96,55 @@ class Log:
 
         with open("report.log", "a+") as log_file:
             log_file.write(formatted_message + "\n")
+
+    def check_pages(self):
+        """ Проверка на несколько страниц"""
+        self.arr_text = []
+        temp_str = []
+
+        for string in self.draw_text.split(sep="\n"):
+            temp_str.append(string)
+
+            if len(temp_str) >= 55:
+                self.arr_text.append("\n".join(temp_str))
+                temp_str = []
+
+        if temp_str:
+            self.arr_text.append("\n".join(temp_str))
+
+
+    def term_prev(self):
+        """ Предыдущая страница """
+        if self.page > 0:
+            self.page -= 1
+
+    def term_next(self):
+        """ Следующая страница """
+        if self.page < self.pages - 1:
+            self.page += 1
+
+    
+    def draw_terminal_text(self, pr, language):
+        """ Отрисовка терминала """
+        self.draw_text = self.get_log()
+        self.check_pages()
+        self.pages = len(self.arr_text)
+        if len(self.arr_text) != 0:
+            pr.draw_text_ex(language.font, str(self.arr_text[self.page]), \
+                            pr.Vector2(5, 75), 12, 1, colors.WHITE)
+
+    def but_next_console(self, pr, language):
+        """ Отрисовка и обработка кнопки следующей страницы терминала """
+        if pr.gui_button(
+                    pr.Rectangle(700, 800, 40, 40), ""):
+            self.term_next()
+        pr.draw_rectangle_rounded(pr.Rectangle(698, 797, 46, 46), 0.5, 5, colors.AQUA)
+        pr.draw_text_ex(language.font, '>>', pr.Vector2(710, 810), 25, 1, colors.WHITE)
+
+    def but_prev_console(self, pr, language):
+        """ Отрисовка и обработка кнопки предыдущей страницы терминала """
+        if pr.gui_button(
+                    pr.Rectangle(650, 800, 40, 40), ""):
+            self.term_prev()
+        pr.draw_rectangle_rounded(pr.Rectangle(648, 797, 46, 46), 0.5, 5, colors.AQUA)
+        pr.draw_text_ex(language.font, '<<', pr.Vector2(660, 810), 25, 1, colors.WHITE)
