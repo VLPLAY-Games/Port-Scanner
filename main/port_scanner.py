@@ -27,7 +27,7 @@ def main():
     keyboard = Keyboard()
     button = Button()
     terminal = Terminal()
-    language = Language()
+    language = Language(settings)
     language_english = Language_English()
     pr.set_trace_log_callback(log.callback_signature)
     # pr.set_trace_log_level(4)

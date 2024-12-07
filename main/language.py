@@ -5,12 +5,12 @@ from translators import RUSSIAN_LANGUAGE, TRANSLATES_RU
 
 class Language:
     """ Класс для работы с языком"""
-    def __init__(self):
+    def __init__(self, settings):
         """ Инициализация """
         logging.info("Started Language class initializing")
         self.font = []
         self.lang_file = __file__
-        self.selected_lang = ""
+        self.selected_lang = settings.language
         self.translates_ru = TRANSLATES_RU
         logging.info("Loaded translates to Russian language")
         self.temp = ""
@@ -99,3 +99,4 @@ class Language_English():
     def __del__(self):
         """ Деинициализация """
         pass
+

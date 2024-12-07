@@ -11,27 +11,49 @@ class Settings:
         """ Инициализация """
         logging.info("Started Settings class initializing")
         self.app_cfg = __file__
-        self.width = config.WIDTH
+        if (exists("app.cfg") == False):
+            logging.warning("App config file doesn't exists")
+            self.app_cfg = open('app.cfg','a+')
+            self.app_cfg.write("width=" + str(config.WIDTH))
+            self.app_cfg.write("\nheight=" + str(config.HEIGHT))
+            self.app_cfg.write("\nfps=" + str(config.FPS))
+            self.app_cfg.write("\nfont_size=" + str(config.FONT_SIZE))
+            self.app_cfg.write("\nbutton_width=" + str(config.BUT_WIDTH))
+            self.app_cfg.write("\nbutton_height=" + str(config.BUT_HEIGHT))
+            self.app_cfg.write("\nbutton_font_size=" + str(config.BUT_FONT_SIZE))
+            self.app_cfg.write("\nlanguage=EN")
+            self.app_cfg.close()
+            logging.info("Created app.cfg with default values")
+        
+        self.app_cfg = open('app.cfg','r')
+        self.temp = []
+        for line in self.app_cfg.readlines():
+            self.temp.append(line.strip().split(sep='=')[1])
+        self.app_cfg.close()
+        self.width, self.height, self.fps, self.font_size, self.but_width, self.but_height, self.but_font_size, self.language = self.temp
+        self.width = int(self.width)
+        self.height = int(self.height)
+        self.fps = int(self.fps)
+        self.font_size = int(self.font_size)
+        self.but_width = int(self.but_width)
+        self.but_height = int(self.but_height)
+        self.but_font_size = int(self.but_font_size)
+
         logging.info("Set app width to " + str(self.width))
-        self.height = config.HEIGHT
         logging.info("Set app height to " + str(self.height))
-        self.fps = config.FPS
         logging.info("Set app FPS to " + str(self.fps))
         self.app_name = config.APP_NAME
         logging.info("Set app name to " + str(self.app_name))
         self.version = config.VERSION
         logging.info("Set app version to " + str(self.version))
+        logging.info("Set app font size to " + str(self.font_size))
+        logging.info("Set app buttons default width to " + str(self.but_width))
+        logging.info("Set app buttons default height to " + str(self.but_height))
+        logging.info("Set app buttons default font size to " + str(self.but_font_size))
+
         self.info = config.INFORMATION
         logging.info("Loaded information")
-        self.font_size = config.FONT_SIZE
-        logging.info("Set app font size to " + str(self.font_size))
-        self.but_width = config.BUT_WIDTH
-        logging.info("Set app buttons default width to " + str(self.but_width))
-        self.but_height = config.BUT_HEIGHT
-        logging.info("Set app buttons default height to " + str(self.but_height))
-        self.but_font_size = config.BUT_FONT_SIZE
-        logging.info("Set app buttons default font size to " + str(self.but_font_size))
-        self.app_config()
+
         logging.info("Settings class initialized successfully")
 
     def __del__(self):
@@ -56,17 +78,13 @@ class Settings:
 
         pr.close_window()
 
-    def app_config(self):
-        logging.info("Checking app config")
-        if (exists('app.cfg') is False):
-            logging.warning("app.cfg file doesn't exists")
-            self.app_cfg = open("app.cfg", 'a')
-            self.app_cfg.write(str(self.width) + "\n")
-            self.app_cfg.write(str(self.height) + "\n")
-            self.app_cfg.write(str(self.fps) + "\n")
-            self.app_cfg.write(str(self.but_font_size) + "\n")
-            self.app_cfg.write(str(self.but_width) + "\n")
-            self.app_cfg.write(str(self.but_height) + "\n")
-            self.app_cfg.close()
-            logging.info("app.cfg file initialized with default parametres")
-        logging.info("Checked app config")
+    def write_settings(self, name, value):
+        with open('app.cfg','r') as f:
+            lines = f.readlines()
+        with open('app.cfg','w') as f:
+            for line in lines:
+                if line.strip("\n").split(sep='=')[0] != name:
+                    f.write(line)
+                else:
+                    f.write(name + "=" + str(value) + '\n')
+        
