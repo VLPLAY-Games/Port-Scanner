@@ -51,12 +51,12 @@ class Log:
                 self.is_drawed = True
         return ''.join(self.log)
 
-    def open_log_window(self, pr, language):
+    def open_log_window(self, pr, language, settings):
         """ Окно с логом"""
         pr.init_window(750, 850, "Port Scanner Log")
-        pr.set_target_fps(30)
+        pr.set_target_fps(settings.fps)
         pr.set_window_icon(pr.load_image('images/portscanner.png'))
-        # language.set_lang_startup(pr)
+        language.set_english(pr)
         logging.info("Log window initialized")
         while not pr.window_should_close():
             pr.begin_drawing()
@@ -71,6 +71,7 @@ class Log:
                             pr.Vector2(5, 75), 12, 1, colors.WHITE)
 
             pr.end_drawing()
+        pr.unload_font(language.font)
         pr.close_window()
         
     def custom_log(self, level, message, user_data):

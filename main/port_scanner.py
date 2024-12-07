@@ -49,7 +49,9 @@ def main():
         logging.critical("Error while drawing main ui: " + str(e))
         logging.critical("Trying to check App config")
         settings.check_app_config(True)
+        pr.unload_font(language_english.font)
         app.error_init(e, pr, colors, language_english, log, settings)
+
     pr.unload_font(language.font)
     pr.unload_font(language_english.font)
     del app, ip, task, port, keyboard, button, terminal, language, language_english, settings, log

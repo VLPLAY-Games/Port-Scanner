@@ -116,5 +116,8 @@ class Settings:
         if flag == False or recreate:
             logging.error("App config file is corrupted")
             self.create_app_config(True)
+            self.app_cfg = open('app.cfg','r')
+            self.main_func()
         
         logging.info("Checked App config file")
+        

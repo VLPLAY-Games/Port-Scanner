@@ -56,17 +56,18 @@ class App():
     def error_init(self, e, pr, colors, language, log, settings):
         """ Отрисовка ошибки """
         logging.critical(str(e) + settings.version)
-        pr.close_window()
+    
         pr.init_window(300, 300, "Port Scanner Critical Error")
-        pr.set_target_fps(30)
+        pr.set_target_fps(settings.fps)
         pr.set_window_icon(pr.load_image('images/portscanner.png'))
-        # language.set_lang_startup(pr)
+        language.set_english(pr)
         logging.info("Error window initialized")
         while not pr.window_should_close():
             pr.begin_drawing()
             pr.clear_background(colors.WHITE)
             pr.draw_rectangle_gradient_ex(pr.Rectangle(0, 0, 300, 300), \
                             colors.DARKGRAY, colors.DARKGRAY, colors.BLACK, colors.BLACK)
+
             pr.draw_text_ex(language.font, "Critical Error", \
                             pr.Vector2(75, 75), 25, 1, colors.WHITE)
             pr.draw_text_ex(language.font, "Check report.log", \
@@ -74,8 +75,9 @@ class App():
             if pr.gui_button(
                     pr.Rectangle(125, 175, 50, 25),
                     'Log'):
+                pr.unload_font(language.font)
                 pr.close_window()
-                log.open_log_window(pr, language)
+                log.open_log_window(pr, language, settings)
             pr.draw_rectangle_gradient_ex(pr.Rectangle(125, 175, 50, 25), \
                             colors.DARKGREEN, colors.DARKGREEN, colors.DARKBLUE, colors.DARKBLUE)
             pr.draw_text_ex(language.font, 'Log', pr.Vector2(135,185), 11, 1, colors.WHITE)
