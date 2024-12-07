@@ -1,7 +1,7 @@
 """ Файл для работы с терминалом"""
 
 import logging
-import subprocess
+from subprocess import check_output
 import colors
 
 class Terminal:
@@ -91,7 +91,7 @@ class Terminal:
     def custom_terminal(self):
         """ Кастомная задача """
         try:
-            self.draw_text += subprocess.check_output(self.custom_task.lower(), \
+            self.draw_text += check_output(self.custom_task.lower(), \
                                                       shell=True).decode("utf-8")
             logging.info("Custom terminal task command completed")
         except Exception as e:

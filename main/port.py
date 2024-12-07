@@ -2,6 +2,7 @@
 
 import logging
 import socket
+from socket import socket, AF_INET, SOCK_STREAM
 from concurrent.futures import ThreadPoolExecutor
 
 class Port:
@@ -20,7 +21,7 @@ class Port:
 
     def scan_port(self, host, port):
         """Проверяет, открыт ли порт на заданном хосте."""
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        with socket(AF_INET, SOCK_STREAM) as sock:
             sock.settimeout(1)  # Устанавливаем таймаут в 1 секунду
             result = sock.connect_ex((host, port))
             return port, result == 0  # Если результат 0, порт открыт

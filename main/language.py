@@ -1,6 +1,5 @@
 """ Файл для работы с языком"""
 import logging
-from os.path import exists
 from translators import RUSSIAN_LANGUAGE, TRANSLATES_RU
 
 class Language:

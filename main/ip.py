@@ -1,9 +1,9 @@
 """ Файл для работы с IP"""
 
 import logging
-import os
+from os import name
 from ipaddress import ip_address, ip_network
-import subprocess
+from subprocess import check_output, CalledProcessError
 from concurrent.futures import ThreadPoolExecutor
 import socket
 import netifaces
@@ -85,10 +85,10 @@ class Ip:
 
     def ping(self, terminal, task):
         """ Функция пинга """
-        parameter = '-n' if os.name == 'nt' else '-c'
+        parameter = '-n' if name == 'nt' else '-c'
         command = ['ping', parameter, '5', self.task_ip]
         try:
-            terminal.draw_text += subprocess.check_output(command).decode("utf-8")
+            terminal.draw_text += check_output(command).decode("utf-8")
             task.status = "OK"
             logging.info("Ping successfull")
         except Exception as e:
@@ -100,23 +100,23 @@ class Ip:
     def ping_device(self, ip):
         """ Пропинговать IP """
         try:
-            subprocess.check_output(f"ping -c 1 -W 1 {ip}", shell=True)
+            check_output(f"ping -c 1 -W 1 {ip}", shell=True)
             return ip
-        except subprocess.CalledProcessError:
+        except CalledProcessError:
             return None
 
     def get_mac_address(self, ip):
         """ Получить мак адрес устройства """
         try:
             # Выполняем arp для получения MAC-адреса
-            output = subprocess.check_output(f"arp {ip}", shell=True).decode()
+            output = check_output(f"arp {ip}", shell=True).decode()
             for line in output.splitlines():
                 if ip in line:
                     # Предполагаем, что MAC-адрес находится в формате XX:XX:XX:XX:XX:XX
                     parts = line.split()
                     if len(parts) >= 3:
                         return parts[2]  # Возвращаем MAC-адрес
-        except subprocess.CalledProcessError:
+        except CalledProcessError:
             return None
 
     def get_device_name(self, ip):

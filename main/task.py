@@ -1,7 +1,7 @@
 """ Файл для работы с задачами"""
 
 import logging
-import subprocess
+from subprocess import check_output
 import os
 
 class Task:
@@ -116,9 +116,9 @@ class Task:
                 app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language, settings)
                 logging.info("Started task 'get ip config'")
                 if os.name == 'nt':
-                    terminal.draw_text += subprocess.check_output("ipconfig" ).decode('utf-8')
+                    terminal.draw_text += check_output("ipconfig" ).decode('utf-8')
                 else:
-                    terminal.draw_text += subprocess.check_output("ifconfig" ).decode('utf-8')
+                    terminal.draw_text += check_output("ifconfig" ).decode('utf-8')
                 logging.info("Finished task 'get ip config'")
                 terminal.draw_text += "Checking open ports... \n"
                 app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language, settings)

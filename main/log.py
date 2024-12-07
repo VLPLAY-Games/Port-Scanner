@@ -1,6 +1,6 @@
 """ Файл для работы с логами"""
 import logging
-import os
+from os import remove
 import colors
 from cffi import FFI
 from datetime import datetime
@@ -29,7 +29,7 @@ class Log:
         self.LOG_NONE = 7      # Disable logging
         self.ffi = FFI()
         self.callback_signature = self.ffi.callback("void(int, const char *, void *)", self.custom_log)
-        os.remove("report.log")
+        remove("report.log")
         logging.basicConfig(filename='report.log', \
                     format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
         logging.info("             Port scanner                 ")

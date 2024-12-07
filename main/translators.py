@@ -1,6 +1,6 @@
 """ Для работы с переводами """
 
-from config import VERSION, INFORMATION
+from config import VERSION
 
 RUSSIAN_LANGUAGE = {
     ' ': 32,

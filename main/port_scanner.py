@@ -37,7 +37,7 @@ def main():
         while not pr.window_should_close():
             pr.begin_drawing()
             app.draw_main(pr, colors, terminal, task, language, settings)
-            button.check_all_but(ip, pr, terminal, task, app, language, log)#, settings)
+            button.check_all_but(ip, pr, terminal, task, app, language, log, settings)
             keyboard.check_key(pr, terminal)
             task.check_task(app, ip, port, keyboard, pr, colors, terminal, task, language, settings)
             terminal.draw_terminal_text(keyboard.get_keys(), pr, language_english)
