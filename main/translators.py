@@ -132,4 +132,5 @@ TRANSLATES_RU = {
             " by VL_PLAY Games " : "",
             "Clear" : "Очистить",
             "Settings" : "Настройки",
+            "Exit" : "Выход",
         }
