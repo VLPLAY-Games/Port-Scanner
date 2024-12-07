@@ -25,19 +25,33 @@ class App():
             logging.info("App initialized")
         except Exception as e:
             logging.critical("Error while initializing App window: " + str(e))
+            logging.critical("Trying to check App config")
+            settings.check_app_config(True)
+            try:
+                pr.init_window(settings.width, settings.height, settings.app_name)
+                pr.set_target_fps(settings.fps)
+                pr.set_window_icon(pr.load_image("images/portscanner.png"))
+                logging.info("App initialized")
+            except Exception as e:
+                logging.critical("Error while initializing App window: " + str(e))
 
     def draw_main(self, pr, colors, terminal, task, language, settings):
         """ Отрисовка дизайна приложения """
-        pr.draw_rectangle_gradient_ex(pr.Rectangle(0, 0, settings.width, settings.height), \
-                                      colors.DARKGRAY, colors.DARKGRAY, colors.BLACK, colors.BLACK)
-        pr.draw_line(500,25,500,575,colors.WHITE)
-        pr.draw_line(25,575,975,575,colors.WHITE)
-        pr.draw_line(25,25,975,25,colors.WHITE)
-        pr.draw_text_ex(language.font, language.get_text_tr("Select option"), \
-                        pr.Vector2(50,50), 25, 1,colors.WHITE)
-        terminal.draw_terminal(pr, task, language)
-        pr.draw_text_ex(language.font, language.get_text_tr(settings.app_name) + language.get_text_tr(" by VL_PLAY Games ") + language.get_text_tr(settings.version),\
-                         pr.Vector2(725, 585), 12, 1, colors.WHITE)
+        try:
+            pr.draw_rectangle_gradient_ex(pr.Rectangle(0, 0, settings.width, settings.height), \
+                                        colors.DARKGRAY, colors.DARKGRAY, colors.BLACK, colors.BLACK)
+            pr.draw_line(500,25,500,575,colors.WHITE)
+            pr.draw_line(25,575,975,575,colors.WHITE)
+            pr.draw_line(25,25,975,25,colors.WHITE)
+            pr.draw_text_ex(language.font, language.get_text_tr("Select option"), \
+                            pr.Vector2(50,50), 25, 1,colors.WHITE)
+            terminal.draw_terminal(pr, task, language)
+            pr.draw_text_ex(language.font, language.get_text_tr(settings.app_name) + language.get_text_tr(" by VL_PLAY Games ") + language.get_text_tr(settings.version),\
+                            pr.Vector2(725, 585), 12, 1, colors.WHITE)
+        except Exception as e:
+            logging.critical("Error while drawing main ui: " + str(e))
+            logging.critical("Trying to check App config")
+            settings.check_app_config(True)
 
     def error_init(self, e, pr, colors, language, log, settings):
         """ Отрисовка ошибки """
