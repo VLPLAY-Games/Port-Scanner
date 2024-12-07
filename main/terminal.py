@@ -95,4 +95,5 @@ class Terminal:
                                                       shell=True).decode("utf-8")
             logging.info("Custom terminal task command completed")
         except Exception as e:
+            self.draw_text += str(e)
             logging.error(f"Command execution error: {str(e)}")

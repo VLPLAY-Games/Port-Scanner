@@ -63,13 +63,14 @@ class Language:
 
 
 class Language_English():
+    """ Класс для английского языка терминала и лога"""
     def __init__(self):
         self.font = list()
 
     def set_english(self, pr):
+        """ Установка английского языка """
         self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
 
     def __del__(self):
         """ Деинициализация """
         pass
-

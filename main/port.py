@@ -48,19 +48,23 @@ class Port:
         try:
             logging.info("Started task 'All ports'")
             task.status = "WORK"
-            app.fast_draw_text("Checking open ports...", pr, colors, terminal, task, language, settings)
+            app.fast_draw_text("Checking open ports...", \
+                               pr, colors, terminal, task, language, settings)
             terminal.draw_text = "Checking open ports... \n \n"
             for ip_l in ip.get_ip4_addresses():
                 terminal.draw_text += "Open ports in " + ip_l + ":\n"
-                app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language, settings)
+                app.fast_draw_text(terminal.draw_text, pr, \
+                                   colors, terminal, task, language, settings)
                 self.open_ports = self.scan_ports(ip_l, 1, 49151)
                 if len(self.open_ports) != 0:
                     terminal.draw_text += str(self.open_ports)[1:-1] + "\n \n"
-                    app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language, settings)
+                    app.fast_draw_text(terminal.draw_text, \
+                                       pr, colors, terminal, task, language, settings)
                     self.open_ports = []
                 else:
                     terminal.draw_text += 'All ports are closed in ' + ip_l
-                    app.fast_draw_text(terminal.draw_text, pr, colors, terminal, task, language, settings)
+                    app.fast_draw_text(terminal.draw_text, \
+                                       pr, colors, terminal, task, language, settings)
             task.status = "OK"
         except Exception as e:
             task.status = "ERR"

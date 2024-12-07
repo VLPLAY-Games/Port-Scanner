@@ -144,9 +144,9 @@ class Ip:
 
         if active_devices_info:
             terminal.draw_text += f"Found {len(active_devices_info)} active devices: \n"
-            for ip, mac, name in active_devices_info:
+            for ip, mac, name_i in active_devices_info:
                 terminal.draw_text += f"IP: {ip}, MAC: {mac if mac else 'N/A'},\
-                      Name: {name if name else 'N/A'}\n"
+                      Name: {name_i if name_i else 'N/A'}\n"
         else:
             terminal.draw_text += "No active devices found"
 

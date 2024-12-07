@@ -1,9 +1,10 @@
 """ Файл для работы с логами"""
 import logging
 from os import remove
+from datetime import datetime
 import colors
 from cffi import FFI
-from datetime import datetime
+
 
 class Log:
     """ Класс для работы с логами"""
@@ -13,11 +14,12 @@ class Log:
         self.log_lines = []
         self.log = []
         self.is_drawed = False
-        self.temp = open("report.log", "a")
+        self.temp = open("report.log", "a", encoding="utf-8")
         self.temp.close()
         self.arr_text = []
         self.page = 0
         self.draw_text = ""
+        self.pages = 0
 
         self.LOG_ALL = 0       # All logs
         self.LOG_TRACE = 1     # Trace logging, intended for debugging
@@ -28,7 +30,8 @@ class Log:
         self.LOG_FATAL = 6     # Fatal error logging
         self.LOG_NONE = 7      # Disable logging
         self.ffi = FFI()
-        self.callback_signature = self.ffi.callback("void(int, const char *, void *)", self.custom_log)
+        self.callback_signature = self.ffi.callback("void(int, const char *, void *)", \
+                                                    self.custom_log)
         remove("report.log")
         logging.basicConfig(filename='report.log', \
                     format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -46,7 +49,7 @@ class Log:
         if (self.is_drawed is False):
             self.log = []
             self.log_lines = []
-            with open("report.log") as file:
+            with open("report.log", encoding="utf-8") as file:
                 self.log_lines = [line.rstrip() for line in file]
             for line in self.log_lines:
                 self.log.append(line + '\n')
@@ -69,19 +72,19 @@ class Log:
             pr.draw_line(25,50,725,50,colors.WHITE)
             pr.draw_text_ex(language.font, "Log:", \
                             pr.Vector2(5, 5), 25, 1, colors.WHITE)
-            
+
             self.but_next_console(pr, language)
             self.but_prev_console(pr, language)
             self.draw_terminal_text(pr, language)
             pr.end_drawing()
         pr.unload_font(language.font)
         pr.close_window()
-        
+
     def custom_log(self, level, message, user_data):
-    
+        """ Кастомное логирование pyray"""
         now = datetime.now()
         time_str = (now.strftime("%Y-%m-%d %H:%M:%S") + f",{now.microsecond // 1000:03d}")
-        
+
         log_prefix = {
             self.LOG_TRACE: "- TRACE - ",
             self.LOG_DEBUG: "- DEBUG - ",
@@ -94,7 +97,7 @@ class Log:
         formatted_message = f"{time_str} {log_prefix}{self.ffi.string(message).decode()}"
 
 
-        with open("report.log", "a+") as log_file:
+        with open("report.log", "a+", encoding="utf-8") as log_file:
             log_file.write(formatted_message + "\n")
 
     def check_pages(self):
@@ -123,7 +126,6 @@ class Log:
         if self.page < self.pages - 1:
             self.page += 1
 
-    
     def draw_terminal_text(self, pr, language):
         """ Отрисовка терминала """
         self.draw_text = self.get_log()
