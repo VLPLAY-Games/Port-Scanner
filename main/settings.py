@@ -81,7 +81,15 @@ class Settings:
                                         colors.DARKGRAY, colors.DARKGRAY, \
                                         colors.BLACK, colors.BLACK)
             pr.draw_text_ex(language.font, language.get_text_tr("Settings"), \
-                            pr.Vector2(50,25), 25, 1,colors.WHITE)
+                            pr.Vector2(50,25), 30, 1,colors.WHITE)
+            pr.draw_text_ex(language.font, language.get_text_tr("Font size"), \
+                            pr.Vector2(100,100), 25, 1,colors.WHITE)
+            pr.draw_text_ex(language.font, language.get_text_tr("Button font size"), \
+                            pr.Vector2(75,325), 25, 1,colors.WHITE)
+            pr.draw_text_ex(language.font, language.get_text_tr("Log level"), \
+                            pr.Vector2(425, 100), 25, 1,colors.WHITE)
+            pr.draw_text_ex(language.font, language.get_text_tr("Button size"), \
+                            pr.Vector2(425,325), 25, 1,colors.WHITE)
             pr.draw_line(25,525,975,525,colors.WHITE)
             pr.draw_line(25,75,975,75,colors.WHITE)
             pr.draw_line(325,75,325,self.height-75,colors.WHITE)
