@@ -14,10 +14,11 @@ class Button:
         """ Деинициализация """
         logging.info("Button class deinitialized")
 
-    def but_all_info(self, pr, task, language, settings):
+    def but_all_info(self, pr, task, language, settings, terminal):
         """ Отрисовка и отработка кнопки вся информация """
         if pr.gui_button(
             pr.Rectangle(355, 103, settings.but_width, settings.but_height),""):
+            terminal.page = 0
             task.task = 'all_info'
         pr.draw_rectangle_rounded(pr.Rectangle(350, 100, 112, 62), 0.5, 5, colors.DARKGREEN)
 
@@ -28,6 +29,7 @@ class Button:
         """ Отрисовка и отработка кнопки кастом """
         if pr.gui_button(
                 pr.Rectangle(55, 203, settings.but_width, settings.but_height), ""):
+            terminal.page = 0
             terminal.draw_text = "Enter IP address to check: \n"
             terminal.terminal_active = True
             task.task = "ip_ports"
@@ -38,11 +40,12 @@ class Button:
         pr.draw_text_ex(language.font, language.get_text_tr('and ports'),\
                          pr.Vector2(68, 230), settings.but_font_size, 1, colors.WHITE)
 
-    def but_all_ports(self, pr, task, language, settings):
+    def but_all_ports(self, pr, task, language, settings, terminal):
         """ Отрисовка и обработка кнопки проверить все порты """
         # Получение открытых портов собственного IP
         if pr.gui_button(
                     pr.Rectangle(205, 103, settings.but_width, settings.but_height), ""):
+            terminal.page = 0
             task.task = "all_ports"
         pr.draw_rectangle_rounded(pr.Rectangle(200, 100, 112, 62), 0.5, 5, colors.DARKPURPLE)
         pr.draw_text_ex(language.font, language.get_text_tr('Check all'),\
@@ -54,6 +57,7 @@ class Button:
         """ Отрисовка и обработка кнопки получения всех ip """
         if pr.gui_button(
                     pr.Rectangle(55, 103, settings.but_width, settings.but_height), ""):
+            terminal.page = 0
             terminal.draw_text = ""
             for res in ip.get_all_ip(app, terminal, task):
                 terminal.draw_text += res + '\n'
@@ -105,6 +109,7 @@ class Button:
         """ Отрисовка и обработка кнопки информации о функциях """
         if pr.gui_button(
                     pr.Rectangle(53, 528, 55, 25), ""):
+            terminal.page = 0
             terminal.draw_text = settings.info
         pr.draw_rectangle_rounded(pr.Rectangle(50, 525, 60, 30), 0.5, 5, colors.DARKBLUE)
         pr.draw_text_ex(language.font, language.get_text_tr('Help'), \
@@ -114,6 +119,7 @@ class Button:
         """ Отрисовка и обработка кнопки отрисовки лога """
         if pr.gui_button(
                     pr.Rectangle(128, 528, 55, 25), ""):
+            terminal.page = 0
             terminal.draw_text = log.get_log(True)
         pr.draw_rectangle_rounded(pr.Rectangle(125, 525, 60, 30), 0.5, 5, colors.DARKBLUE)
         pr.draw_text_ex(language.font, language.get_text_tr('Log'), \
@@ -123,6 +129,7 @@ class Button:
         """ Отрисовка и обработка кнопки отрисовки очистки терминала """
         if pr.gui_button(
                     pr.Rectangle(203, 528, 55, 25), ""):
+            terminal.page = 0
             terminal.draw_text = ""
         pr.draw_rectangle_rounded(pr.Rectangle(200, 525, 60, 30), 0.5, 5, colors.DARKBLUE)
         pr.draw_text_ex(language.font, language.get_text_tr('Clear'), \
@@ -141,6 +148,7 @@ class Button:
         """ Отрисовка и обработка кнопки пинга """
         if pr.gui_button(
                     pr.Rectangle(205, 203, settings.but_width, settings.but_height), ""):
+            terminal.page = 0
             terminal.draw_text = "Enter IP or link to ping: \n"
             terminal.terminal_active = True
             task.task = "ping_start"
@@ -154,6 +162,7 @@ class Button:
         """ Отрисовка и обработка кнопки кастомного терминала"""
         if pr.gui_button(
                     pr.Rectangle(355, 203, settings.but_width, settings.but_height), ""):
+            terminal.page = 0
             terminal.draw_text = "Enter command: \n"
             terminal.terminal_active = True
             task.task = "cus_terminal"
@@ -167,6 +176,7 @@ class Button:
         """ Отрисовка и обработка кнопки проверки активных устройств в сети"""
         if pr.gui_button(
                     pr.Rectangle(55, 303, settings.but_width, settings.but_height), ""):
+            terminal.page = 0
             terminal.draw_text = "Enter command: \n"
             terminal.terminal_active = True
             task.task = "act_devices"
@@ -180,10 +190,10 @@ class Button:
 
     def check_all_but(self, ip, pr, terminal, task, app, language, log, settings):
         """ Проверка всех кнопок """
-        self.but_all_info(pr, task, language, settings)
+        self.but_all_info(pr, task, language, settings, terminal)
         self.but_custom_task(pr, terminal, task, language, settings)
         self.but_ip(ip, pr, terminal, app, task, language, settings)
-        self.but_all_ports(pr, task, language, settings)
+        self.but_all_ports(pr, task, language, settings, terminal)
         self.but_next_console(pr, terminal, language)
         self.but_prev_console(pr, terminal, language)
         self.but_lang_eng(pr, language, settings)
