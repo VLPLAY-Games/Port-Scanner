@@ -81,9 +81,12 @@ class Settings:
                                         colors.DARKGRAY, colors.DARKGRAY, \
                                         colors.BLACK, colors.BLACK)
             pr.draw_text_ex(language.font, language.get_text_tr("Settings"), \
-                            pr.Vector2(50,50), 25, 1,colors.WHITE)
-            pr.draw_line(25,575,975,575,colors.WHITE)
-            pr.draw_line(25,25,975,25,colors.WHITE)
+                            pr.Vector2(50,25), 25, 1,colors.WHITE)
+            pr.draw_line(25,525,975,525,colors.WHITE)
+            pr.draw_line(25,75,975,75,colors.WHITE)
+            pr.draw_line(325,75,325,self.height-75,colors.WHITE)
+            pr.draw_line(650,75,650,self.height-75,colors.WHITE)
+            pr.draw_line(25, int(self.height / 2),self.width - 25, int(self.height / 2),colors.WHITE)
             button.check_buttons_settings(ip, pr, terminal, task, app, language, log, self)
             pr.end_drawing()
 
@@ -139,6 +142,5 @@ class Settings:
         logging.info("Checked App config file")
 
 
-    def exit(self):
-        pass
-
+    def exit(self, pr):
+        pr.close_window()

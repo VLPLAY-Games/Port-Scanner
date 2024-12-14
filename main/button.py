@@ -212,11 +212,11 @@ class Button:
     def settings_exit(self, pr, terminal, settings, language):
         """ Отрисовка и обработка кнопки информации о функциях """
         if pr.gui_button(
-                    pr.Rectangle(53, 528, 55, 25), ""):
-            settings.exit()
-        pr.draw_rectangle_rounded(pr.Rectangle(50, 525, 100, 50), 0.5, 5, colors.DARKBLUE)
+                    pr.Rectangle(53, 548, 55, 25), ""):
+            settings.exit(pr)
+        pr.draw_rectangle_rounded(pr.Rectangle(50, 547, 61, 28), 0.5, 5, colors.DARKBLUE)
         pr.draw_text_ex(language.font, language.get_text_tr('Exit'), \
-                        pr.Vector2(63, 533), 16, 1, colors.WHITE)
+                        pr.Vector2(63, 553), 16, 1, colors.WHITE)
 
     def check_buttons_settings(self, ip, pr, terminal, task, app, language, log, settings):
         self.settings_exit(pr, terminal, settings, language)
