@@ -107,7 +107,7 @@ class Settings:
         """ Создание конфигурационного файла приложения"""
         if (exists("app.cfg") is False) or recreate:
             logging.warning("App config file doesn't exists" if recreate is False\
-                             else "App config file needs to be recteated")
+                             else "App config file needs to be recreated")
             self.app_cfg = open('app.cfg','w', encoding="utf-8")
             self.app_cfg.write("width=" + str(config.WIDTH))
             self.app_cfg.write("\nheight=" + str(config.HEIGHT))
