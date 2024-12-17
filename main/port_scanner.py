@@ -18,7 +18,7 @@ from settings import Settings
 def main():
     """ Основная функция """
     log = Log()
-    settings = Settings()
+    settings = Settings(pr)
     app = App()
     ip = Ip()
     task = Task()
@@ -29,7 +29,6 @@ def main():
     language = Language(settings)
     language_english = Language_English()
     pr.set_trace_log_callback(log.callback_signature)
-    # pr.set_trace_log_level(4)
     try:
         app.init_app(pr, settings)
         language.set_lang_startup(pr)

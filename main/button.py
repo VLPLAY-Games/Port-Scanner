@@ -20,7 +20,7 @@ class Button:
             pr.Rectangle(355, 103, settings.but_width, settings.but_height),""):
             terminal.page = 0
             task.task = 'all_info'
-        pr.draw_rectangle_rounded(pr.Rectangle(350, 100, 112, 62), 0.5, 5, colors.DARKGREEN)
+        pr.draw_rectangle_rounded(pr.Rectangle(350, 100, settings.get_button_gradient_width(), settings.get_button_gradient_height()), 0.5, 5, colors.DARKGREEN)
 
         pr.draw_text_ex(language.font, language.get_text_tr("All info"), \
                         pr.Vector2(375, 120), settings.but_font_size, 1, colors.WHITE)
@@ -34,7 +34,7 @@ class Button:
             terminal.terminal_active = True
             task.task = "ip_ports"
             task.status = "WAIT"
-        pr.draw_rectangle_rounded(pr.Rectangle(50, 200, 112, 62), 0.5, 5, colors.DARKBYZAN)
+        pr.draw_rectangle_rounded(pr.Rectangle(50, 200, settings.get_button_gradient_width(), settings.get_button_gradient_height()), 0.5, 5, colors.DARKBYZAN)
         pr.draw_text_ex(language.font, language.get_text_tr('Custom IP'),\
                          pr.Vector2(65, 215), settings.but_font_size, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('and ports'),\
@@ -47,7 +47,8 @@ class Button:
                     pr.Rectangle(205, 103, settings.but_width, settings.but_height), ""):
             terminal.page = 0
             task.task = "all_ports"
-        pr.draw_rectangle_rounded(pr.Rectangle(200, 100, 112, 62), 0.5, 5, colors.DARKPURPLE)
+            
+        pr.draw_rectangle_rounded(pr.Rectangle(200, 100, settings.get_button_gradient_width(), settings.get_button_gradient_height()), 0.5, 5, colors.DARKPURPLE)
         pr.draw_text_ex(language.font, language.get_text_tr('Check all'),\
                          pr.Vector2(220, 116), settings.but_font_size, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('ports'),\
@@ -63,7 +64,7 @@ class Button:
                 terminal.draw_text += res + '\n'
             task.status = "OK"
             logging.info("Finished task 'get all ip'")
-        pr.draw_rectangle_rounded(pr.Rectangle(50, 100, 112, 62), 0.5, 5, colors.DARKRED)
+        pr.draw_rectangle_rounded(pr.Rectangle(50, 100, settings.get_button_gradient_width(), settings.get_button_gradient_height()), 0.5, 5, colors.DARKRED)
         pr.draw_text_ex(language.font, language.get_text_tr('Check your'), \
                         pr.Vector2(60, 117), settings.but_font_size, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('IP'), \
@@ -154,7 +155,7 @@ class Button:
             task.task = "ping_start"
             task.status = "WAIT"
             logging.info("Ping command started")
-        pr.draw_rectangle_rounded(pr.Rectangle(200, 200, 112, 62), 0.5, 5, colors.DARKORANGE)
+        pr.draw_rectangle_rounded(pr.Rectangle(200, 200, settings.get_button_gradient_width(), settings.get_button_gradient_height()), 0.5, 5, colors.DARKORANGE)
         pr.draw_text_ex(language.font, language.get_text_tr('Ping'), \
                         pr.Vector2(235, 220), settings.but_font_size, 1, colors.WHITE)
 
@@ -168,7 +169,7 @@ class Button:
             task.task = "cus_terminal"
             task.status = "WAIT"
             logging.info("Custom terminal command started")
-        pr.draw_rectangle_rounded(pr.Rectangle(350, 200, 112, 62), 0.5, 5, colors.DARKAQUA)
+        pr.draw_rectangle_rounded(pr.Rectangle(350, 200, settings.get_button_gradient_width(), settings.get_button_gradient_height()), 0.5, 5, colors.DARKAQUA)
         pr.draw_text_ex(language.font, language.get_text_tr('Terminal'), \
                         pr.Vector2(370, 222), settings.but_font_size, 1, colors.WHITE)
 
@@ -182,7 +183,7 @@ class Button:
             task.task = "act_devices"
             task.status = "WAIT"
             logging.info("Active devices command started")
-        pr.draw_rectangle_rounded(pr.Rectangle(50, 300, 112, 62), 0.5, 5, colors.DARKGREENORANGE)
+        pr.draw_rectangle_rounded(pr.Rectangle(50, 300, settings.get_button_gradient_width(), settings.get_button_gradient_height()), 0.5, 5, colors.DARKGREENORANGE)
         pr.draw_text_ex(language.font, language.get_text_tr('Active'), \
                         pr.Vector2(80, 313), settings.but_font_size, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('devices'), \
@@ -210,7 +211,7 @@ class Button:
 
 
     def settings_exit(self, pr, terminal, settings, language):
-        """ Отрисовка и обработка кнопки информации о функциях """
+        """ Отрисовка и обработка кнопки выхода из настроек """
         if pr.gui_button(
                     pr.Rectangle(53, 548, 55, 25), ""):
             settings.exit(pr)
@@ -219,28 +220,29 @@ class Button:
                         pr.Vector2(63, 553), 16, 1, colors.WHITE)
         
     def settings_log(self, pr, settings, language):
-        """ Отрисовка и обработка кнопки лога о функциях """
+        """ Отрисовка и обработка кнопки лога в настройках """
         if pr.gui_button(
                     pr.Rectangle(400, 130, 60, 30), ""):
-            pass 
+            settings.write_settings("loglevel", 7)
         if pr.gui_button(
                     pr.Rectangle(500, 130, 60, 30), ""):
-            pass 
+            settings.write_settings("loglevel", 0)
         if pr.gui_button(
                     pr.Rectangle(400, 170, 60, 30), ""):
-            pass 
+            settings.write_settings("loglevel", 2)
         if pr.gui_button(
                     pr.Rectangle(500, 170, 60, 30), ""):
-            pass 
+            settings.write_settings("loglevel", 3)
         if pr.gui_button(
                     pr.Rectangle(400, 210, 60, 30), ""):
-            pass 
+            settings.write_settings("loglevel", 4)
         if pr.gui_button(
                     pr.Rectangle(500, 210, 60, 30), ""):
-            pass 
+            settings.write_settings("loglevel", 5)
         if pr.gui_button(
                     pr.Rectangle(400, 250, 60, 30), ""):
-            pass 
+            settings.write_settings("loglevel", 6)
+
         pr.draw_rectangle_rounded(pr.Rectangle(397, 127, 66, 35), 0.5, 5, colors.DARKBLUE)
         pr.draw_rectangle_rounded(pr.Rectangle(497, 127, 66, 35), 0.5, 5, colors.DARKBLUE)
         pr.draw_rectangle_rounded(pr.Rectangle(397, 167, 66, 35), 0.5, 5, colors.DARKBLUE)
@@ -265,16 +267,17 @@ class Button:
                         pr.Vector2(400, 250), 16, 1, colors.WHITE)
         
     def settings_font_size(self, pr, settings, language):
-        """ Отрисовка и обработка кнопки информации о функциях """
+        """ Отрисовка и обработка кнопки размера шрифта в настройках """
         if pr.gui_button(
                     pr.Rectangle(120, 150, 60, 30), ""):
-            pass 
+            settings.write_settings("font_size", settings.font_size_small) 
         if pr.gui_button(
                     pr.Rectangle(120, 200, 60, 30), ""):
-            pass 
+            settings.write_settings("font_size", settings.font_size_middle) 
         if pr.gui_button(
                     pr.Rectangle(120, 250, 60, 30), ""):
-            pass 
+            settings.write_settings("font_size", settings.font_size_big)  
+        
         pr.draw_rectangle_rounded(pr.Rectangle(117, 147, 66, 35), 0.5, 5, colors.DARKBLUE)
         pr.draw_rectangle_rounded(pr.Rectangle(117, 197, 66, 35), 0.5, 5, colors.DARKBLUE)
         pr.draw_rectangle_rounded(pr.Rectangle(117, 247, 66, 35), 0.5, 5, colors.DARKBLUE)
@@ -286,16 +289,17 @@ class Button:
                         pr.Vector2(120, 250), 16, 1, colors.WHITE)
         
     def settings_button_font_size(self, pr, settings, language):
-        """ Отрисовка и обработка кнопки размера шрифта у кнопок о функциях """
+        """ Отрисовка и обработка кнопки размера шрифта у кнопок в настройках """
         if pr.gui_button(
                     pr.Rectangle(120, 375, 60, 30), ""):
-            pass 
+            settings.write_settings("button_font_size", settings.but_font_size_small)  
         if pr.gui_button(
                     pr.Rectangle(120, 425, 60, 30), ""):
-            pass 
+            settings.write_settings("button_font_size", settings.but_font_size_middle)   
         if pr.gui_button(
                     pr.Rectangle(120, 475, 60, 30), ""):
-            pass 
+            settings.write_settings("button_font_size", settings.but_font_size_big)  
+        
         pr.draw_rectangle_rounded(pr.Rectangle(117, 372, 66, 35), 0.5, 5, colors.DARKBLUE)
         pr.draw_rectangle_rounded(pr.Rectangle(117, 422, 66, 35), 0.5, 5, colors.DARKBLUE)
         pr.draw_rectangle_rounded(pr.Rectangle(117, 472, 66, 35), 0.5, 5, colors.DARKBLUE)
@@ -310,13 +314,17 @@ class Button:
         """ Отрисовка и обработка кнопки размера кнопок о функциях """
         if pr.gui_button(
                     pr.Rectangle(450, 375, 60, 30), ""):
-            pass 
+            settings.write_settings("button_width", settings.but_width_small)  
+            settings.write_settings("button_height", settings.but_height_small)  
         if pr.gui_button(
                     pr.Rectangle(450, 425, 60, 30), ""):
-            pass 
+            settings.write_settings("button_width", settings.but_width_middle)  
+            settings.write_settings("button_height", settings.but_height_middle)  
         if pr.gui_button(
                     pr.Rectangle(450, 475, 60, 30), ""):
-            pass 
+            settings.write_settings("button_width", settings.but_width_big)  
+            settings.write_settings("button_height", settings.but_height_big)  
+
         pr.draw_rectangle_rounded(pr.Rectangle(447, 372, 66, 35), 0.5, 5, colors.DARKBLUE)
         pr.draw_rectangle_rounded(pr.Rectangle(447, 422, 66, 35), 0.5, 5, colors.DARKBLUE)
         pr.draw_rectangle_rounded(pr.Rectangle(447, 472, 66, 35), 0.5, 5, colors.DARKBLUE)

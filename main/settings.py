@@ -7,14 +7,26 @@ import colors
 
 class Settings:
     """ Класс для работы с клавиатурой"""
-    def __init__(self):
+    def __init__(self, pr):
         """ Инициализация """
         logging.info("Started Settings class initializing")
         self.app_cfg = __file__
         self.check_app_config()
         self.width, self.height, self.fps, self.font_size, \
-            self.but_width, self.but_height, self.but_font_size, self.language = \
-                0, 0, 0, 0, 0, 0, 0, ""
+            self.but_width, self.but_height, self.but_font_size, self.language, self.log_level = \
+                0, 0, 0, 0, 0, 0, 0, "", 0
+        self.font_size_small = config.FONT_SIZE_SMALL
+        self.font_size_middle = config.FONT_SIZE
+        self.font_size_big = config.FONT_SIZE_BIG
+        self.but_font_size_small = config.BUT_FONT_SIZE_SMALL
+        self.but_font_size_middle = config.BUT_FONT_SIZE
+        self.but_font_size_big = config.BUT_FONT_SIZE_BIG
+        self.but_width_small = config.BUT_WIDTH_SMALL
+        self.but_height_small = config.BUT_HEIGHT_SMALL
+        self.but_width_middle = config.BUT_WIDTH
+        self.but_height_middle = config.BUT_HEIGHT
+        self.but_width_big = config.BUT_WIDTH_BIG
+        self.but_height_big = config.BUT_HEIGHT_BIG
         self.app_cfg = open('app.cfg','r', encoding="utf-8")
         try:
             self.main_func()
@@ -36,6 +48,8 @@ class Settings:
         logging.info("Set app buttons default width to " + str(self.but_width))
         logging.info("Set app buttons default height to " + str(self.but_height))
         logging.info("Set app buttons default font size to " + str(self.but_font_size))
+        pr.set_trace_log_level(self.log_level)
+        logging.info("Set app log level to " + str(self.log_level))
 
         self.info = config.INFORMATION
         logging.info("Loaded information")
@@ -53,7 +67,7 @@ class Settings:
             self.temp.append(line.strip().split(sep='=')[1])
         self.app_cfg.close()
         self.width, self.height, self.fps, self.font_size, \
-            self.but_width, self.but_height, self.but_font_size, self.language = \
+            self.but_width, self.but_height, self.but_font_size, self.language, self.log_level = \
             self.temp
         self.width = int(self.width)
         self.height = int(self.height)
@@ -62,6 +76,7 @@ class Settings:
         self.but_width = int(self.but_width)
         self.but_height = int(self.but_height)
         self.but_font_size = int(self.but_font_size)
+        self.log_level = int(self.log_level)
 
     def settings_window(self, ip, pr, terminal, task, app, language, log, settings, button):
         """ Запуск приложения """
@@ -102,14 +117,28 @@ class Settings:
 
     def write_settings(self, name, value):
         """ Изменение параметров в файле конфига"""
-        with open('app.cfg','r', encoding="utf-8") as f:
-            lines = f.readlines()
-        with open('app.cfg','w', encoding="utf-8") as f:
-            for line in lines:
-                if line.strip("\n").split(sep='=')[0] != name:
-                    f.write(line)
-                else:
-                    f.write(name + "=" + str(value) + '\n')
+        try:
+            with open('app.cfg','r', encoding="utf-8") as f:
+                lines = f.readlines()
+            with open('app.cfg','w', encoding="utf-8") as f:
+                for line in lines:
+                    if line.strip("\n").split(sep='=')[0] != name:
+                        f.write(line)
+                    else:
+                        f.write(name + "=" + str(value) + '\n')
+            if name == "font_size":
+                self.font_size = value
+            elif name == "button_width":
+                self.but_width = value
+            elif name == "button_height":
+                self.but_height = value
+            elif name == "button_font_size":
+                self.but_font_size = value
+            logging.info("Changed in app config " + name + " to " + str(value))
+
+        except Exception as e:
+            logging.error("Error while changing app config " + str(e))
+        
 
     def create_app_config(self, recreate = False):
         """ Создание конфигурационного файла приложения"""
@@ -124,7 +153,8 @@ class Settings:
             self.app_cfg.write("\nbutton_width=" + str(config.BUT_WIDTH))
             self.app_cfg.write("\nbutton_height=" + str(config.BUT_HEIGHT))
             self.app_cfg.write("\nbutton_font_size=" + str(config.BUT_FONT_SIZE))
-            self.app_cfg.write("\nlanguage=EN")
+            self.app_cfg.write("\nlanguage=" + str(config.LANGUAGE))
+            self.app_cfg.write("\nloglevel=" + str(config.LOG_LEVEL))
             self.app_cfg.close()
             logging.info("Created app.cfg with default values")
 
@@ -148,6 +178,26 @@ class Settings:
             self.main_func()
 
         logging.info("Checked App config file")
+
+    def get_button_gradient_width(self):
+        if self.but_width == config.BUT_WIDTH:
+            return self.but_width + 12
+
+        elif self.but_width == config.BUT_WIDTH_SMALL:
+            return self.but_width + 10
+
+        elif self.but_width == config.BUT_WIDTH_BIG:
+            return self.but_width + 15
+    
+    def get_button_gradient_height(self):
+        if self.but_height == config.BUT_HEIGHT:
+            return self.but_height + 7
+
+        elif self.but_height == config.BUT_HEIGHT_SMALL:
+            return self.but_height + 6
+
+        elif self.but_height == config.BUT_HEIGHT_BIG:
+            return self.but_height + 9
 
 
     def exit(self, pr):

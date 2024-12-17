@@ -3,7 +3,7 @@ WIDTH = 1000
 HEIGHT = 600
 FPS = 30
 APP_NAME = "Port Scanner"
-VERSION = ' v0.97'
+VERSION = ' v0.98'
 INFORMATION = (
     "Help:\n\n\n"
     "Check your IP - displays all IP addresses of computers \non the network\n\n"
@@ -16,6 +16,19 @@ INFORMATION = (
     "Active devices - check active devices in local network"
 )
 FONT_SIZE = 18
+FONT_SIZE_SMALL = 14
+FONT_SIZE_BIG = 22
+
 BUT_WIDTH = 100
 BUT_HEIGHT = 55
+BUT_WIDTH_SMALL = 75
+BUT_HEIGHT_SMALL = 42
+BUT_WIDTH_BIG = 125
+BUT_HEIGHT_BIG = 68
+
 BUT_FONT_SIZE = 18
+BUT_FONT_SIZE_SMALL = 14
+BUT_FONT_SIZE_BIG = 22
+
+LOG_LEVEL = 3
+LANGUAGE = "EN"

@@ -4,6 +4,7 @@ from os import remove
 from datetime import datetime
 import colors
 from cffi import FFI
+import struct
 
 
 class Log:
@@ -93,10 +94,8 @@ class Log:
             self.LOG_ERROR: "- ERROR - ",
             self.LOG_FATAL: "- FATAL - ",
         }.get(level, "LOG  : ")
-
+        
         formatted_message = f"{time_str} {log_prefix}{self.ffi.string(message).decode()}"
-
-
         with open("report.log", "a+", encoding="utf-8") as log_file:
             log_file.write(formatted_message + "\n")
 
