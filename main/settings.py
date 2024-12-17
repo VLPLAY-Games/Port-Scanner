@@ -134,6 +134,8 @@ class Settings:
                 self.but_height = value
             elif name == "button_font_size":
                 self.but_font_size = value
+            elif name == "loglevel":
+                self.log_level = value
             logging.info("Changed in app config " + name + " to " + str(value))
 
         except Exception as e:
@@ -199,6 +201,50 @@ class Settings:
         elif self.but_height == config.BUT_HEIGHT_BIG:
             return self.but_height + 9
 
+    def get_button_color(self, but_name):
+        font_sizes = {
+            "fs_s": config.FONT_SIZE_SMALL,
+            "fs_m": config.FONT_SIZE,
+            "fs_b": config.FONT_SIZE_BIG,
+        }
+        
+        but_font_sizes = {
+            "bfs_s": config.BUT_FONT_SIZE_SMALL,
+            "bfs_m": config.BUT_FONT_SIZE,
+            "bfs_b": config.BUT_FONT_SIZE_BIG,
+        }
+        
+        button_sizes = {
+            "bs_s": (config.BUT_WIDTH_SMALL, config.BUT_HEIGHT_SMALL),
+            "bs_m": (config.BUT_WIDTH, config.BUT_HEIGHT),
+            "bs_b": (config.BUT_WIDTH_BIG, config.BUT_HEIGHT_BIG),
+        }
+        
+        log_levels = {
+            "log_0": 7,
+            "log_1": 0,
+            "log_2": 2,
+            "log_3": 3,
+            "log_4": 4,
+            "log_5": 5,
+            "log_6": 6,
+        }
+
+        if but_name in font_sizes:
+            return colors.DARKGREEN if self.font_size == font_sizes[but_name] else colors.DARKBLUE
+        
+        elif but_name in but_font_sizes:
+            return colors.DARKGREEN if self.but_font_size == but_font_sizes[but_name] else colors.DARKBLUE
+        
+        elif but_name in button_sizes:
+            width, height = button_sizes[but_name]
+            return colors.DARKGREEN if (self.but_width == width and self.but_height == height) else colors.DARKBLUE
+        
+        elif but_name in log_levels:
+            return colors.DARKGREEN if self.log_level == log_levels[but_name] else colors.DARKBLUE
+
+        return colors.DARKBLUE
+            
 
     def exit(self, pr):
         pr.close_window()

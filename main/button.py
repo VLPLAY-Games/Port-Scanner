@@ -243,28 +243,28 @@ class Button:
                     pr.Rectangle(400, 250, 60, 30), ""):
             settings.write_settings("loglevel", 6)
 
-        pr.draw_rectangle_rounded(pr.Rectangle(397, 127, 66, 35), 0.5, 5, colors.DARKBLUE)
-        pr.draw_rectangle_rounded(pr.Rectangle(497, 127, 66, 35), 0.5, 5, colors.DARKBLUE)
-        pr.draw_rectangle_rounded(pr.Rectangle(397, 167, 66, 35), 0.5, 5, colors.DARKBLUE)
-        pr.draw_rectangle_rounded(pr.Rectangle(497, 167, 66, 35), 0.5, 5, colors.DARKBLUE)
-        pr.draw_rectangle_rounded(pr.Rectangle(397, 207, 66, 35), 0.5, 5, colors.DARKBLUE)
-        pr.draw_rectangle_rounded(pr.Rectangle(497, 207, 66, 35), 0.5, 5, colors.DARKBLUE)
-        pr.draw_rectangle_rounded(pr.Rectangle(397, 247, 66, 35), 0.5, 5, colors.DARKBLUE)
+        pr.draw_rectangle_rounded(pr.Rectangle(397, 127, 66, 35), 0.5, 5, settings.get_button_color("log_0"))
+        pr.draw_rectangle_rounded(pr.Rectangle(497, 127, 66, 35), 0.5, 5, settings.get_button_color("log_1"))
+        pr.draw_rectangle_rounded(pr.Rectangle(397, 167, 66, 35), 0.5, 5, settings.get_button_color("log_2"))
+        pr.draw_rectangle_rounded(pr.Rectangle(497, 167, 66, 35), 0.5, 5, settings.get_button_color("log_3"))
+        pr.draw_rectangle_rounded(pr.Rectangle(397, 207, 66, 35), 0.5, 5, settings.get_button_color("log_4"))
+        pr.draw_rectangle_rounded(pr.Rectangle(497, 207, 66, 35), 0.5, 5, settings.get_button_color("log_5"))
+        pr.draw_rectangle_rounded(pr.Rectangle(397, 247, 66, 35), 0.5, 5, settings.get_button_color("log_6"))
 
         pr.draw_text_ex(language.font, language.get_text_tr('None'), \
-                        pr.Vector2(400, 130), 16, 1, colors.WHITE)
+                        pr.Vector2(407, 137), 16, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('All'), \
-                        pr.Vector2(500, 130), 16, 1, colors.WHITE)
+                        pr.Vector2(507, 137), 16, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('Debug'), \
-                        pr.Vector2(400, 170), 16, 1, colors.WHITE)
+                        pr.Vector2(407, 177), 16, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('Info'), \
-                        pr.Vector2(500, 170), 16, 1, colors.WHITE)
+                        pr.Vector2(507, 177), 16, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('Warning'), \
-                        pr.Vector2(400, 210), 16, 1, colors.WHITE)
+                        pr.Vector2(400, 217), 16, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('Error'), \
-                        pr.Vector2(500, 210), 16, 1, colors.WHITE)
+                        pr.Vector2(507, 217), 16, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('Fatal'), \
-                        pr.Vector2(400, 250), 16, 1, colors.WHITE)
+                        pr.Vector2(407, 257), 16, 1, colors.WHITE)
         
     def settings_font_size(self, pr, settings, language):
         """ Отрисовка и обработка кнопки размера шрифта в настройках """
@@ -278,15 +278,15 @@ class Button:
                     pr.Rectangle(120, 250, 60, 30), ""):
             settings.write_settings("font_size", settings.font_size_big)  
         
-        pr.draw_rectangle_rounded(pr.Rectangle(117, 147, 66, 35), 0.5, 5, colors.DARKBLUE)
-        pr.draw_rectangle_rounded(pr.Rectangle(117, 197, 66, 35), 0.5, 5, colors.DARKBLUE)
-        pr.draw_rectangle_rounded(pr.Rectangle(117, 247, 66, 35), 0.5, 5, colors.DARKBLUE)
+        pr.draw_rectangle_rounded(pr.Rectangle(117, 147, 66, 35), 0.5, 5, settings.get_button_color("fs_s"))
+        pr.draw_rectangle_rounded(pr.Rectangle(117, 197, 66, 35), 0.5, 5, settings.get_button_color("fs_m"))
+        pr.draw_rectangle_rounded(pr.Rectangle(117, 247, 66, 35), 0.5, 5, settings.get_button_color("fs_b"))
         pr.draw_text_ex(language.font, language.get_text_tr('Small'), \
-                        pr.Vector2(120, 150), 16, 1, colors.WHITE)
+                        pr.Vector2(127, 157), 16, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('Middle'), \
-                        pr.Vector2(120, 200), 16, 1, colors.WHITE)
+                        pr.Vector2(127, 207), 16, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('Big'), \
-                        pr.Vector2(120, 250), 16, 1, colors.WHITE)
+                        pr.Vector2(127, 257), 16, 1, colors.WHITE)
         
     def settings_button_font_size(self, pr, settings, language):
         """ Отрисовка и обработка кнопки размера шрифта у кнопок в настройках """
@@ -300,15 +300,15 @@ class Button:
                     pr.Rectangle(120, 475, 60, 30), ""):
             settings.write_settings("button_font_size", settings.but_font_size_big)  
         
-        pr.draw_rectangle_rounded(pr.Rectangle(117, 372, 66, 35), 0.5, 5, colors.DARKBLUE)
-        pr.draw_rectangle_rounded(pr.Rectangle(117, 422, 66, 35), 0.5, 5, colors.DARKBLUE)
-        pr.draw_rectangle_rounded(pr.Rectangle(117, 472, 66, 35), 0.5, 5, colors.DARKBLUE)
+        pr.draw_rectangle_rounded(pr.Rectangle(117, 372, 66, 35), 0.5, 5, settings.get_button_color("bfs_s"))
+        pr.draw_rectangle_rounded(pr.Rectangle(117, 422, 66, 35), 0.5, 5, settings.get_button_color("bfs_m"))
+        pr.draw_rectangle_rounded(pr.Rectangle(117, 472, 66, 35), 0.5, 5, settings.get_button_color("bfs_b"))
         pr.draw_text_ex(language.font, language.get_text_tr('Small'), \
-                        pr.Vector2(120, 375), 16, 1, colors.WHITE)
+                        pr.Vector2(127, 382), 16, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('Middle'), \
-                        pr.Vector2(120, 425), 16, 1, colors.WHITE)
+                        pr.Vector2(127, 432), 16, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('Big'), \
-                        pr.Vector2(120, 475), 16, 1, colors.WHITE)
+                        pr.Vector2(127, 482), 16, 1, colors.WHITE)
         
     def settings_but_size(self, pr, settings, language):
         """ Отрисовка и обработка кнопки размера кнопок о функциях """
@@ -325,15 +325,15 @@ class Button:
             settings.write_settings("button_width", settings.but_width_big)  
             settings.write_settings("button_height", settings.but_height_big)  
 
-        pr.draw_rectangle_rounded(pr.Rectangle(447, 372, 66, 35), 0.5, 5, colors.DARKBLUE)
-        pr.draw_rectangle_rounded(pr.Rectangle(447, 422, 66, 35), 0.5, 5, colors.DARKBLUE)
-        pr.draw_rectangle_rounded(pr.Rectangle(447, 472, 66, 35), 0.5, 5, colors.DARKBLUE)
+        pr.draw_rectangle_rounded(pr.Rectangle(447, 372, 66, 35), 0.5, 5, settings.get_button_color("bs_s"))
+        pr.draw_rectangle_rounded(pr.Rectangle(447, 422, 66, 35), 0.5, 5, settings.get_button_color("bs_m"))
+        pr.draw_rectangle_rounded(pr.Rectangle(447, 472, 66, 35), 0.5, 5, settings.get_button_color("bs_b"))
         pr.draw_text_ex(language.font, language.get_text_tr('Small'), \
-                        pr.Vector2(450, 375), 16, 1, colors.WHITE)
+                        pr.Vector2(457, 382), 16, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('Middle'), \
-                        pr.Vector2(450, 425), 16, 1, colors.WHITE)
+                        pr.Vector2(457, 432), 16, 1, colors.WHITE)
         pr.draw_text_ex(language.font, language.get_text_tr('Big'), \
-                        pr.Vector2(450, 475), 16, 1, colors.WHITE)
+                        pr.Vector2(457, 482), 16, 1, colors.WHITE)
 
     def check_buttons_settings(self, ip, pr, terminal, task, app, language, log, settings):
         self.settings_exit(pr, terminal, settings, language)
