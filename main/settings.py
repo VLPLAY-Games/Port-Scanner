@@ -27,6 +27,7 @@ class Settings:
         self.but_height_middle = config.BUT_HEIGHT
         self.but_width_big = config.BUT_WIDTH_BIG
         self.but_height_big = config.BUT_HEIGHT_BIG
+        self.about = config.ABOUT
         self.app_cfg = open('app.cfg','r', encoding="utf-8")
         try:
             self.main_func()

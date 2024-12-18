@@ -144,6 +144,16 @@ class Button:
         pr.draw_rectangle_rounded(pr.Rectangle(275, 525, 60, 30), 0.5, 5, colors.DARKBLUE)
         pr.draw_text_ex(language.font, language.get_text_tr('Settings'), \
                         pr.Vector2(275, 532), 16, 1, colors.WHITE)
+        
+    def but_about(self, pr, terminal, language, settings):
+        """ Отрисовка и обработка кнопки отрисовки очистки терминала """
+        if pr.gui_button(
+                    pr.Rectangle(353, 528, 55, 25), ""):
+            terminal.page = 0
+            terminal.draw_text = settings.about
+        pr.draw_rectangle_rounded(pr.Rectangle(350, 525, 60, 30), 0.5, 5, colors.DARKBLUE)
+        pr.draw_text_ex(language.font, language.get_text_tr('About'), \
+                        pr.Vector2(350, 532), 16, 1, colors.WHITE)
 
     def but_ping(self, pr, terminal, language, task, settings):
         """ Отрисовка и обработка кнопки пинга """
@@ -206,6 +216,7 @@ class Button:
         self.but_clear(pr, terminal, language)
         self.but_terminal(pr, terminal, language, task, settings)
         self.but_active_devices(pr, terminal, language, task, settings)
+        self.but_about(pr, terminal, language, settings)
 
 
 
