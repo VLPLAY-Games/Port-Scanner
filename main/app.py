@@ -24,7 +24,7 @@ class App():
             pr.set_window_icon(pr.load_image("images/portscanner.png"))
             logging.info("App initialized")
         except Exception as e:
-            logging.critical("Error while initializing App window: " + str(e))
+            logging.critical("Error while initializing App window: %s", str(e))
             logging.critical("Trying to check App config")
             settings.check_app_config(True)
             try:
@@ -32,8 +32,8 @@ class App():
                 pr.set_target_fps(settings.fps)
                 pr.set_window_icon(pr.load_image("images/portscanner.png"))
                 logging.info("App initialized")
-            except Exception as e:
-                logging.critical("Error while initializing App window: " + str(e))
+            except Exception as exp:
+                logging.critical("Error while initializing App window: %s", str(exp))
 
     def draw_main(self, pr, colors, terminal, task, language, settings):
         """ Отрисовка дизайна приложения """
@@ -52,13 +52,13 @@ class App():
                             language.get_text_tr(settings.version),\
                             pr.Vector2(725, 585), 12, 1, colors.WHITE)
         except Exception as e:
-            logging.critical("Error while drawing main ui: " + str(e))
+            logging.critical("Error while drawing main ui: %s", str(e))
             logging.critical("Trying to check App config")
             settings.check_app_config(True)
 
     def error_init(self, e, pr, colors, language, log, settings):
         """ Отрисовка ошибки """
-        logging.critical(str(e) + settings.version)
+        logging.critical("%s %s", str(e), settings.version)
 
         pr.init_window(300, 300, "Port Scanner Critical Error")
         pr.set_target_fps(settings.fps)

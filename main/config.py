@@ -33,9 +33,9 @@ BUT_FONT_SIZE_BIG = 22
 LOG_LEVEL = 3
 LANGUAGE = "EN"
 
-
 ABOUT = (
     "\n\n\n\n\n\n\n\n\n\n\nPort Scanner v0.99\n"
     "by VL_PLAY Games\n\n"
     "github.com/VLPLAY-Games\n"
+    "github.com/VLPLAY-Games/Port-Scanner"
 )

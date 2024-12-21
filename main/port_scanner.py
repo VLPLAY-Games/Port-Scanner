@@ -11,7 +11,7 @@ from keyboard import Keyboard # type: ignore
 from task import Task
 from button import Button
 from terminal import Terminal
-from language import Language, Language_English
+from language import Language, LanguageEnglish
 from log import Log
 from settings import Settings
 
@@ -27,7 +27,7 @@ def main():
     button = Button()
     terminal = Terminal()
     language = Language(settings)
-    language_english = Language_English()
+    language_english = LanguageEnglish()
     pr.set_trace_log_callback(log.callback_signature)
     try:
         app.init_app(pr, settings)
@@ -45,7 +45,7 @@ def main():
 
         pr.close_window()
     except Exception as e:
-        logging.critical("Error while drawing main ui: " + str(e))
+        logging.critical("Error while drawing main ui: %s", str(e))
         logging.critical("Trying to check App config")
         settings.check_app_config(True)
         pr.unload_font(language_english.font)

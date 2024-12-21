@@ -32,25 +32,25 @@ class Settings:
         try:
             self.main_func()
         except Exception as e:
-            logging.critical("Error while initializing Settings class: " + str(e))
+            logging.critical("Error while initializing Settings class: %s", str(e))
             logging.critical("Trying to check App config")
             self.check_app_config(True)
             self.app_cfg = open('app.cfg','r', encoding="utf-8")
             self.main_func()
 
-        logging.info("Set app width to " + str(self.width))
-        logging.info("Set app height to " + str(self.height))
-        logging.info("Set app FPS to " + str(self.fps))
+        logging.info("Set app width to %s", str(self.width))
+        logging.info("Set app height to %s", str(self.height))
+        logging.info("Set app FPS to %s", str(self.fps))
         self.app_name = config.APP_NAME
-        logging.info("Set app name to " + str(self.app_name))
+        logging.info("Set app name to %s", str(self.app_name))
         self.version = config.VERSION
-        logging.info("Set app version to " + str(self.version))
-        logging.info("Set app font size to " + str(self.font_size))
-        logging.info("Set app buttons default width to " + str(self.but_width))
-        logging.info("Set app buttons default height to " + str(self.but_height))
-        logging.info("Set app buttons default font size to " + str(self.but_font_size))
+        logging.info("Set app version to %s", str(self.version))
+        logging.info("Set app font size to %s", str(self.font_size))
+        logging.info("Set app buttons default width to %s", str(self.but_width))
+        logging.info("Set app buttons default height to %s", str(self.but_height))
+        logging.info("Set app buttons default font size to %s", str(self.but_font_size))
         pr.set_trace_log_level(self.log_level)
-        logging.info("Set app log level to " + str(self.log_level))
+        logging.info("Set app log level to %s", str(self.log_level))
 
         self.info = config.INFORMATION
         logging.info("Loaded information")
@@ -79,7 +79,7 @@ class Settings:
         self.but_font_size = int(self.but_font_size)
         self.log_level = int(self.log_level)
 
-    def settings_window(self, ip, pr, terminal, task, app, language, log, settings, button):
+    def settings_window(self, pr, language, button):
         """ Запуск приложения """
         try:
             pr.init_window(self.width, self.height, self.app_name + " Settings")
@@ -88,7 +88,7 @@ class Settings:
             language.set_lang_startup(pr)
             logging.info("Settings window initialized")
         except Exception as e:
-            logging.critical("Error while initializing Settings window: " + str(e))
+            logging.critical("Error while initializing Settings window: %s", str(e))
 
         while not pr.window_should_close():
             pr.begin_drawing()
@@ -110,8 +110,9 @@ class Settings:
             pr.draw_line(25,75,975,75,colors.WHITE)
             pr.draw_line(325,75,325,self.height-75,colors.WHITE)
             pr.draw_line(650,75,650,self.height-75,colors.WHITE)
-            pr.draw_line(25, int(self.height / 2),self.width - 25, int(self.height / 2),colors.WHITE)
-            button.check_buttons_settings(ip, pr, terminal, task, app, language, log, self)
+            pr.draw_line(25, int(self.height / 2), \
+                         self.width - 25, int(self.height / 2), colors.WHITE)
+            button.check_buttons_settings(pr, language, self)
             pr.end_drawing()
 
         pr.close_window()
@@ -137,11 +138,11 @@ class Settings:
                 self.but_font_size = value
             elif name == "loglevel":
                 self.log_level = value
-            logging.info("Changed in app config " + name + " to " + str(value))
+            logging.info("Changed in app config %s to %s", name, str(value))
 
         except Exception as e:
-            logging.error("Error while changing app config " + str(e))
-        
+            logging.error("Error while changing app config: %s", str(e))
+
 
     def create_app_config(self, recreate = False):
         """ Создание конфигурационного файла приложения"""
@@ -183,6 +184,7 @@ class Settings:
         logging.info("Checked App config file")
 
     def get_button_gradient_width(self):
+        """ Получение ширины для красивого фона кнопок"""
         if self.but_width == config.BUT_WIDTH:
             return self.but_width + 12
 
@@ -191,8 +193,9 @@ class Settings:
 
         elif self.but_width == config.BUT_WIDTH_BIG:
             return self.but_width + 15
-    
+
     def get_button_gradient_height(self):
+        """ Получение высоты для красивого фона кнопок"""
         if self.but_height == config.BUT_HEIGHT:
             return self.but_height + 7
 
@@ -203,24 +206,25 @@ class Settings:
             return self.but_height + 9
 
     def get_button_color(self, but_name):
+        """ Получение цвета кнопок в настройках выбрано или нет"""
         font_sizes = {
             "fs_s": config.FONT_SIZE_SMALL,
             "fs_m": config.FONT_SIZE,
             "fs_b": config.FONT_SIZE_BIG,
         }
-        
+
         but_font_sizes = {
             "bfs_s": config.BUT_FONT_SIZE_SMALL,
             "bfs_m": config.BUT_FONT_SIZE,
             "bfs_b": config.BUT_FONT_SIZE_BIG,
         }
-        
+
         button_sizes = {
             "bs_s": (config.BUT_WIDTH_SMALL, config.BUT_HEIGHT_SMALL),
             "bs_m": (config.BUT_WIDTH, config.BUT_HEIGHT),
             "bs_b": (config.BUT_WIDTH_BIG, config.BUT_HEIGHT_BIG),
         }
-        
+
         log_levels = {
             "log_0": 7,
             "log_1": 0,
@@ -233,19 +237,22 @@ class Settings:
 
         if but_name in font_sizes:
             return colors.DARKGREEN if self.font_size == font_sizes[but_name] else colors.DARKBLUE
-        
+
         elif but_name in but_font_sizes:
-            return colors.DARKGREEN if self.but_font_size == but_font_sizes[but_name] else colors.DARKBLUE
-        
+            return colors.DARKGREEN if self.but_font_size == but_font_sizes[but_name] \
+                else colors.DARKBLUE
+
         elif but_name in button_sizes:
             width, height = button_sizes[but_name]
-            return colors.DARKGREEN if (self.but_width == width and self.but_height == height) else colors.DARKBLUE
-        
+            return colors.DARKGREEN if (self.but_width == width and self.but_height == height) \
+                else colors.DARKBLUE
+
         elif but_name in log_levels:
             return colors.DARKGREEN if self.log_level == log_levels[but_name] else colors.DARKBLUE
 
         return colors.DARKBLUE
-            
+
 
     def exit(self, pr):
+        """ Закрытие окна настроек"""
         pr.close_window()

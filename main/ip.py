@@ -35,11 +35,11 @@ class Ip:
                     for link in netifaces.ifaddresses(interface)[netifaces.AF_INET]:
                         self.ipv4_list.append(link['addr'])
                 except Exception as e:
-                    logging.error(str(e) + VERSION)
+                    logging.error("%s %s", str(e), VERSION)
             logging.info("Finished task 'get IP v4'")
             return self.ipv4_list
         except Exception as e:
-            logging.error("Error while getting IP v4: " + str(e))
+            logging.error("Error while getting IP v4: %s", str(e))
 
     def get_ip6_addresses(self):
         """ Получение IP v6 """
@@ -51,17 +51,18 @@ class Ip:
                     for link in netifaces.ifaddresses(interface)[netifaces.AF_INET6]:
                         self.ipv6_list.append(link['addr'])
                 except Exception as e:
-                    logging.error(str(e) + VERSION)
+                    logging.error("%s %s", str(e), VERSION)
             logging.info("Finished task 'get IP v6'")
             return self.ipv6_list
         except Exception as e:
-            logging.error("Error while getting IP v6: " + str(e))
+            logging.error("Error while getting IP v6: %s", str(e))
 
     def get_all_ip(self, app, terminal, task):
         """ Получение IP v4 + v6 """
         try:
             logging.info("Started task 'get all ip'")
             task.status = "WORK"
+            self.result = []
             self.result.append("Your IP v4 is: \n")
             for ip in self.get_ip4_addresses():
                 self.result.append(ip)
@@ -79,7 +80,7 @@ class Ip:
         try:
             ip_address(ip)
         except Exception as e:
-            logging.warning("IP Adress is not valid " + str(e))
+            logging.warning("IP Adress is not valid: %s", str(e))
             return "IP Adress is not valid"
         return "OK"
 
@@ -94,7 +95,7 @@ class Ip:
         except Exception as e:
             terminal.draw_text += "\nAn error was occured"
             task.status = "ERR"
-            logging.error("Error while pinging " + self.task_ip + " " + str(e))
+            logging.error("Error while pinging %s: %s", self.task_ip, str(e))
         logging.info("Ping command completed")
 
     def ping_device(self, ip):

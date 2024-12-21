@@ -96,4 +96,4 @@ class Terminal:
             logging.info("Custom terminal task command completed")
         except Exception as e:
             self.draw_text += str(e)
-            logging.error(f"Command execution error: {str(e)}")
+            logging.error("Command execution error: %s", str(e))

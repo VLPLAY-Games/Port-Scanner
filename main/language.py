@@ -35,7 +35,7 @@ class Language:
                 self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
                 logging.info("Changed language to English")
         except Exception as e:
-            logging.error("Error while changing language " + str(e))
+            logging.error("Error while changing language: %s", str(e))
 
     def get_text_tr(self, text):
         """ Получение текста по языку"""
@@ -54,18 +54,18 @@ class Language:
                 self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
             elif (self.selected_lang == "RU"):
                 self.font = pr.load_font_ex('fonts/cyrillic.ttf', 50, None, 0)
-            logging.info("Set language " + self.selected_lang + " sucessfully")
+            logging.info("Set language %s successfully", self.selected_lang)
 
         except Exception as e:
-            logging.error("Error while reading language file " + str(e))
+            logging.error("Error while reading language file: %s", str(e))
             logging.info("Set default language")
             self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
 
 
-class Language_English():
+class LanguageEnglish():
     """ Класс для английского языка терминала и лога"""
     def __init__(self):
-        self.font = list()
+        self.font = []
 
     def set_english(self, pr):
         """ Установка английского языка """

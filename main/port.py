@@ -40,7 +40,7 @@ class Port:
             logging.info("Finished task 'scan ports'")
             return self.open_ports
         except Exception as e:
-            logging.error("Error while scan ports: " + str(e))
+            logging.error("Error while scan ports: %s", str(e))
 
 
     def scan_all_ports(self, pr, colors, app, ip, terminal, task, language, settings):

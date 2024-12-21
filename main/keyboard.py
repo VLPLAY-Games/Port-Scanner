@@ -43,8 +43,7 @@ class Keyboard:
                     self.keys_del()
                 else:
                     if (pr.is_key_down(340) or pr.is_key_down(344)):
-                        if (value >= 65 and value <= 90) or (chr(value) >= '0' \
-                                                             and chr(value) <= '9'):
+                        if (65 <= value <= 90) or ('0' <= chr(value) <= '9'):
                             self.keys.append(chr(value))
                     else:
                         self.keys.append(chr(value).lower())
