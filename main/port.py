@@ -1,9 +1,8 @@
 """ Файл для работы с портами"""
 
 import logging
-import socket
 from socket import socket, AF_INET, SOCK_STREAM
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, TimeoutError
 
 class Port:
     """ Класс для работы с портами"""
@@ -22,14 +21,15 @@ class Port:
     def scan_port(self, host, port):
         """Проверяет, открыт ли порт на заданном хосте."""
         with socket(AF_INET, SOCK_STREAM) as sock:
-            sock.settimeout(1)  # Устанавливаем таймаут в 1 секунду
+            sock.settimeout(0.01)
             result = sock.connect_ex((host, port))
-            return port, result == 0  # Если результат 0, порт открыт
+            return port, result == 0 
 
     def scan_ports(self, host, start_port, end_port):
         """Сканирует порты в заданном диапазоне."""
         try:
             logging.info("Started task 'scan ports'")
+            self.open_ports = []
             with ThreadPoolExecutor(max_workers=100) as executor:
                 futures = {executor.submit(self.scan_port, host, port):
                         port for port in range(start_port, end_port + 1)}
@@ -41,6 +41,7 @@ class Port:
             return self.open_ports
         except Exception as e:
             logging.error("Error while scan ports: %s", str(e))
+            return []
 
 
     def scan_all_ports(self, pr, colors, app, ip, terminal, task, language, settings):

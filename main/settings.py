@@ -188,10 +188,10 @@ class Settings:
         if self.but_width == config.BUT_WIDTH:
             return self.but_width + 12
 
-        elif self.but_width == config.BUT_WIDTH_SMALL:
+        if self.but_width == config.BUT_WIDTH_SMALL:
             return self.but_width + 10
 
-        elif self.but_width == config.BUT_WIDTH_BIG:
+        if self.but_width == config.BUT_WIDTH_BIG:
             return self.but_width + 15
 
     def get_button_gradient_height(self):
@@ -199,10 +199,10 @@ class Settings:
         if self.but_height == config.BUT_HEIGHT:
             return self.but_height + 7
 
-        elif self.but_height == config.BUT_HEIGHT_SMALL:
+        if self.but_height == config.BUT_HEIGHT_SMALL:
             return self.but_height + 6
 
-        elif self.but_height == config.BUT_HEIGHT_BIG:
+        if self.but_height == config.BUT_HEIGHT_BIG:
             return self.but_height + 9
 
     def get_button_color(self, but_name):
@@ -238,16 +238,16 @@ class Settings:
         if but_name in font_sizes:
             return colors.DARKGREEN if self.font_size == font_sizes[but_name] else colors.DARKBLUE
 
-        elif but_name in but_font_sizes:
+        if but_name in but_font_sizes:
             return colors.DARKGREEN if self.but_font_size == but_font_sizes[but_name] \
                 else colors.DARKBLUE
 
-        elif but_name in button_sizes:
+        if but_name in button_sizes:
             width, height = button_sizes[but_name]
             return colors.DARKGREEN if (self.but_width == width and self.but_height == height) \
                 else colors.DARKBLUE
 
-        elif but_name in log_levels:
+        if but_name in log_levels:
             return colors.DARKGREEN if self.log_level == log_levels[but_name] else colors.DARKBLUE
 
         return colors.DARKBLUE

@@ -3,7 +3,7 @@ WIDTH = 1000
 HEIGHT = 600
 FPS = 30
 APP_NAME = "Port Scanner"
-VERSION = ' v0.99'
+VERSION = ' v1.0'
 INFORMATION = (
     "Help:\n\n\n"
     "Check your IP - displays all IP addresses of computers \non the network\n\n"
