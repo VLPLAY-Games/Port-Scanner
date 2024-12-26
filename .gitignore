@@ -9,3 +9,5 @@ port_scanner.spec
 dist/
 lang.cfg
 app.cfg
+pyinstaller/
+output/
