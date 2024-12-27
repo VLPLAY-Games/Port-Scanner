@@ -2,7 +2,7 @@
 
 import logging
 from subprocess import check_output
-import os
+from os import name
 
 class Task:
     """ Класс для работы с заданиями"""
@@ -116,7 +116,7 @@ class Task:
                 app.fast_draw_text(terminal.draw_text, \
                                    pr, colors, terminal, task, language, settings)
                 logging.info("Started task 'get ip config'")
-                if os.name == 'nt':
+                if name == 'nt':
                     terminal.draw_text += check_output("ipconfig" ).decode('utf-8')
                 else:
                     terminal.draw_text += check_output("ifconfig" ).decode('utf-8')

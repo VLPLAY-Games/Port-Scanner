@@ -5,8 +5,8 @@ from os import name
 from ipaddress import ip_address, ip_network
 from subprocess import check_output, CalledProcessError
 from concurrent.futures import ThreadPoolExecutor
-import socket
-import netifaces
+from socket import gethostbyaddr, herror
+from netifaces import interfaces, ifaddresses, AF_INET, AF_INET6
 from config import VERSION
 
 class Ip:
@@ -30,9 +30,9 @@ class Ip:
         try:
             logging.info("Started task 'get IP v4'")
             self.ipv4_list = []
-            for interface in netifaces.interfaces():
+            for interface in interfaces():
                 try:
-                    for link in netifaces.ifaddresses(interface)[netifaces.AF_INET]:
+                    for link in ifaddresses(interface)[AF_INET]:
                         self.ipv4_list.append(link['addr'])
                 except Exception as e:
                     logging.error("%s %s", str(e), VERSION)
@@ -40,15 +40,16 @@ class Ip:
             return self.ipv4_list
         except Exception as e:
             logging.error("Error while getting IP v4: %s", str(e))
+            return None
 
     def get_ip6_addresses(self):
         """ Получение IP v6 """
         try:
             logging.info("Started task 'get IP v6'")
             self.ipv6_list = []
-            for interface in netifaces.interfaces():
+            for interface in interfaces():
                 try:
-                    for link in netifaces.ifaddresses(interface)[netifaces.AF_INET6]:
+                    for link in ifaddresses(interface)[AF_INET6]:
                         self.ipv6_list.append(link['addr'])
                 except Exception as e:
                     logging.error("%s %s", str(e), VERSION)
@@ -132,8 +133,8 @@ class Ip:
         """ Получить имя устройства"""
         try:
             # Получаем имя устройства по IP
-            return socket.gethostbyaddr(str(ip))[0]
-        except socket.herror:
+            return gethostbyaddr(str(ip))[0]
+        except herror:
             return None
 
     def active_devices(self, terminal, task):

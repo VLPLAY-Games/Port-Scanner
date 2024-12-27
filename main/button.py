@@ -200,7 +200,7 @@ class Button:
         if pr.gui_button(
                     pr.Rectangle(55, 303, settings.but_width, settings.but_height), ""):
             terminal.page = 0
-            terminal.draw_text = "Enter command: \n"
+            terminal.draw_text = "Enter IP with subnet mask: \n"
             terminal.terminal_active = True
             task.task = "act_devices"
             task.status = "WAIT"
