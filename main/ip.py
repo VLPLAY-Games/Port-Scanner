@@ -103,7 +103,9 @@ class Ip:
     def ping_device(self, ip):
         """ Пропинговать IP """
         try:
-            check_output(f"ping -c 1 -W 1 {ip}", shell=False)
+            parameter = '-n' if name == 'nt' else '-c'
+            command = ['ping', parameter, '1', ip]
+            check_output(command)
             return ip
         except CalledProcessError:
             return None
@@ -112,7 +114,8 @@ class Ip:
         """ Получить мак адрес устройства """
         try:
             # Выполняем arp для получения MAC-адреса
-            output = check_output(f"arp {ip}", shell=False).decode()
+            command = ['arp', ip]
+            output = check_output(command).decode()
             for line in output.splitlines():
                 if ip in line:
                     # Предполагаем, что MAC-адрес находится в формате XX:XX:XX:XX:XX:XX
