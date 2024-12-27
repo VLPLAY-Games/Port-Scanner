@@ -116,15 +116,14 @@ class Ip:
         """ Получить мак адрес устройства """
         try:
             # Выполняем arp для получения MAC-адреса
-            parameter = '-a' if name == 'nt' else ''
-            command = ['arp', parameter, ip]
+            command = ['arp', '-a', ip] if name == 'nt' else ['arp', ip]
             output = check_output(command).decode()
             for line in output.splitlines():
                 if ip in line:
                     # Предполагаем, что MAC-адрес находится в формате XX:XX:XX:XX:XX:XX
                     parts = line.split()
                     if len(parts) >= 3:
-                        return parts[1] if name == 'nt' else parts[2]  # Возвращаем MAC-адрес
+                        return (parts[1] if name == 'nt' else parts[2])  # Возвращаем MAC-адрес
             return None
         except CalledProcessError:
             return None
