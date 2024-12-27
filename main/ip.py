@@ -105,7 +105,9 @@ class Ip:
         try:
             parameter = '-n' if name == 'nt' else '-c'
             command = ['ping', parameter, '1', ip]
-            check_output(command)
+            temp = check_output(command)
+            if 'Destination host unreachable' in str(temp):
+                return None
             return ip
         except CalledProcessError:
             return None
@@ -114,14 +116,15 @@ class Ip:
         """ Получить мак адрес устройства """
         try:
             # Выполняем arp для получения MAC-адреса
-            command = ['arp', ip]
+            parameter = '-a' if name == 'nt' else ''
+            command = ['arp', parameter, ip]
             output = check_output(command).decode()
             for line in output.splitlines():
                 if ip in line:
                     # Предполагаем, что MAC-адрес находится в формате XX:XX:XX:XX:XX:XX
                     parts = line.split()
                     if len(parts) >= 3:
-                        return parts[2]  # Возвращаем MAC-адрес
+                        return parts[1] if name == 'nt' else parts[2]  # Возвращаем MAC-адрес
             return None
         except CalledProcessError:
             return None
@@ -146,6 +149,7 @@ class Ip:
                 ip = future.result()
                 if ip:
                     mac_address = self.get_mac_address(ip)
+                    print(mac_address)
                     device_name = self.get_device_name(ip)
                     active_devices_info.append((ip, mac_address, device_name))
 
