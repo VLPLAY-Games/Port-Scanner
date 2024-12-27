@@ -149,17 +149,16 @@ class Settings:
         if (exists("app.cfg") is False) or recreate:
             logging.warning("App config file doesn't exists" if recreate is False\
                              else "App config file needs to be recreated")
-            self.app_cfg = open('app.cfg','w', encoding="utf-8")
-            self.app_cfg.write("width=" + str(config.WIDTH))
-            self.app_cfg.write("\nheight=" + str(config.HEIGHT))
-            self.app_cfg.write("\nfps=" + str(config.FPS))
-            self.app_cfg.write("\nfont_size=" + str(config.FONT_SIZE))
-            self.app_cfg.write("\nbutton_width=" + str(config.BUT_WIDTH))
-            self.app_cfg.write("\nbutton_height=" + str(config.BUT_HEIGHT))
-            self.app_cfg.write("\nbutton_font_size=" + str(config.BUT_FONT_SIZE))
-            self.app_cfg.write("\nlanguage=" + str(config.LANGUAGE))
-            self.app_cfg.write("\nloglevel=" + str(config.LOG_LEVEL))
-            self.app_cfg.close()
+            with open('app.cfg', 'w', encoding="utf-8") as app_cfg:
+                app_cfg.write("width=" + str(config.WIDTH))
+                app_cfg.write("\nheight=" + str(config.HEIGHT))
+                app_cfg.write("\nfps=" + str(config.FPS))
+                app_cfg.write("\nfont_size=" + str(config.FONT_SIZE))
+                app_cfg.write("\nbutton_width=" + str(config.BUT_WIDTH))
+                app_cfg.write("\nbutton_height=" + str(config.BUT_HEIGHT))
+                app_cfg.write("\nbutton_font_size=" + str(config.BUT_FONT_SIZE))
+                app_cfg.write("\nlanguage=" + str(config.LANGUAGE))
+                app_cfg.write("\nloglevel=" + str(config.LOG_LEVEL))
             logging.info("Created app.cfg with default values")
 
     def check_app_config(self, recreate = False):
@@ -194,6 +193,8 @@ class Settings:
         if self.but_width == config.BUT_WIDTH_BIG:
             return self.but_width + 15
 
+        return self.but_width
+
     def get_button_gradient_height(self):
         """ Получение высоты для красивого фона кнопок"""
         if self.but_height == config.BUT_HEIGHT:
@@ -204,6 +205,8 @@ class Settings:
 
         if self.but_height == config.BUT_HEIGHT_BIG:
             return self.but_height + 9
+
+        return self.but_height
 
     def get_button_color(self, but_name):
         """ Получение цвета кнопок в настройках выбрано или нет"""

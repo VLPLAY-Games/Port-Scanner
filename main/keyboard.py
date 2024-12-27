@@ -1,7 +1,7 @@
 """ Файл для работы с клавиатурой"""
 
 import logging
-
+from pyperclip import paste
 
 class Keyboard:
     """ Класс для работы с клавиатурой"""
@@ -32,6 +32,7 @@ class Keyboard:
         """ Удалить 1 смивол с конца"""
         self.keys = self.keys[:-1]
 
+
     def check_key(self, pr, terminal):
         """ Добавление текста с клавиатуры """
         # Получение нажатия всех кнопок с клавиатуры
@@ -41,6 +42,9 @@ class Keyboard:
                     self.enter_pressed = True
                 elif pr.is_key_pressed(259):
                     self.keys_del()
+                elif (pr.is_key_down(341) or pr.is_key_down(345)):
+                    if chr(value) == 'V':
+                        self.keys.extend(list(paste()))
                 else:
                     if (pr.is_key_down(340) or pr.is_key_down(344)):
                         if (65 <= value <= 90) or ('0' <= chr(value) <= '9'):

@@ -15,6 +15,7 @@ from language import Language, LanguageEnglish
 from log import Log
 from settings import Settings
 
+
 def main():
     """ Основная функция """
     log = Log()

@@ -56,6 +56,7 @@ class Ip:
             return self.ipv6_list
         except Exception as e:
             logging.error("Error while getting IP v6: %s", str(e))
+            return None
 
     def get_all_ip(self, app, terminal, task):
         """ Получение IP v4 + v6 """
@@ -74,6 +75,7 @@ class Ip:
         except Exception as e:
             self.status = "ERR"
             app.exception("Error while perfoming task 'all info': ", str(e), terminal, task)
+            return None
 
     def check_ip(self, ip):
         """ Проверка правильности написания ip адреса"""
@@ -101,7 +103,7 @@ class Ip:
     def ping_device(self, ip):
         """ Пропинговать IP """
         try:
-            check_output(f"ping -c 1 -W 1 {ip}", shell=True)
+            check_output(f"ping -c 1 -W 1 {ip}", shell=False)
             return ip
         except CalledProcessError:
             return None
@@ -110,13 +112,14 @@ class Ip:
         """ Получить мак адрес устройства """
         try:
             # Выполняем arp для получения MAC-адреса
-            output = check_output(f"arp {ip}", shell=True).decode()
+            output = check_output(f"arp {ip}", shell=False).decode()
             for line in output.splitlines():
                 if ip in line:
                     # Предполагаем, что MAC-адрес находится в формате XX:XX:XX:XX:XX:XX
                     parts = line.split()
                     if len(parts) >= 3:
                         return parts[2]  # Возвращаем MAC-адрес
+            return None
         except CalledProcessError:
             return None
 

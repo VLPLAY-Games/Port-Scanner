@@ -7,9 +7,12 @@ VERSION = ' v1.0'
 INFORMATION = (
     "Help:\n\n\n"
     "Check your IP - displays all IP addresses of computers \non the network\n\n"
-    "Check all ports - displays all open ports on each IP address \nof a computer on the network\n\n"
-    "All info - displays information about: IP addresses, open \nports, network driver and other data\n\n"
-    "Custom task - a function through which you can find out open \nports on a specified IP address\n\n"
+    "Check all ports - displays all open ports on each IP address \n\
+                       of a computer on the network\n\n"
+    "All info - displays information about: IP addresses, open \n\
+                ports, network driver and other data\n\n"
+    "Custom task - a function through which you can find out open \n\
+                   ports on a specified IP address\n\n"
     "Log - displays all program logs\n\n"
     "Ping - ping site, IP or server\n\n"
     "Terminal - custom terminal (like base terminal in Windows or Linux)\n\n"

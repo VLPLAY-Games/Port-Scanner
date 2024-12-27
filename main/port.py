@@ -2,7 +2,7 @@
 
 import logging
 from socket import socket, AF_INET, SOCK_STREAM
-from concurrent.futures import ThreadPoolExecutor, TimeoutError
+from concurrent.futures import ThreadPoolExecutor
 
 class Port:
     """ Класс для работы с портами"""
@@ -23,7 +23,7 @@ class Port:
         with socket(AF_INET, SOCK_STREAM) as sock:
             sock.settimeout(0.01)
             result = sock.connect_ex((host, port))
-            return port, result == 0 
+            return port, result == 0
 
     def scan_ports(self, host, start_port, end_port):
         """Сканирует порты в заданном диапазоне."""

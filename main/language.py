@@ -35,7 +35,7 @@ class Language:
                 pr.unload_font(self.font)
                 self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
                 logging.info("Changed language to English")
-        except (FileNotFoundError, ValueError) as e:
+        except Exception as e:
             logging.error("Error while changing language: %s", str(e))
 
     def get_text_tr(self, text):
@@ -73,4 +73,3 @@ class LanguageEnglish:
 
     def __del__(self):
         """ Деинициализация """
-        pass
