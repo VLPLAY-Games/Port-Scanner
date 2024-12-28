@@ -12,7 +12,13 @@
 
 using namespace std;
 
-extern "C" __declspec(dllexport) const char* get_device_name(const char* ip) {
+#ifdef _WIN32
+extern "C" __declspec(dllexport) const char* get_device_name(const char* ip);
+#else
+extern "C" const char* get_device_name(const char* ip);
+#endif
+
+extern "C" const char* get_device_name(const char* ip) {
     static string result;
 
 #ifdef _WIN32
