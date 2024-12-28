@@ -21,7 +21,7 @@ class Port:
     def scan_port(self, host, port):
         """Проверяет, открыт ли порт на заданном хосте."""
         with socket(AF_INET, SOCK_STREAM) as sock:
-            sock.settimeout(0.01)
+            sock.settimeout(0.02)
             result = sock.connect_ex((host, port))
             return port, result == 0
 

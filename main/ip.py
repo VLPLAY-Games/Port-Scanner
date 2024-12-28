@@ -1,13 +1,13 @@
 """ Файл для работы с IP"""
 
 import logging
-from os import name
+from os import name, path
 from ipaddress import ip_address, ip_network
 from subprocess import check_output, CalledProcessError
 from concurrent.futures import ThreadPoolExecutor
-from socket import gethostbyaddr, herror
 from netifaces import interfaces, ifaddresses, AF_INET, AF_INET6
 from config import VERSION
+from cffi import FFI
 
 class Ip:
     """ Класс для работы с IP """
@@ -19,6 +19,11 @@ class Ip:
         self.task_ip = ""
         self.status = ""
         self.result = []
+        self.ffi = FFI()
+        self.device_name_lib = self.ffi.dlopen(path.abspath("main/dll/device_name.dll")) if name == "nt" else self.ffi.dlopen("main/dll/device_name.so")
+        self.ffi.cdef("""
+            const char* get_device_name(const char* ip);
+        """)
         logging.info("IP class initialized successfully")
 
     def __del__(self):
@@ -119,6 +124,7 @@ class Ip:
             # Выполняем arp для получения MAC-адреса
             command = ['arp', '-a', ip] if name == 'nt' else ['arp', ip]
             output = check_output(command).decode()
+            
             for line in output.splitlines():
                 if ip in line:
                     # Предполагаем, что MAC-адрес находится в формате XX:XX:XX:XX:XX:XX
@@ -130,12 +136,12 @@ class Ip:
             return None
 
     def get_device_name(self, ip):
-        """ Получить имя устройства"""
-        try:
-            # Получаем имя устройства по IP
-            return gethostbyaddr(str(ip))[0]
-        except herror:
-            return None
+        """Обертка для вызова функции C++"""
+        # Вызов функции C++
+        result = self.device_name_lib.get_device_name(ip.encode('utf-8'))
+        if result:
+            return self.ffi.string(result).decode('utf-8')
+        return None
 
     def active_devices(self, terminal, task):
         """ Найти активные устройства в локальной сети"""
@@ -148,6 +154,7 @@ class Ip:
             for future in futures:
                 ip = future.result()
                 if ip:
+                    print(ip)
                     mac_address = self.get_mac_address(ip)
                     device_name = self.get_device_name(ip)
                     active_devices_info.append((ip, mac_address, device_name))
