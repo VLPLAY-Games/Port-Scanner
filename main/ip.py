@@ -20,7 +20,8 @@ class Ip:
         self.status = ""
         self.result = []
         self.ffi = FFI()
-        self.device_name_lib = self.ffi.dlopen(path.abspath("main/dll/device_name.dll")) if name == "nt" else self.ffi.dlopen("main/dll/device_name.so")
+        self.device_name_lib = self.ffi.dlopen(path.abspath("dll/device_name.dll")) \
+                if name == "nt" else self.ffi.dlopen("dll/device_name.so")
         self.ffi.cdef("""
             const char* get_device_name(const char* ip);
         """)
@@ -97,7 +98,7 @@ class Ip:
         parameter = '-n' if name == 'nt' else '-c'
         command = ['ping', parameter, '5', self.task_ip]
         try:
-            terminal.draw_text += check_output(command).decode("utf-8")
+            terminal.draw_text += check_output(command, shell=True).decode("utf-8")
             task.status = "OK"
             logging.info("Ping successfull")
         except Exception as e:
@@ -111,7 +112,7 @@ class Ip:
         try:
             parameter = '-n' if name == 'nt' else '-c'
             command = ['ping', parameter, '1', ip]
-            temp = check_output(command)
+            temp = check_output(command, shell=True)
             if 'Destination host unreachable' in str(temp):
                 return None
             return ip
@@ -123,8 +124,8 @@ class Ip:
         try:
             # Выполняем arp для получения MAC-адреса
             command = ['arp', '-a', ip] if name == 'nt' else ['arp', ip]
-            output = check_output(command).decode()
-            
+            output = check_output(command, shell=True).decode()
+
             for line in output.splitlines():
                 if ip in line:
                     # Предполагаем, что MAC-адрес находится в формате XX:XX:XX:XX:XX:XX

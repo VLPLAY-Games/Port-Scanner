@@ -9,3 +9,4 @@ lang.cfg
 app.cfg
 pyinstaller/
 output/
+pytoexe.json
