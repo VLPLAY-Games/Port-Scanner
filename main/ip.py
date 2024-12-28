@@ -154,7 +154,6 @@ class Ip:
             for future in futures:
                 ip = future.result()
                 if ip:
-                    print(ip)
                     mac_address = self.get_mac_address(ip)
                     device_name = self.get_device_name(ip)
                     active_devices_info.append((ip, mac_address, device_name))
