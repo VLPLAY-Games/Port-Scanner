@@ -74,14 +74,14 @@ class Log:
             )
             pr.draw_line(25, 50, 725, 50, colors.WHITE)
             pr.draw_text_ex(
-                language.font, "Log:", pr.Vector2(5, 5), 25, 1, colors.WHITE
+                language.english_font, "Log:", pr.Vector2(5, 5), 25, 1, colors.WHITE
             )
 
             self.but_next_console(pr, language)
             self.but_prev_console(pr, language)
             self.draw_terminal_text(pr, language)
             pr.end_drawing()
-        pr.unload_font(language.font)
+        pr.unload_font(language.english_font)
         pr.close_window()
 
     def custom_log(self, level, message, user_data):
@@ -134,7 +134,7 @@ class Log:
         self.pages = len(self.arr_text)
         if self.arr_text:
             pr.draw_text_ex(
-                language.font,
+                language.english_font,
                 str(self.arr_text[self.page]),
                 pr.Vector2(5, 75),
                 12,
@@ -150,7 +150,7 @@ class Log:
             pr.Rectangle(698, 797, 46, 46), 0.5, 5, colors.AQUA
         )
         pr.draw_text_ex(
-            language.font, ">>", pr.Vector2(710, 810), 25, 1, colors.WHITE
+            language.english_font, ">>", pr.Vector2(710, 810), 25, 1, colors.WHITE
         )
 
     def but_prev_console(self, pr, language):
@@ -161,5 +161,5 @@ class Log:
             pr.Rectangle(648, 797, 46, 46), 0.5, 5, colors.AQUA
         )
         pr.draw_text_ex(
-            language.font, "<<", pr.Vector2(660, 810), 25, 1, colors.WHITE
+            language.english_font, "<<", pr.Vector2(660, 810), 25, 1, colors.WHITE
         )

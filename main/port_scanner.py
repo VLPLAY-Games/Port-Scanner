@@ -11,7 +11,7 @@ from keyboard import Keyboard # type: ignore
 from task import Task
 from button import Button
 from terminal import Terminal
-from language import Language, LanguageEnglish
+from language import Language
 from log import Log
 from settings import Settings
 
@@ -28,19 +28,18 @@ def main():
     button = Button()
     terminal = Terminal()
     language = Language(settings)
-    language_english = LanguageEnglish()
     pr.set_trace_log_callback(log.callback_signature)
     try:
         app.init_app(pr, settings)
         language.set_lang_startup(pr)
-        language_english.set_english(pr)
+        language.set_english(pr)
         while not pr.window_should_close():
             pr.begin_drawing()
             app.draw_main(pr, colors, terminal, task, language, settings)
             button.check_all_but(ip, pr, terminal, task, app, language, log, settings)
             keyboard.check_key(pr, terminal)
             task.check_task(app, ip, port, keyboard, pr, colors, terminal, task, language, settings)
-            terminal.draw_terminal_text(keyboard.get_keys(), pr, language_english)
+            terminal.draw_terminal_text(keyboard.get_keys(), pr, language)
             pr.clear_background(colors.WHITE)
             pr.end_drawing()
 
@@ -49,12 +48,12 @@ def main():
         logging.critical("Error while drawing main ui: %s", str(e))
         logging.critical("Trying to check App config")
         settings.check_app_config(True)
-        pr.unload_font(language_english.font)
-        app.error_init(e, pr, colors, language_english, log, settings)
+        pr.unload_font(language.english_font)
+        app.error_init(e, pr, colors, language, log, settings)
 
     pr.unload_font(language.font)
-    pr.unload_font(language_english.font)
-    del app, ip, task, port, keyboard, button, terminal, language, language_english, settings, log
+    pr.unload_font(language.english_font)
+    del app, ip, task, port, keyboard, button, terminal, language, settings, log
     logging.info("App is closed")
 
 if __name__ == '__main__':

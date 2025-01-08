@@ -161,26 +161,60 @@ class Settings:
                 app_cfg.write("\nloglevel=" + str(config.LOG_LEVEL))
             logging.info("Created app.cfg with default values")
 
-    def check_app_config(self, recreate = False):
+    def check_app_config(self, recreate=False):
         """ Проверка конфигурационного файла """
+
         logging.info("Checking app config file")
-        self.create_app_config()
-        temp = []
-        self.app_cfg = open('app.cfg', 'r', encoding="utf-8")
-        for line in self.app_cfg.readlines():
-            temp.append(line.strip())
-        flag = True
-        for item in temp:
-            if len(item.split("=")) != 2:
-                flag = False
 
-        if flag is False or recreate:
-            logging.error("App config file is corrupted")
+        # Ожидаемые параметры, их условия проверки и значения по умолчанию
+        expected_config = {
+            "width": (lambda x: x.isdigit() and int(x) > 0, "1000"),
+            "height": (lambda x: x.isdigit() and int(x) > 0, "600"),
+            "fps": (lambda x: x.isdigit() and int(x) > 0, "30"),
+            "font_size": (lambda x: x.isdigit() and int(x) > 0, "18"),
+            "button_width": (lambda x: x.isdigit() and int(x) > 0, "100"),
+            "button_height": (lambda x: x.isdigit() and int(x) > 0, "55"),
+            "button_font_size": (lambda x: x.isdigit() and int(x) > 0, "18"),
+            "language": (lambda x: x in ["EN", "RU"], "EN"),
+            "loglevel": (lambda x: x.isdigit() and 0 <= int(x) <= 7, "3"),
+        }
+
+        def validate_and_correct_config(config_lines):
+            config_dict = {}
+            for line in config_lines:
+                if "=" in line:
+                    key, value = line.split("=", 1)
+                    config_dict[key.strip()] = value.strip()
+
+            corrected = False
+            # Проверяем наличие всех ключей и их значения
+            for key, (validator, default) in expected_config.items():
+                if key not in config_dict or not validator(config_dict[key]):
+                    config_dict[key] = default
+                    corrected = True
+
+            return config_dict, corrected
+
+        try:
+            with open('app.cfg', 'r', encoding="utf-8") as cfg_file:
+                config_lines = [line.strip() for line in cfg_file if line.strip()]
+
+            config_dict, corrected = validate_and_correct_config(config_lines)
+
+            if corrected or recreate:
+                logging.warning("App config file corrected or recreated.")
+                with open('app.cfg', 'w', encoding="utf-8") as cfg_file:
+                    for key, value in config_dict.items():
+                        cfg_file.write(f"{key}={value}\n")
+            else:
+                logging.info("App config file is valid")
+
+        except FileNotFoundError:
+            logging.error("App config file not found, recreating")
             self.create_app_config(True)
-            self.app_cfg = open('app.cfg','r', encoding="utf-8")
-            self.main_func()
-
-        logging.info("Checked App config file")
+        except Exception as e:
+            logging.error(f"Unexpected error: {e}, recreating config")
+            self.create_app_config(True)
 
     def get_button_gradient_width(self):
         """ Получение ширины для красивого фона кнопок"""

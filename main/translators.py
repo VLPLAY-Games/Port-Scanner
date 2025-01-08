@@ -132,7 +132,7 @@ TRANSLATES_RU = {
             "<<" : "<<",
             ">>" : ">>",
             "Port Scanner" : "Порт Сканер",
-            VERSION : " версия 1.0",
+            VERSION : " версия 1.0.1",
             " by VL_PLAY Games " : "",
             "Clear" : "Очистить",
             "Settings" : "Настройки",

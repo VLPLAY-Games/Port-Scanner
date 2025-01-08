@@ -71,19 +71,19 @@ class App():
             pr.draw_rectangle_gradient_ex(pr.Rectangle(0, 0, 300, 300), \
                             colors.DARKGRAY, colors.DARKGRAY, colors.BLACK, colors.BLACK)
 
-            pr.draw_text_ex(language.font, "Critical Error", \
+            pr.draw_text_ex(language.english_font, "Critical Error", \
                             pr.Vector2(75, 75), 25, 1, colors.WHITE)
-            pr.draw_text_ex(language.font, "Check report.log", \
+            pr.draw_text_ex(language.english_font, "Check report.log", \
                             pr.Vector2(90, 125), 15, 1, colors.WHITE)
             if pr.gui_button(
                     pr.Rectangle(125, 175, 50, 25),
                     'Log'):
-                pr.unload_font(language.font)
+                pr.unload_font(language.english_font)
                 pr.close_window()
                 log.open_log_window(pr, language, settings)
             pr.draw_rectangle_gradient_ex(pr.Rectangle(125, 175, 50, 25), \
                             colors.DARKGREEN, colors.DARKGREEN, colors.DARKBLUE, colors.DARKBLUE)
-            pr.draw_text_ex(language.font, 'Log', pr.Vector2(135,185), 11, 1, colors.WHITE)
+            pr.draw_text_ex(language.english_font, 'Log', pr.Vector2(135,185), 11, 1, colors.WHITE)
             pr.end_drawing()
         pr.close_window()
 
@@ -100,7 +100,7 @@ class App():
         """ Отрисовать перед выполнением задачи текст"""
         self.draw_main(pr, colors, terminal, task, language, settings)
         pr.begin_drawing()
-        pr.draw_text_ex(language.font, text, pr.Vector2(550, 125), 12, 1, colors.WHITE)
+        pr.draw_text_ex(language.english_font, terminal.check_text(text), pr.Vector2(550, 125), 12, 1, colors.WHITE)
         pr.clear_background(colors.WHITE)
         pr.end_drawing()
         pr.begin_drawing()

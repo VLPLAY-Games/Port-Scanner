@@ -9,6 +9,7 @@ class Language:
         """ Инициализация """
         logging.info("Started Language class initializing")
         self.font = []
+        self.english_font = []
         self.lang_file = __file__
         self.selected_lang = settings.language
         self.translates_ru = TRANSLATES_RU
@@ -61,15 +62,6 @@ class Language:
             logging.info("Set default language")
             self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
 
-
-class LanguageEnglish:
-    """ Класс для английского языка терминала и лога """
-    def __init__(self):
-        self.font = []
-
     def set_english(self, pr):
         """ Установка английского языка """
-        self.font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)
-
-    def __del__(self):
-        """ Деинициализация """
+        self.english_font = pr.load_font_ex('fonts/english.ttf', 50, None, 0)

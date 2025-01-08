@@ -52,24 +52,27 @@ class Terminal:
         self.check_pages()
         self.pages = len(self.arr_text)
         if len(self.arr_text) != 0:
-            pr.draw_text_ex(language.font, str(self.arr_text[self.page]) + str(''.join(keys)) \
+            pr.draw_text_ex(language.english_font, str(self.arr_text[self.page]) + str(''.join(keys)) \
                             if self.terminal_active else str(self.arr_text[self.page]), \
                             pr.Vector2(550, 125), 12, 1, colors.WHITE)
 
-    def check_text(self):
+    def check_text(self, text=""):
         """ Проверка переноса строки"""
         temp = []
         temp_count = 0
-        for string in self.draw_text:
+        if text == "":
+            text = self.draw_text
+        for string in text:
             for letter in string:
-                if letter != "\n":
-                    temp_count += 1
-                    if temp_count > 75:
-                        temp.append("\n")
-                        temp_count = 1
-                else:
-                    temp_count = 0
-                temp.append(letter)
+                if 32 <= ord(letter) <= 126 or letter == "\n":
+                    if letter != "\n":
+                        temp_count += 1
+                        if temp_count > 68:
+                            temp.append("\n")
+                            temp_count = 1
+                    else:
+                        temp_count = 0
+                    temp.append(letter)
         return ''.join(temp)
 
 
