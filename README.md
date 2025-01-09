@@ -1,4 +1,4 @@
-# Port Scanner by VL_PLAY Games v1.0
+# Port Scanner by VL_PLAY Games v1.0.1
 
 ## Overview
 The **Port Scanner** application is a versatile tool designed to analyze and interact with networks. It provides features for checking IP addresses, scanning ports, pinging servers, viewing logs, and accessing terminal commands. The intuitive graphical interface supports multiple functions to cater to developers, network administrators, and tech enthusiasts.
