@@ -81,3 +81,10 @@ Developed by **VL_PLAY Games**
 ---
 
 Feel free to contribute or report any issues!
+
+---
+
+## If windows complains about viruses
+I use Pyinstaller to create an .exe file and since Pyinstaller creates a self-extracting archive, Windows (and Virus Total) shows it as a virus
+You can look at the source code of the program and make sure that there are no viruses
+[https://stackoverflow.com/questions/43777106/program-made-with-pyinstaller-now-seen-as-a-trojan-horse-by-avg](url)
