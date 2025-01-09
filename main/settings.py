@@ -10,74 +10,87 @@ class Settings:
     def __init__(self, pr):
         """ Инициализация """
         logging.info("Started Settings class initializing")
-        self.app_cfg = __file__
-        self.check_app_config()
-        self.width, self.height, self.fps, self.font_size, \
-            self.but_width, self.but_height, self.but_font_size, self.language, self.log_level = \
-                0, 0, 0, 0, 0, 0, 0, "", 0
+        self.initialize_defaults()
+
+        try:
+            self.app_cfg = open('app.cfg', 'r', encoding="utf-8")
+            self.main_func()
+        except Exception as e:
+            logging.critical("Error while initializing Settings class: %s", str(e))
+            logging.critical("Trying to check App config")
+            self.check_app_config(True)
+            self.app_cfg = open('app.cfg', 'r', encoding="utf-8")
+            self.main_func()
+
+        self.log_settings(pr)
+        logging.info("Settings class initialized successfully")
+
+    def initialize_defaults(self):
+        """Инициализация настроек по умолчанию"""
+        self.app_cfg = None
+        self.width = self.height = self.fps = self.font_size = 0
+        self.but_width = self.but_height = self.but_font_size = 0
+        self.language = ""
+        self.log_level = 0
+
         self.font_size_small = config.FONT_SIZE_SMALL
         self.font_size_middle = config.FONT_SIZE
         self.font_size_big = config.FONT_SIZE_BIG
+
         self.but_font_size_small = config.BUT_FONT_SIZE_SMALL
         self.but_font_size_middle = config.BUT_FONT_SIZE
         self.but_font_size_big = config.BUT_FONT_SIZE_BIG
+
         self.but_width_small = config.BUT_WIDTH_SMALL
         self.but_height_small = config.BUT_HEIGHT_SMALL
         self.but_width_middle = config.BUT_WIDTH
         self.but_height_middle = config.BUT_HEIGHT
         self.but_width_big = config.BUT_WIDTH_BIG
         self.but_height_big = config.BUT_HEIGHT_BIG
+
         self.about = config.ABOUT
-        self.app_cfg = open('app.cfg','r', encoding="utf-8")
-        try:
-            self.main_func()
-        except Exception as e:
-            logging.critical("Error while initializing Settings class: %s", str(e))
-            logging.critical("Trying to check App config")
-            self.check_app_config(True)
-            self.app_cfg = open('app.cfg','r', encoding="utf-8")
-            self.main_func()
-
-        logging.info("Set app width to %s", str(self.width))
-        logging.info("Set app height to %s", str(self.height))
-        logging.info("Set app FPS to %s", str(self.fps))
         self.app_name = config.APP_NAME
-        logging.info("Set app name to %s", str(self.app_name))
         self.version = config.VERSION
-        logging.info("Set app version to %s", str(self.version))
-        logging.info("Set app font size to %s", str(self.font_size))
-        logging.info("Set app buttons default width to %s", str(self.but_width))
-        logging.info("Set app buttons default height to %s", str(self.but_height))
-        logging.info("Set app buttons default font size to %s", str(self.but_font_size))
-        pr.set_trace_log_level(self.log_level)
-        logging.info("Set app log level to %s", str(self.log_level))
-
         self.info = config.INFORMATION
-        logging.info("Loaded information")
 
-        logging.info("Settings class initialized successfully")
+    def log_settings(self, pr):
+        """Логирование установленных настроек"""
+        logging.info("Set app width to %s", self.width)
+        logging.info("Set app height to %s", self.height)
+        logging.info("Set app FPS to %s", self.fps)
+        logging.info("Set app font size to %s", self.font_size)
+        logging.info("Set app buttons default width to %s", self.but_width)
+        logging.info("Set app buttons default height to %s", self.but_height)
+        logging.info("Set app buttons default font size to %s", self.but_font_size)
+        logging.info("Set app name to %s", self.app_name)
+        logging.info("Set app version to %s", self.version)
+        pr.set_trace_log_level(self.log_level)
+        logging.info("Set app log level to %s", self.log_level)
+        logging.info("Loaded information")
 
     def __del__(self):
         """ Деинициализация """
+        if self.app_cfg and not self.app_cfg.closed:
+            self.app_cfg.close()
+            logging.info("App configuration file closed")
         logging.info("Settings class deinitialized")
 
     def main_func(self):
         """ Основная функция при инциализации класса """
-        self.temp = []
-        for line in self.app_cfg.readlines():
-            self.temp.append(line.strip().split(sep='=')[1])
+        self.temp = [line.strip().split('=')[1] for line in self.app_cfg]
         self.app_cfg.close()
-        self.width, self.height, self.fps, self.font_size, \
-            self.but_width, self.but_height, self.but_font_size, self.language, self.log_level = \
-            self.temp
-        self.width = int(self.width)
-        self.height = int(self.height)
-        self.fps = int(self.fps)
-        self.font_size = int(self.font_size)
-        self.but_width = int(self.but_width)
-        self.but_height = int(self.but_height)
-        self.but_font_size = int(self.but_font_size)
-        self.log_level = int(self.log_level)
+
+        (self.width, self.height, self.fps, self.font_size,
+         self.but_width, self.but_height, self.but_font_size,
+         self.language, self.log_level) = map(self._convert_config_value, self.temp)
+
+    @staticmethod
+    def _convert_config_value(value):
+        """Преобразует значение конфигурации в нужный тип"""
+        try:
+            return int(value)
+        except ValueError:
+            return value
 
     def settings_window(self, pr, language, button):
         """ Запуск приложения """
@@ -120,46 +133,67 @@ class Settings:
     def write_settings(self, name, value):
         """ Изменение параметров в файле конфига"""
         try:
-            with open('app.cfg','r', encoding="utf-8") as f:
+            updated = False
+            # Читаем и обновляем строки конфигурации
+            with open('app.cfg', 'r', encoding='utf-8') as f:
                 lines = f.readlines()
-            with open('app.cfg','w', encoding="utf-8") as f:
+
+            with open('app.cfg', 'w', encoding='utf-8') as f:
                 for line in lines:
-                    if line.strip("\n").split(sep='=')[0] != name:
-                        f.write(line)
+                    key, *rest = line.strip().split('=', 1)
+                    if key == name:
+                        f.write(f"{name}={value}\n")
+                        updated = True
                     else:
-                        f.write(name + "=" + str(value) + '\n')
-            if name == "font_size":
-                self.font_size = value
-            elif name == "button_width":
-                self.but_width = value
-            elif name == "button_height":
-                self.but_height = value
-            elif name == "button_font_size":
-                self.but_font_size = value
-            elif name == "loglevel":
-                self.log_level = value
+                        f.write(line)
+
+                # Добавляем новый параметр, если он отсутствует
+                if not updated:
+                    f.write(f"{name}={value}\n")
+
+            # Динамически обновляем атрибут объекта, если он существует
+            attr_map = {
+                "font_size": "font_size",
+                "button_width": "but_width",
+                "button_height": "but_height",
+                "button_font_size": "but_font_size",
+                "loglevel": "log_level"
+            }
+            if name in attr_map:
+                setattr(self, attr_map[name], value)
+
             logging.info("Changed in app config %s to %s", name, str(value))
 
         except Exception as e:
             logging.error("Error while changing app config: %s", str(e))
 
 
-    def create_app_config(self, recreate = False):
+    def create_app_config(self, recreate=False):
         """ Создание конфигурационного файла приложения"""
-        if (exists("app.cfg") is False) or recreate:
-            logging.warning("App config file doesn't exists" if recreate is False\
-                             else "App config file needs to be recreated")
-            with open('app.cfg', 'w', encoding="utf-8") as app_cfg:
-                app_cfg.write("width=" + str(config.WIDTH))
-                app_cfg.write("\nheight=" + str(config.HEIGHT))
-                app_cfg.write("\nfps=" + str(config.FPS))
-                app_cfg.write("\nfont_size=" + str(config.FONT_SIZE))
-                app_cfg.write("\nbutton_width=" + str(config.BUT_WIDTH))
-                app_cfg.write("\nbutton_height=" + str(config.BUT_HEIGHT))
-                app_cfg.write("\nbutton_font_size=" + str(config.BUT_FONT_SIZE))
-                app_cfg.write("\nlanguage=" + str(config.LANGUAGE))
-                app_cfg.write("\nloglevel=" + str(config.LOG_LEVEL))
-            logging.info("Created app.cfg with default values")
+        try:
+            if not exists("app.cfg") or recreate:
+                message = "App config file doesn't exist" \
+                    if not recreate else "App config file needs to be recreated"
+                logging.warning(message)
+
+                config_values = {
+                    "width": config.WIDTH,
+                    "height": config.HEIGHT,
+                    "fps": config.FPS,
+                    "font_size": config.FONT_SIZE,
+                    "button_width": config.BUT_WIDTH,
+                    "button_height": config.BUT_HEIGHT,
+                    "button_font_size": config.BUT_FONT_SIZE,
+                    "language": config.LANGUAGE,
+                    "loglevel": config.LOG_LEVEL
+                }
+
+                with open('app.cfg', 'w', encoding='utf-8') as app_cfg:
+                    app_cfg.writelines(f"{key}={value}\n" for key, value in config_values.items())
+
+                logging.info("Created app.cfg with default values")
+        except Exception as e:
+            logging.error("Error while creating app config: %s", str(e))
 
     def check_app_config(self, recreate=False):
         """ Проверка конфигурационного файла """
@@ -213,34 +247,28 @@ class Settings:
             logging.error("App config file not found, recreating")
             self.create_app_config(True)
         except Exception as e:
-            logging.error(f"Unexpected error: {e}, recreating config")
+            logging.error("Unexpected error: %s, recreating config", str(e))
             self.create_app_config(True)
 
     def get_button_gradient_width(self):
         """ Получение ширины для красивого фона кнопок"""
-        if self.but_width == config.BUT_WIDTH:
-            return self.but_width + 12
+        gradient_offsets = {
+            config.BUT_WIDTH: 12,
+            config.BUT_WIDTH_SMALL: 10,
+            config.BUT_WIDTH_BIG: 15
+        }
+        return self.but_width + gradient_offsets.get(self.but_width, 0)
 
-        if self.but_width == config.BUT_WIDTH_SMALL:
-            return self.but_width + 10
-
-        if self.but_width == config.BUT_WIDTH_BIG:
-            return self.but_width + 15
-
-        return self.but_width
 
     def get_button_gradient_height(self):
         """ Получение высоты для красивого фона кнопок"""
-        if self.but_height == config.BUT_HEIGHT:
-            return self.but_height + 7
+        gradient_offsets = {
+            config.BUT_HEIGHT: 7,
+            config.BUT_HEIGHT_SMALL: 6,
+            config.BUT_HEIGHT_BIG: 9
+        }
+        return self.but_height + gradient_offsets.get(self.but_height, 0)
 
-        if self.but_height == config.BUT_HEIGHT_SMALL:
-            return self.but_height + 6
-
-        if self.but_height == config.BUT_HEIGHT_BIG:
-            return self.but_height + 9
-
-        return self.but_height
 
     def get_button_color(self, but_name):
         """ Получение цвета кнопок в настройках выбрано или нет"""

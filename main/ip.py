@@ -98,7 +98,8 @@ class Ip:
         parameter = '-n' if name == 'nt' else '-c'
         command = ['ping', parameter, '5', self.task_ip]
         try:
-            terminal.draw_text += check_output(command, shell=True if name == 'nt' else False).decode("utf-8")
+            terminal.draw_text += check_output(command, shell=name == 'nt').decode("utf-8")
+
             task.status = "OK"
             logging.info("Ping successfull")
         except Exception as e:
@@ -112,7 +113,7 @@ class Ip:
         try:
             parameter = '-n' if name == 'nt' else '-c'
             command = ['ping', parameter, '1', ip]
-            temp = check_output(command, shell=True if name == 'nt' else False)
+            temp = check_output(command, shell=name == 'nt')
             if 'Destination host unreachable' in str(temp):
                 return None
             return ip
@@ -124,7 +125,7 @@ class Ip:
         try:
             # Выполняем arp для получения MAC-адреса
             command = ['arp', '-a', ip] if name == 'nt' else ['arp', ip]
-            output = check_output(command, shell=True if name == 'nt' else False).decode()
+            output = check_output(command, shell=name == 'nt').decode()
 
             for line in output.splitlines():
                 if ip in line:

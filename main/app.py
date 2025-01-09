@@ -100,7 +100,8 @@ class App():
         """ Отрисовать перед выполнением задачи текст"""
         self.draw_main(pr, colors, terminal, task, language, settings)
         pr.begin_drawing()
-        pr.draw_text_ex(language.english_font, terminal.check_text(text), pr.Vector2(550, 125), 12, 1, colors.WHITE)
+        pr.draw_text_ex(language.english_font, terminal.check_text(text), \
+                        pr.Vector2(550, 125), 12, 1, colors.WHITE)
         pr.clear_background(colors.WHITE)
         pr.end_drawing()
         pr.begin_drawing()

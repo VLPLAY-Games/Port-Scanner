@@ -1,11 +1,12 @@
 """ Файл для работы с клавиатурой """
 import logging
-from pyperclip import paste
 from collections import deque
+from pyperclip import paste
+
 
 class Keyboard:
     """ Класс для работы с клавиатурой"""
-    
+
     def __init__(self):
         """ Инициализация """
         logging.info("Started Keyboard class initializing")
@@ -13,7 +14,7 @@ class Keyboard:
         self.enter_pressed = False
         logging.info("Keyboard class initialized successfully")
 
-    def del_keys(self):
+    def __del__(self):
         """ Деинициализация """
         logging.info("Keyboard class deinitialized")
 
@@ -49,8 +50,8 @@ class Keyboard:
                     self.keys_del()
                 elif paste_pressed and chr(value) == 'V':
                     self.keys.extend(list(paste()))
-                
+
                 else:
                     char_to_add = chr(value).lower() if not shift_pressed else chr(value)
-                    if (32 <= value <= 126):
+                    if 32 <= value <= 126:
                         self.keys.append(char_to_add)

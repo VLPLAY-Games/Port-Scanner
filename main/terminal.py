@@ -52,8 +52,9 @@ class Terminal:
         self.check_pages()
         self.pages = len(self.arr_text)
         if len(self.arr_text) != 0:
-            pr.draw_text_ex(language.english_font, str(self.arr_text[self.page]) + str(''.join(keys)) \
-                            if self.terminal_active else str(self.arr_text[self.page]), \
+            pr.draw_text_ex(language.english_font, str(self.arr_text[self.page]) + \
+                            str(''.join(keys)) if self.terminal_active else \
+                            str(self.arr_text[self.page]), \
                             pr.Vector2(550, 125), 12, 1, colors.WHITE)
 
     def check_text(self, text=""):
