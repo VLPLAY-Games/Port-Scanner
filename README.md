@@ -1,51 +1,32 @@
-# Port Scanner by VL_PLAY Games v1.0.1
+# Port Scanner by VL_PLAY Games
+
+- [Read in Russian](README.ru.md) 
+- [Read in Japanese](README.ja.md)
 
 ## Overview
 The **Port Scanner** application is a versatile tool designed to analyze and interact with networks. It provides features for checking IP addresses, scanning ports, pinging servers, viewing logs, and accessing terminal commands. The intuitive graphical interface supports multiple functions to cater to developers, network administrators, and tech enthusiasts.
 
 ## Features
 
-### Main Functions
-1. **Check your IP**
-   - Displays all IP addresses of the computer.
+### 🔍 Main Functions
+1. **IP Check** - Display all computer IP addresses
+2. **Port Scan** - Scan and show all open ports
+3. **All Info** - Complete network overview:
+   - IP addresses
+   - Open ports
+   - Network drivers
+   - Additional network data
+4. **Custom IP** - Scan ports on specific IP address
+5. **Ping** - Check connectivity and latency
+6. **Terminal** - Built-in command line interface
+7. **Active Devices** - List devices in local network
 
-2. **Check all ports**
-   - Scans and displays all open ports for the computer.
-
-3. **All info**
-   - Provides detailed information about:
-     - IP addresses
-     - Open ports
-     - Network drivers
-     - Additional network data
-
-4. **Custom IP and Ports**
-   - Allows scanning for open ports on a specific IP address provided by the user.
-
-5. **Ping**
-   - Pings a website, IP, or server to check connectivity and latency.
-
-6. **Terminal**
-   - Custom terminal functionality similar to the basic terminal in Windows or Linux.
-
-7. **Active Devices**
-   - Lists active devices in the local network.
-
-### Additional Features
-- **Help**
-  - Displays detailed descriptions and guidance for using the app.
-
-- **Log**
-  - Shows a history of program activity and logs.
-
-- **Clear**
-  - Clears the current results or log entries.
-
-- **Settings**
-  - Adjust application configurations.
-
-- **About**
-  - Displays version information and credits.
+### ⚙️ Additional Features
+- **Help** - Usage instructions and guidance
+- **Log** - Program activity history
+- **Clear** - Clear results and logs
+- **Settings** - Application configuration
+- **About** - Version info and credits
 
 ## Interface
 The interface is divided into two primary sections:
@@ -74,9 +55,6 @@ The interface is divided into two primary sections:
    ```bash
    ./port_scanner
    ```
-
-## Credits
-Developed by **VL_PLAY Games**
 
 ---
 
