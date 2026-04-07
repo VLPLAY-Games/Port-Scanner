@@ -1,12 +1,4 @@
-.venv/
-__pycache__/
-other/
-report.log
-build/
-port_scanner.spec
-dist/
-lang.cfg
-app.cfg
-pyinstaller/
-output/
-pytoexe.json
+Port-Scanner/.vs
+Port-Scanner/bin
+Port-Scanner/obj
+.vs
